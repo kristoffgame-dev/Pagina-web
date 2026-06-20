@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevForge Studio | Software Premium & Páginas Web Profesionales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#4c1d95',
+                        },
+                        darkBg: '#09090b',
+                        darkCard: '#18181b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #09090b;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Outfit', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.08); opacity: 0.6; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 8s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-zinc-100 overflow-x-hidden">
+
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+    <div class="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-fuchsia-600/10 rounded-full blur-[100px] pointer-events-none animate-pulse-slow" style="animation-delay: 4s;"></div>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-darkBg/80 backdrop-blur-md border-b border-zinc-800/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center space-x-3">
+                        <div class="w-11 h-11 rounded-xl overflow-hidden border border-zinc-700 shadow-lg shadow-violet-500/20">
+                            <img src="logo dodi.jpg" alt="Dodi Logo" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-2xl font-bold font-display tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-100 to-zinc-400">
+                            DevForge<span class="text-violet-500">.</span>
+                        </span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#servicios" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Servicios</a>
+                    <a href="#portafolio" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Portafolio</a>
+                    <a href="#contacto" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <a href="#contacto" class="relative group inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-xl group bg-gradient-to-br from-violet-600 to-blue-500 text-white focus:ring-4 focus:outline-none focus:ring-blue-800">
+                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-zinc-950 rounded-xl group-hover:bg-opacity-0">
+                            Iniciar Proyecto
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="inline-flex items-center space-x-2 bg-violet-500/10 border border-violet-500/20 px-3 py-1.5 rounded-full mb-6">
+                <span class="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
+                <span class="text-xs font-semibold text-violet-300 uppercase tracking-wider">Soluciones Digitales Inteligentes</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-white mb-6 leading-tight">
+                Forjamos el Software que <br class="hidden sm:inline">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-400">
+                    Acelera tu Negocio Comercial
+                </span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-zinc-400 mb-10">
+                Creamos aplicaciones a medida, software con bases de datos robustas y sitios web profesionales que automatizan tus tareas y multiplican tus ingresos.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16">
+                <a href="#servicios" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 text-white font-medium shadow-lg shadow-violet-600/20 hover:from-violet-700 hover:to-blue-600 hover:shadow-violet-600/30 transition-all transform hover:-translate-y-0.5 text-center">
+                    Ver Catálogo de Soluciones
+                </a>
+            </div>
+
+            <div class="relative mx-auto max-w-5xl rounded-3xl border border-zinc-800/80 bg-zinc-900/30 p-1 backdrop-blur-xl shadow-2xl">
+                <div class="rounded-t-2xl border-b border-zinc-800 bg-zinc-950 p-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex space-x-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                        </div>
+                        <span class="text-xs text-zinc-500 font-mono">|</span>
+                        <div class="flex items-center space-x-2 bg-zinc-900/80 px-3 py-1 rounded-md border border-zinc-800/80">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-xs text-zinc-300 font-semibold uppercase tracking-wider font-display">Demostración de Software en Vivo</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-violet-950/40 border border-violet-500/30 px-3 py-1 rounded-lg">
+                        <span class="text-[11px] text-violet-300 font-semibold uppercase tracking-wider">Módulo: Calculadora de Rentabilidad Comercial 📊</span>
+                    </div>
+                </div>
+
+                <div class="p-6 sm:p-8 bg-zinc-950/40 rounded-b-3xl text-left grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-5 space-y-6 bg-zinc-900/60 p-6 rounded-2xl border border-zinc-800">
+                        <div class="border-b border-zinc-800/80 pb-3">
+                            <h4 class="text-base font-bold font-display text-white">Consola de Operaciones</h4>
+                            <p class="text-xs text-zinc-500">Modifica los rangos para ver cómo el sistema recalcula los flujos de caja en tiempo real.</p>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider">📥 Capital Inicial</label>
+                                <span id="val-inversion" class="text-sm font-extrabold text-blue-400 font-mono">$10,000 USD</span>
+                            </div>
+                            <input id="slide-inversion" type="range" min="1000" max="50000" step="500" value="10000" oninput="updateDemoApp()" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            <div class="flex justify-between text-[10px] text-zinc-600 font-mono mt-1">
+                                <span>$1,000</span>
+                                <span>$50,000 Max</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider">💰 Ventas Totales</label>
+                                <span id="val-ventas" class="text-sm font-extrabold text-emerald-400 font-mono">$25,000 USD</span>
+                            </div>
+                            <input id="slide-ventas" type="range" min="1000" max="100000" step="1000" value="25000" oninput="updateDemoApp()" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                            <div class="flex justify-between text-[10px] text-zinc-600 font-mono mt-1">
+                                <span>$1,000</span>
+                                <span>$100,000 Max</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider">⚠️ Pérdidas / Mermas</label>
+                                <span id="val-merma" class="text-sm font-extrabold text-rose-400 font-mono">$1,500 USD</span>
+                            </div>
+                            <input id="slide-merma" type="range" min="0" max="15000" step="100" value="1500" oninput="updateDemoApp()" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-rose-500">
+                            <div class="flex justify-between text-[10px] text-zinc-600 font-mono mt-1">
+                                <span>$0 (Sin Merma)</span>
+                                <span>$15,000 Max</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-5 bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-2xl relative overflow-hidden">
+                                <span class="absolute top-2 right-3 text-2xl" id="icon-profit">💸</span>
+                                <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Ganancia Neta Real</p>
+                                <p id="result-neta" class="text-3xl font-extrabold font-display tracking-tight text-emerald-400 mt-2 font-mono">$13,500</p>
+                                <p class="text-[11px] text-zinc-400 mt-1" id="subtext-neta">Ventas netas menos costos e inversión.</p>
+                            </div>
+
+                            <div class="p-5 bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-2xl relative overflow-hidden">
+                                <span class="absolute top-2 right-3 text-2xl">📈</span>
+                                <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Retorno de Inversión (ROI)</p>
+                                <p id="result-roi" class="text-3xl font-extrabold font-display tracking-tight text-violet-400 mt-2 font-mono">135.0%</p>
+                                <p class="text-[11px] text-zinc-400 mt-1">Eficiencia del capital aplicado.</p>
+                            </div>
+                        </div>
+
+                        <div id="demo-status-card" class="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 flex items-center space-x-3 transition-all duration-300">
+                            <div id="demo-status-icon" class="text-2xl">🚀</div>
+                            <div>
+                                <h5 id="demo-status-title" class="text-sm font-bold text-emerald-400">Rendimiento Saludable</h5>
+                                <p id="demo-status-desc" class="text-xs text-zinc-400 mt-0.5">El negocio genera utilidades estables y los gastos se mantienen bajo balance.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-zinc-900/40 p-5 rounded-2xl border border-zinc-800/80">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-semibold text-zinc-400">Distribución de Recursos Financieros</span>
+                            </div>
+                            <div class="w-full bg-zinc-950 h-5 rounded-full flex overflow-hidden border border-zinc-800">
+                                <div id="bar-inversion" class="bg-blue-500 h-full transition-all duration-300" style="width: 40%"></div>
+                                <div id="bar-merma" class="bg-rose-500 h-full transition-all duration-300" style="width: 6%"></div>
+                                <div id="bar-neta" class="bg-emerald-500 h-full transition-all duration-300" style="width: 54%"></div>
+                            </div>
+                            <div class="flex flex-wrap gap-4 mt-3 text-[11px] text-zinc-400">
+                                <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-blue-500 mr-1.5"></span> Inversión (<span id="lbl-pct-inversion">40%</span>)</div>
+                                <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-rose-500 mr-1.5"></span> Merma (<span id="lbl-pct-merma">6%</span>)</div>
+                                <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-emerald-500 mr-1.5"></span> Ganancia Neta (<span id="lbl-pct-neta">54%</span>)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="servicios" class="py-24 md:py-32 relative border-t border-zinc-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-violet-500 mb-3">Soluciones Tecnológicas Especializadas</h2>
+                <p class="text-3xl sm:text-5xl font-extrabold font-display text-white tracking-tight mb-4">
+                    Herramientas de Software para tu Negocio
+                </p>
+                <p class="text-zinc-400">
+                    Desarrollamos la arquitectura digital que tu comercio necesita para crecer de forma segura y automatizada.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="group bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/40 p-8 rounded-2xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center text-violet-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-white mb-3">Páginas Web Comerciales</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                        Sitios web rápidos y optimizados para mostrar tus productos, capturar clientes potenciales y posicionar tu marca local en los motores de búsqueda.
+                    </p>
+                    <ul class="text-xs text-zinc-500 space-y-2 mt-4">
+                        <li class="flex items-center"><span class="text-violet-500 mr-2">✓</span> Diseño Adaptivo Premium</li>
+                        <li class="flex items-center"><span class="text-violet-500 mr-2">✓</span> Estructuras de Carga Ultra-veloz</li>
+                    </ul>
+                </div>
+
+                <div class="group bg-zinc-900/50 border border-zinc-800 hover:border-blue-500/40 p-8 rounded-2xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-white mb-3">Software a la Medida (SaaS)</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                        Plataformas interactivas en la nube como paneles de control financieros, CRM básicos y consolas de métricas internas para ordenar tu operación.
+                    </p>
+                    <ul class="text-xs text-zinc-500 space-y-2 mt-4">
+                        <li class="flex items-center"><span class="text-blue-500 mr-2">✓</span> Lógicas de Cálculo Personalizadas</li>
+                        <li class="flex items-center"><span class="text-blue-500 mr-2">✓</span> Bases de Datos Seguras y Escalables</li>
+                    </ul>
+                </div>
+
+                <div class="group bg-zinc-900/50 border border-zinc-800 hover:border-fuchsia-500/40 p-8 rounded-2xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-fuchsia-500/10 rounded-xl flex items-center justify-center text-fuchsia-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-white mb-3">Automatizaciones Python</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                        Scripts técnicos personalizados que conectan bases de datos locales (SQLite) con interfaces interactivas para eliminar tareas manuales.
+                    </p>
+                    <ul class="text-xs text-zinc-500 space-y-2 mt-4">
+                        <li class="flex items-center"><span class="text-fuchsia-500 mr-2">✓</span> Control Inteligente de Registros</li>
+                        <li class="flex items-center"><span class="text-fuchsia-500 mr-2">✓</span> Reportes y Respuestas Automatizadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto" class="py-12 border-t border-zinc-800 bg-zinc-950 text-center">
+        <p class="text-sm text-zinc-500">© 2026 DevForge Studio. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function updateDemoApp() {
+            const inversion = parseFloat(document.getElementById('slide-inversion').value);
+            const ventas = parseFloat(document.getElementById('slide-ventas').value);
+            const merma = parseFloat(document.getElementById('slide-merma').value);
+
+            document.getElementById('val-inversion').innerText = `$${inversion.toLocaleString()} USD`;
+            document.getElementById('val-ventas').innerText = `$${ventas.toLocaleString()} USD`;
+            document.getElementById('val-merma').innerText = `$${merma.toLocaleString()} USD`;
+
+            const gananciaNeta = ventas - inversion - merma;
+            let roi = 0;
+            if (inversion > 0) {
+                roi = (gananciaNeta / inversion) * 100;
+            }
+
+            const totalSuma = inversion + merma + Math.max(0, gananciaNeta);
+            const pctInversion = totalSuma > 0 ? Math.round((inversion / totalSuma) * 100) : 0;
+            const pctMerma = totalSuma > 0 ? Math.round((merma / totalSuma) * 100) : 0;
+            const pctNeta = totalSuma > 0 ? Math.round((Math.max(0, gananciaNeta) / totalSuma) * 100) : 0;
+
+            const txtGananciaNeta = document.getElementById('result-neta');
+            txtGananciaNeta.innerText = `${gananciaNeta < 0 ? '-' : ''}$${Math.abs(gananciaNeta).toLocaleString()}`;
+            
+            if (gananciaNeta < 0) {
+                txtGananciaNeta.className = "text-3xl font-extrabold font-display tracking-tight text-rose-500 mt-2 font-mono";
+                document.getElementById('icon-profit').innerText = "📉";
+            } else {
+                txtGananciaNeta.className = "text-3xl font-extrabold font-display tracking-tight text-emerald-400 mt-2 font-mono";
+                document.getElementById('icon-profit').innerText = "💸";
+            }
+
+            document.getElementById('result-roi').innerText = `${roi.toFixed(1)}%`;
+
+            document.getElementById('bar-inversion').style.width = `${pctInversion}%`;
+            document.getElementById('bar-merma').style.width = `${pctMerma}%`;
+            document.getElementById('bar-neta').style.width = `${pctNeta}%`;
+
+            document.getElementById('lbl-pct-inversion').innerText = `${pctInversion}%`;
+            document.getElementById('lbl-pct-merma').innerText = `${pctMerma}%`;
+            document.getElementById('lbl-pct-neta').innerText = `${pctNeta}%`;
+
+            const statusCard = document.getElementById('demo-status-card');
+            const statusIcon = document.getElementById('demo-status-icon');
+            const statusTitle = document.getElementById('demo-status-title');
+            const statusDesc = document.getElementById('demo-status-desc');
+
+            const pctMermaSobreVentas = ventas > 0 ? (merma / ventas) * 100 : 0;
+
+            if (gananciaNeta < 0) {
+                statusCard.className = "p-4 rounded-xl border border-rose-500/20 bg-rose-500/5 flex items-center space-x-3 transition-all duration-300";
+                statusIcon.innerText = "⚠️";
+                statusTitle.className = "text-sm font-bold text-rose-400";
+                statusTitle.innerText = "Operación con Pérdidas";
+                statusDesc.innerText = "Los gastos operativos superan tus ingresos. Ajusta los márgenes comerciales.";
+            } else if (pctMermaSobreVentas > 15) {
+                statusCard.className = "p-4 rounded-xl border border-yellow-500/20 bg-yellow-500/5 flex items-center space-x-3 transition-all duration-300";
+                statusIcon.innerText = "🚨";
+                statusTitle.className = "text-sm font-bold text-yellow-400";
+                statusTitle.innerText = "Fuga por Mermas Alta";
+                statusDesc.innerText = `Atención: Las pérdidas físicas representan el ${pctMermaSobreVentas.toFixed(1)}% de las ventas.`;
+            } else {
+                statusCard.className = "p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 flex items-center space-x-3 transition-all duration-300";
+                statusIcon.innerText = "🚀";
+                statusTitle.className = "text-sm font-bold text-emerald-400";
+                statusTitle.innerText = "Negocio Saludable y Rentable";
+                statusDesc.innerText = `Excelente: Margen neto fuerte y mermas bajo estricto control (${pctMermaSobreVentas.toFixed(1)}% del ingreso).`;
+            }
+        }
+
+        window.onload = function() {
+            updateDemoApp();
+        };
+    </script>
+</body>
+</html>
