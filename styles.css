@@ -50,10 +50,10 @@ header {
 }
 
 .logo img {
-    height: 42px;
+    height: 60px;
     width: auto;
     display: block;
-    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
+    filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.65));
 }
 
 .logo-text {
