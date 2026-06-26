@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. RESETEO Y VARIABLES DE ESTILO
+   1. RESETEO, VARIABLES Y ANIMACIONES DE INTERFAZ
    ========================================================================== */
 * {
     margin: 0;
@@ -14,34 +14,54 @@ html {
 }
 
 body {
-    background-color: #0b0f19;
+    background-color: #070a13;
     color: #f1f5f9;
     line-height: 1.6;
 }
 
+@keyframes pulseGlow {
+    0% { text-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+    50% { text-shadow: 0 0 25px rgba(56, 189, 248, 0.6); }
+    100% { text-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+}
+
 /* ==========================================================================
-   2. ENCABEZADO CON EFECTO CRISTAL (GLASSMORPHISM)
+   2. BARRA DE NAVEGACIÓN ENCAPSULADA CON CRISTAL
    ========================================================================== */
 header {
-    background-color: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(11, 17, 32, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 8%;
+    padding: 12px 8%;
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-header .logo h2 {
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    height: 42px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
+}
+
+.logo-text {
     font-weight: 800;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     color: #38bdf8;
-    text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    margin-bottom: 0;
+    animation: pulseGlow 3s infinite ease-in-out;
 }
 
 nav ul {
@@ -57,9 +77,9 @@ nav ul li {
 nav ul li a {
     color: #94a3b8;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
@@ -69,23 +89,24 @@ nav ul li a:hover {
 .btn-nav {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white !important;
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    padding: 8px 18px;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+    transition: all 0.3s ease !important;
 }
 
 .btn-nav:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
 }
 
 /* ==========================================================================
-   3. SECCIÓN HERO (Fondo con esferas de luz)
+   3. SECCIÓN HERO DE ALTA PROFUNDIDAD VISUAL
    ========================================================================== */
 .hero {
     position: relative;
-    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
-    padding: 140px 8%;
+    background: radial-gradient(circle at 50% 40%, #151f32 0%, #070a13 100%);
+    padding: 150px 8%;
     text-align: center;
     overflow: hidden;
 }
@@ -98,37 +119,52 @@ nav ul li a:hover {
     height: 100%;
     z-index: 1;
 }
+
 .circle {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.15;
+    filter: blur(100px);
+    opacity: 0.12;
 }
-.circle.c1 { width: 300px; height: 300px; background: #38bdf8; top: -50px; left: 10%; }
-.circle.c2 { width: 400px; height: 400px; background: #10b981; bottom: -100px; right: 10%; }
+.circle.c1 { width: 350px; height: 350px; background: #38bdf8; top: -50px; left: 8%; }
+.circle.c2 { width: 450px; height: 450px; background: #10b981; bottom: -120px; right: 8%; }
+.circle.c3 { width: 250px; height: 250px; background: #6366f1; top: 40%; left: 45%; }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 850px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
-.hero h1 {
-    font-size: 48px;
-    font-weight: 800;
-    line-height: 1.15;
+.badge-tech {
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: inline-block;
     margin-bottom: 25px;
-    background: linear-gradient(to right, #ffffff, #94a3b8);
+}
+
+.hero h1 {
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
     -webkit-background-clip: text;
-    background-clip: text; /* Corregido para evitar warnings */
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero p {
-    font-size: 19px;
+    font-size: 18px;
     color: #94a3b8;
-    margin-bottom: 45px;
+    margin-bottom: 40px;
 }
 
 .hero-buttons {
@@ -139,48 +175,51 @@ nav ul li a:hover {
 
 .btn-primario, .btn-secundario {
     text-decoration: none;
-    padding: 15px 32px;
+    padding: 14px 30px;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primario {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.25);
 }
 
 .btn-primario:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
 }
 
 .btn-secundario {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: rgba(255, 255, 255, 0.02);
     color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    border: 1px solid rgba(56, 189, 248, 0.25);
 }
 
 .btn-secundario:hover {
-    background-color: rgba(56, 189, 248, 0.1);
+    background-color: rgba(56, 189, 248, 0.08);
     transform: translateY(-3px);
 }
 
 /* ==========================================================================
-   4. SECCIÓN CARACTERÍSTICAS (Efecto 3D Hover)
+   4. SECCIÓN TARJETAS CON EFECTO MAGNÉTICO
    ========================================================================== */
 .features {
-    padding: 100px 8%;
+    padding: 90px 8%;
     text-align: center;
-    background-color: #0f172a;
+    background-color: #0b0f19;
 }
 
-.features h2 {
-    font-size: 36px;
-    margin-bottom: 60px;
+.features h2, .for-who h2, .support h2 {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
+
+.features h2 { margin-bottom: 50px; }
 
 .grid-features {
     display: grid;
@@ -189,50 +228,47 @@ nav ul li a:hover {
 }
 
 .card {
-    background-color: rgba(30, 41, 59, 0.5);
-    padding: 45px 35px;
-    border-radius: 16px;
+    position: relative;
+    background-color: rgba(17, 24, 39, 0.4);
+    padding: 40px 30px;
+    border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     text-align: left;
+    overflow: hidden;
 }
 
 .card:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border-color: rgba(56, 189, 248, 0.4);
-    background-color: rgba(30, 41, 59, 0.8);
+    transform: translateY(-6px);
+    border-color: rgba(56, 189, 248, 0.35);
+    background-color: rgba(17, 24, 39, 0.7);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .card h3 {
-    font-size: 22px;
+    font-size: 20px;
     color: #ffffff;
     margin-bottom: 15px;
 }
 
 .card p {
     color: #94a3b8;
-    font-size: 15px;
+    font-size: 14.5px;
 }
 
 /* ==========================================================================
-   5. SECCIÓN SERVICIOS
+   5. SECCIÓN SERVICIOS Y PANEL INTERACTIVO DE SIMULACIÓN
    ========================================================================== */
 .for-who {
-    padding: 100px 8%;
-    background-color: #0b0f19;
+    padding: 90px 8%;
+    background-color: #070a13;
     text-align: center;
-}
-
-.for-who h2 {
-    font-size: 36px;
-    margin-bottom: 10px;
 }
 
 .for-who .subtitulo {
     color: #94a3b8;
-    margin-bottom: 60px;
-    font-size: 17px;
+    margin-bottom: 50px;
+    font-size: 16px;
 }
 
 .grid-for-who {
@@ -242,8 +278,8 @@ nav ul li a:hover {
 }
 
 .box-target {
-    background-color: rgba(15, 23, 42, 0.6);
-    padding: 40px 25px;
+    background-color: rgba(11, 17, 32, 0.5);
+    padding: 35px 25px;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     text-align: center;
@@ -251,71 +287,69 @@ nav ul li a:hover {
 }
 
 .box-target:hover {
-    transform: translateY(-8px);
-    border-color: rgba(56, 189, 248, 0.3);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    transform: translateY(-6px);
+    border-color: rgba(56, 189, 248, 0.25);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 .icon-box {
-    font-size: 45px;
-    margin-bottom: 20px;
+    font-size: 40px;
+    margin-bottom: 15px;
 }
 
 .box-target h3 {
-    font-size: 20px;
+    font-size: 19px;
     color: #ffffff;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .box-target p {
     color: #94a3b8;
-    font-size: 14.5px;
+    font-size: 14px;
 }
 
 .box-target.especial {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: linear-gradient(135deg, #111827 0%, #070a13 100%);
     border: 1px solid rgba(56, 189, 248, 0.2);
 }
 
 .btn-consulta {
     display: inline-block;
-    margin-top: 25px;
+    margin-top: 20px;
     background-color: #38bdf8;
-    color: #0f172a;
-    padding: 10px 20px;
+    color: #070a13;
+    padding: 10px 22px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13.5px;
     transition: all 0.3s ease;
 }
 
 .btn-consulta:hover {
     background-color: #ffffff;
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
-/* ==========================================================================
-   INTERACTIVIDAD: SIMULADOR DE APLICACIONES DODITECH
-   ========================================================================== */
+/* INTERACTIVIDAD AVANZADA ENGINE V2 */
 .demo-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: rgba(30, 41, 59, 0.3) !important;
+    background: rgba(17, 24, 39, 0.4) !important;
 }
 
 .app-simulator {
-    background-color: #090d16;
+    background-color: #04060b;
     border-radius: 10px;
-    margin: 20px 0;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin: 18px 0;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     text-align: left;
-    box-shadow: inset 0 4px 20px rgba(0,0,0,0.6);
+    box-shadow: inset 0 4px 20px rgba(0,0,0,0.7);
 }
 
 .simulator-header {
-    background-color: #111827;
+    background-color: #0b0f19;
     padding: 8px 12px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
@@ -324,85 +358,38 @@ nav ul li a:hover {
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 6px;
-    display: inline-block;
-}
+.dot { width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; display: inline-block; }
 .dot.red { background-color: #ef4444; }
 .dot.yellow { background-color: #f59e0b; }
 .dot.green { background-color: #10b981; }
 
 .simulator-title {
     font-size: 11px;
-    color: #64748b;
+    color: #475569;
     font-family: monospace;
-    margin-left: 10px;
+    margin-left: 8px;
 }
 
-.simulator-body {
-    padding: 20px;
-    font-family: monospace;
-}
-
-.sim-text {
-    font-size: 13px;
-    color: #94a3b8;
-    margin-bottom: 6px;
-}
-
-.sim-text strong {
-    color: #ffffff;
-}
-
-.sim-text.highlight {
-    color: #38bdf8;
-    font-size: 14px;
-    border-bottom: 1px dashed rgba(56, 189, 248, 0.2);
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-}
-
-.sim-text.highlight span {
-    font-weight: bold;
-    color: #10b981;
-}
-
-.sim-screen {
-    background-color: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.05);
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    color: #a7f3d0;
-    min-height: 54px;
-}
+.simulator-body { padding: 18px; font-family: monospace; }
 
 .sim-input-group {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
-.sim-input-group label {
-    font-size: 12px;
-    color: #94a3b8;
-    font-family: monospace;
-    margin-bottom: 0 !important;
-}
+.sim-input-group label { font-size: 11.5px; color: #64748b; font-family: monospace; margin-bottom: 0 !important; }
 
 .sim-input-group input {
-    width: 100px;
-    background-color: #111827;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 90px;
+    background-color: #0b0f19;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 4px;
     color: #10b981;
-    padding: 4px 8px;
+    padding: 3px 6px;
     font-family: monospace;
-    font-size: 13px;
+    font-size: 12.5px;
     text-align: right;
     margin-bottom: 0 !important;
 }
@@ -410,16 +397,37 @@ nav ul li a:hover {
 .sim-input-group input:focus {
     outline: none;
     border-color: #38bdf8;
-    box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
 }
 
+.sim-screen {
+    background-color: rgba(255,255,255,0.01);
+    border: 1px solid rgba(255,255,255,0.03);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #a7f3d0;
+    min-height: 50px;
+    margin-top: 15px;
+}
+
+.sim-text.highlight {
+    color: #38bdf8;
+    font-size: 13.5px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.05);
+    padding-top: 10px;
+    margin-top: 12px;
+}
+
+.sim-text.highlight span { font-weight: bold; color: #10b981; }
+
 /* ==========================================================================
-   6. SECCIÓN FORMULARIO INTERACTIVO (CRISTAL TEMPLADO)
+   6. FORMULARIO GLASSMORPHISM E INPUTS FLUIDOS
    ========================================================================== */
 .support {
     position: relative;
-    padding: 100px 8%;
-    background-color: #0f172a;
+    padding: 90px 8%;
+    background-color: #0b0f19;
     text-align: center;
     overflow: hidden;
 }
@@ -429,9 +437,9 @@ nav ul li a:hover {
     width: 300px;
     height: 300px;
     background: #38bdf8;
-    filter: blur(100px);
-    opacity: 0.1;
-    bottom: -50px;
+    filter: blur(120px);
+    opacity: 0.08;
+    bottom: -60px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -439,53 +447,47 @@ nav ul li a:hover {
 .form-contacto {
     position: relative;
     z-index: 5;
-    max-width: 650px;
-    margin: 50px auto 0 auto;
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 50px;
-    border-radius: 20px;
+    max-width: 600px;
+    margin: 40px auto 0 auto;
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 45px;
+    border-radius: 16px;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
     text-align: left;
 }
 
-.form-contacto label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-    color: #cbd5e1;
-    font-size: 14px;
-}
+.form-contacto label { display: block; margin-bottom: 8px; font-weight: 500; color: #94a3b8; font-size: 13.5px; }
 
 .form-contacto input, .form-contacto textarea {
     width: 100%;
-    padding: 14px;
-    margin-bottom: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    background-color: rgba(15, 23, 42, 0.6);
-    font-size: 15px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    background-color: rgba(7, 10, 19, 0.5);
+    font-size: 14.5px;
     color: white;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s ease;
 }
 
 .form-contacto input:focus, .form-contacto textarea:focus {
     outline: none;
     border-color: #38bdf8;
-    background-color: rgba(15, 23, 42, 0.9);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    background-color: #070a13;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
 }
 
 .btn-enviar {
     width: 100%;
     background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
-    color: #0f172a;
-    padding: 15px;
+    color: #070a13;
+    padding: 14px;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 6px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -494,12 +496,12 @@ nav ul li a:hover {
 
 .btn-enviar:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
     color: white;
 }
 
 /* ==========================================================================
-   7. BOTÓN FLOTANTE DE WHATSAPP
+   7. WHATSAPP FLOTANTE Y PIE DE PÁGINA
    ========================================================================== */
 .btn-whatsapp {
     position: fixed;
@@ -507,41 +509,36 @@ nav ul li a:hover {
     right: 30px;
     background-color: #25d366;
     color: white;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
     font-weight: bold;
-    font-size: 18px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    font-size: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
     z-index: 9999;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.btn-whatsapp:hover {
-    transform: scale(1.15) rotate(5deg);
-    background-color: #128c7e;
-}
+.btn-whatsapp:hover { transform: scale(1.12) rotate(4deg); background-color: #128c7e; }
 
 footer {
-    background-color: #0b0f19;
-    color: #64748b;
+    background-color: #04060b;
+    color: #475569;
     text-align: center;
-    padding: 40px;
-    font-size: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    padding: 35px;
+    font-size: 13px;
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
 }
 
-/* ==========================================================================
-   8. ESTILOS DE ANIMACIÓN CON JAVASCRIPT (Scroll Reveal)
-   ========================================================================== */
+/* ANIMACIÓN INTERACTIVE SCROLL REVEAL VIA SCRIPT */
 .animar-subir {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .animar-subir.activo {
@@ -549,12 +546,12 @@ footer {
     transform: translateY(0);
 }
 
-/* Responsive */
+/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
-    header { flex-direction: column; gap: 15px; padding: 20px; }
-    nav ul { flex-wrap: wrap; justify-content: center; gap: 10px; }
-    nav ul li { margin: 0 10px; }
-    .hero { padding: 100px 5%; }
-    .hero h1 { font-size: 32px; }
+    header { flex-direction: column; gap: 12px; padding: 15px; }
+    nav ul { flex-wrap: wrap; justify-content: center; gap: 8px; }
+    nav ul li { margin: 0 8px; }
+    .hero { padding: 110px 4%; }
+    .hero h1 { font-size: 30px; }
     .form-contacto { padding: 30px 20px; }
 }

@@ -1,90 +1,96 @@
 // ==========================================================================
-// MOTOR DE INTERACTIVIDAD Y ANIMACIONES AVANZADAS - DODITECH
+// MOTOR DE INTERACTIVIDAD INTERNA Y REVELACIÓN DE CONTENIDO - DODITECH
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. ANIMACIÓN SCROLL REVEAL (Aparición fluida de elementos)
-    const elementosAnimados = document.querySelectorAll('.animar-subir');
+    // 1. ALGORITMO INTERSECTION OBSERVER (Scroll Reveal Avanzado)
+    const elementosParaAnimar = document.querySelectorAll('.animar-subir');
 
-    const opcionesContenedor = {
+    const configuracionObservador = {
         root: null, 
-        threshold: 0.15, 
-        rootMargin: "0px 0px -50px 0px" 
+        threshold: 0.12, 
+        rootMargin: "0px 0px -40px 0px" 
     };
 
-    const observadorScroll = new IntersectionObserver((entradas, observador) => {
+    const observadorDePantalla = new IntersectionObserver((entradas, observador) => {
         entradas.forEach(entrada => {
             if (entrada.isIntersecting) {
                 entrada.target.classList.add('activo');
-                observador.unobserve(entrada.target);
+                observador.unobserve(entrada.target); // Detiene la observación una vez animado
             }
         });
-    }, opcionesContenedor);
+    }, configuracionObservador);
 
-    elementosAnimados.forEach(elemento => {
-        observadorScroll.observe(elemento);
+    elementosParaAnimar.forEach(elemento => {
+        observadorDePantalla.observe(elemento);
     });
 
-    // 2. CONTROLADOR E INTERACTIVIDAD DEL FORMULARIO DE CONTACTO
-    const formulario = document.getElementById('form-soporte');
+    // 2. CAPTURA Y PROCESAMIENTO DEL FORMULARIO DE CONTACTO PREMIUM
+    const formularioContacto = document.getElementById('form-soporte');
 
-    formulario.addEventListener('submit', (evento) => {
+    formularioContacto.addEventListener('submit', (evento) => {
         evento.preventDefault();
 
-        const nombre = document.getElementById('nombre').value.trim();
-        const correo = document.getElementById('correo').value.trim();
-        const mensaje = document.getElementById('mensaje').value.trim();
+        const clienteNombre = document.getElementById('nombre').value.trim();
+        const clienteCorreo = document.getElementById('correo').value.trim();
+        const clienteMensaje = document.getElementById('mensaje').value.trim();
 
-        if (nombre === '' || correo === '' || mensaje === '') {
-            alert('Por favor, ingresa todos los campos requeridos.');
+        if (clienteNombre === '' || clienteCorreo === '' || clienteMensaje === '') {
+            alert('Por favor, rellene todos los campos del formulario.');
             return;
         }
 
-        console.log('--- Registro de Interacción Exitoso ---');
-        console.log(`Prospecto: ${nombre} (${correo})`);
-        console.log(`Mensaje: ${mensaje}`);
+        // Simulación de trazabilidad interna en consola
+        console.log('--- NUEVO LEAD RECIBIDO EN DODITECH ---');
+        console.log(`Nombre: ${clienteNombre}`);
+        console.log(`Contacto: ${clienteCorreo}`);
+        console.log(`Consulta: ${clienteMensaje}`);
 
-        alert(`¡Excelente elección, ${nombre}! Tu mensaje ha sido enviado con éxito a Doditech. Me pondré en contacto contigo al correo electrónico ${correo} lo antes posible para revisar tu proyecto.`);
+        alert(`¡Excelente elección, ${clienteNombre}! Tu requerimiento ha sido enviado con éxito a DODITECH. Analizaremos tu caso de inmediato y nos comunicaremos contigo al correo electrónico ${clienteCorreo}.`);
         
-        formulario.reset();
+        formularioContacto.reset();
     });
 });
 
 // ==========================================================================
-// MOTOR DE CÁLCULO DINÁMICO EN VIVO - DODITECH LOTES
+// MOTOR MATEMÁTICO EN TIEMPO REAL - SIMULADOR DE LOTES DODITECH
 // ==========================================================================
 function calcularMargenVivo() {
     const costoLote = parseFloat(document.getElementById('sim-costo').value) || 0;
-    const piezas = parseInt(document.getElementById('sim-piezas').value) || 0;
-    const precioVentaUnitario = parseFloat(document.getElementById('sim-venta').value) || 0;
+    const piezasLote = parseInt(document.getElementById('sim-piezas').value) || 0;
+    const precioVentaU = parseFloat(document.getElementById('sim-venta').value) || 0;
 
-    const pantalla = document.getElementById('sim-pantalla');
-    const margenTxt = document.getElementById('demo-margen');
+    const visualPantalla = document.getElementById('sim-pantalla');
+    const visualMargen = document.getElementById('demo-margen');
 
-    if (costoLote <= 0 || piezas <= 0 || precioVentaUnitario <= 0) {
-        pantalla.innerHTML = "⚠️ Introduce valores mayores a 0";
-        margenTxt.innerText = "0.00%";
-        margenTxt.style.color = "#ef4444";
+    // Validación matemática preventiva
+    if (costoLote <= 0 || piezasLote <= 0 || precioVentaU <= 0) {
+        visualPantalla.innerHTML = "⚠️ Ingrese valores numéricos superiores a 0";
+        visualMargen.innerText = "0.00%";
+        visualMargen.style.color = "#ef4444";
         return;
     }
 
-    const costoUnitario = costoLote / piezas;
-    const ingresosTotales = precioVentaUnitario * piezas;
-    const gananciaNeta = ingresosTotales - costoLote;
-    const porcentajeMargen = (gananciaNeta / ingresosTotales) * 100;
+    // Fórmulas aritméticas de negocio
+    const costoPorUnidad = costoLote / piezasLote;
+    const ingresosBrutos = precioVentaU * piezasLote;
+    const utilidadNeta = ingresosBrutos - costoLote;
+    const porcentajeUtilidad = (utilidadNeta / ingresosBrutos) * 100;
 
-    const costoUnitarioFormato = costoUnitario.toFixed(2);
-    const gananciaFormato = gananciaNeta.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const margenFormato = porcentajeMargen.toFixed(2);
+    // Formateo bajo estándar regional de moneda
+    const costoUnidadFormato = costoPorUnidad.toFixed(2);
+    const utilidadFormato = utilidadNeta.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const porcentajeFormato = porcentajeUtilidad.toFixed(2);
 
-    if (gananciaNeta < 0) {
-        pantalla.innerHTML = `Costo u.: <strong>$${costoUnitarioFormato}</strong> | Pérdida: <strong style="color:#ef4444;">$${gananciaFormato}</strong>`;
-        margenTxt.innerText = `${margenFormato}%`;
-        margenTxt.style.color = "#ef4444";
+    // Renderizado reactivo según estado financiero (Ganancia o Pérdida)
+    if (utilidadNeta < 0) {
+        visualPantalla.innerHTML = `Costo u.: <strong>$${costoUnidadFormato}</strong> | Pérdida: <strong style="color:#ef4444;">$${utilidadFormato}</strong>`;
+        visualMargen.innerText = `${porcentajeFormato}%`;
+        visualMargen.style.color = "#ef4444";
     } else {
-        pantalla.innerHTML = `Costo u.: <strong>$${costoUnitarioFormato}</strong> | Ganancia: <strong style="color:#10b981;">+$${gananciaFormato}</strong>`;
-        margenTxt.innerText = `${margenFormato}%`;
-        margenTxt.style.color = "#10b981";
+        visualPantalla.innerHTML = `Costo u.: <strong>$${costoUnidadFormato}</strong> | Ganancia: <strong style="color:#10b981;">+$${utilidadFormato}</strong>`;
+        visualMargen.innerText = `${porcentajeFormato}%`;
+        visualMargen.style.color = "#10b981";
     }
 }
