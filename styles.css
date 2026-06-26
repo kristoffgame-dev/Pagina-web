@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    background-color: #0b0f19; /* Fondo general oscuro ultra moderno */
+    background-color: #0b0f19;
     color: #f1f5f9;
     line-height: 1.6;
 }
@@ -23,8 +23,8 @@ body {
    2. ENCABEZADO CON EFECTO CRISTAL (GLASSMORPHISM)
    ========================================================================== */
 header {
-    background-color: rgba(15, 23, 42, 0.75); /* Transparente */
-    backdrop-filter: blur(12px); /* Desenfoque del fondo */
+    background-color: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     color: #ffffff;
     display: flex;
@@ -90,7 +90,6 @@ nav ul li a:hover {
     overflow: hidden;
 }
 
-/* Esferas decorativas de luz de fondo */
 .hero-circles {
     position: absolute;
     top: 0;
@@ -122,7 +121,7 @@ nav ul li a:hover {
     margin-bottom: 25px;
     background: linear-gradient(to right, #ffffff, #94a3b8);
     -webkit-background-clip: text;
-    background-clip: text; /* <-- Esta es la propiedad estándar que te pide para compatibilidad */
+    background-clip: text; /* Corregido para evitar warnings */
     -webkit-text-fill-color: transparent;
 }
 
@@ -297,151 +296,6 @@ nav ul li a:hover {
 }
 
 /* ==========================================================================
-   6. SECCIÓN FORMULARIO INTERACTIVO (CRISTAL TEMPLADO)
-   ========================================================================== */
-.support {
-    position: relative;
-    padding: 100px 8%;
-    background-color: #0f172a;
-    text-align: center;
-    overflow: hidden;
-}
-
-.bg-gradient-decoration {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: #38bdf8;
-    filter: blur(100px);
-    opacity: 0.1;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.form-contacto {
-    position: relative;
-    z-index: 5;
-    max-width: 650px;
-    margin: 50px auto 0 auto;
-    background: rgba(255, 255, 255, 0.02); /* Súper transparente */
-    backdrop-filter: blur(16px); /* El cristal */
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-    text-align: left;
-}
-
-.form-contacto label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-    color: #cbd5e1;
-    font-size: 14px;
-}
-
-.form-contacto input, .form-contacto textarea {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    background-color: rgba(15, 23, 42, 0.6);
-    font-size: 15px;
-    color: white;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.form-contacto input:focus, .form-contacto textarea:focus {
-    outline: none;
-    border-color: #38bdf8;
-    background-color: rgba(15, 23, 42, 0.9);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
-}
-
-.btn-enviar {
-    width: 100%;
-    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
-    color: #0f172a;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2);
-}
-
-.btn-enviar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
-    color: white;
-}
-
-/* ==========================================================================
-   7. BOTÓN FLOTANTE DE WHATSAPP
-   ========================================================================== */
-.btn-whatsapp {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #25d366;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    z-index: 9999;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Rebote elástico */
-}
-
-.btn-whatsapp:hover {
-    transform: scale(1.15) rotate(5deg);
-    background-color: #128c7e;
-}
-
-footer {
-    background-color: #0b0f19;
-    color: #64748b;
-    text-align: center;
-    padding: 40px;
-    font-size: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.02);
-}
-
-/* ==========================================================================
-   8. ESTILOS DE ANIMACIÓN CON JAVASCRIPT (Scroll Reveal)
-   ========================================================================== */
-.animar-subir {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.animar-subir.activo {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    header { flex-direction: column; gap: 15px; padding: 20px; }
-    nav ul { flex-wrap: wrap; justify-content: center; gap: 10px; }
-    nav ul li { margin: 0 10px; }
-    .hero { padding: 100px 5%; }
-    .hero h1 { font-size: 32px; }
-    .form-contacto { padding: 30px 20px; }
-}
-/* ==========================================================================
    INTERACTIVIDAD: SIMULADOR DE APLICACIONES DODITECH
    ========================================================================== */
 .demo-container {
@@ -526,45 +380,6 @@ footer {
     min-height: 54px;
 }
 
-.demo-buttons-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.btn-demo {
-    background-color: rgba(56, 189, 248, 0.1);
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 8px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-demo:hover {
-    background-color: #38bdf8;
-    color: #0f172a;
-}
-
-.btn-demo.clear {
-    grid-column: span 2;
-    background-color: rgba(239, 68, 68, 0.05);
-    color: #f87171;
-    border-color: rgba(239, 68, 68, 0.1);
-}
-
-.btn-demo.clear:hover {
-    background-color: #ef4444;
-    color: white;
-}
-
-/* ==========================================================================
-   ESTILOS COMPLEMENTARIOS PARA INPUTS EN EL SIMULADOR
-   ========================================================================== */
 .sim-input-group {
     display: flex;
     justify-content: space-between;
@@ -576,7 +391,7 @@ footer {
     font-size: 12px;
     color: #94a3b8;
     font-family: monospace;
-    margin-bottom: 0 !important; /* Quita márgenes heredados */
+    margin-bottom: 0 !important;
 }
 
 .sim-input-group input {
@@ -589,7 +404,7 @@ footer {
     font-family: monospace;
     font-size: 13px;
     text-align: right;
-    margin-bottom: 0 !important; /* Quita márgenes heredados del formulario original */
+    margin-bottom: 0 !important;
 }
 
 .sim-input-group input:focus {
@@ -598,7 +413,148 @@ footer {
     box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
 }
 
-/* Ajuste fino para la pantalla de resultados rápidos */
-.sim-screen strong {
-    color: #ffffff;
+/* ==========================================================================
+   6. SECCIÓN FORMULARIO INTERACTIVO (CRISTAL TEMPLADO)
+   ========================================================================== */
+.support {
+    position: relative;
+    padding: 100px 8%;
+    background-color: #0f172a;
+    text-align: center;
+    overflow: hidden;
+}
+
+.bg-gradient-decoration {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: #38bdf8;
+    filter: blur(100px);
+    opacity: 0.1;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.form-contacto {
+    position: relative;
+    z-index: 5;
+    max-width: 650px;
+    margin: 50px auto 0 auto;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    text-align: left;
+}
+
+.form-contacto label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.form-contacto input, .form-contacto textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background-color: rgba(15, 23, 42, 0.6);
+    font-size: 15px;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-contacto input:focus, .form-contacto textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+    background-color: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+}
+
+.btn-enviar {
+    width: 100%;
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    color: #0f172a;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2);
+}
+
+.btn-enviar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+    color: white;
+}
+
+/* ==========================================================================
+   7. BOTÓN FLOTANTE DE WHATSAPP
+   ========================================================================== */
+.btn-whatsapp {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.15) rotate(5deg);
+    background-color: #128c7e;
+}
+
+footer {
+    background-color: #0b0f19;
+    color: #64748b;
+    text-align: center;
+    padding: 40px;
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+/* ==========================================================================
+   8. ESTILOS DE ANIMACIÓN CON JAVASCRIPT (Scroll Reveal)
+   ========================================================================== */
+.animar-subir {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animar-subir.activo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header { flex-direction: column; gap: 15px; padding: 20px; }
+    nav ul { flex-wrap: wrap; justify-content: center; gap: 10px; }
+    nav ul li { margin: 0 10px; }
+    .hero { padding: 100px 5%; }
+    .hero h1 { font-size: 32px; }
+    .form-contacto { padding: 30px 20px; }
 }

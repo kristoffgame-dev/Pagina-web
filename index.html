@@ -1,448 +1,160 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DODITECH | Software Premium & Páginas Web Profesionales</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                            900: '#4c1d95',
-                        },
-                        darkBg: '#09090b',
-                        darkCard: '#18181b',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts: Inter & Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #09090b;
-        }
-        h1, h2, h3, .font-display {
-            font-family: 'Outfit', sans-serif;
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #121214;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3f3f46;
-        }
-        /* Custom animations */
-        @keyframes pulse-slow {
-            0%, 100% { transform: scale(1); opacity: 0.4; }
-            50% { transform: scale(1.08); opacity: 0.6; }
-        }
-        .animate-pulse-slow {
-            animation: pulse-slow 8s infinite ease-in-out;
-        }
-    </style>
+    <title>Doditech - Soluciones Digitales E Interactivas</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="text-zinc-100 overflow-x-hidden">
+<body>
 
-    <!-- Glowing Background blobs -->
-    <div class="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
-    <div class="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
-    <div class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-fuchsia-600/10 rounded-full blur-[100px] pointer-events-none animate-pulse-slow" style="animation-delay: 4s;"></div>
-
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-darkBg/80 backdrop-blur-md border-b border-zinc-800/80 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="flex items-center space-x-2">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 to-blue-500 flex items-center justify-center font-display font-bold text-white text-xl shadow-lg shadow-violet-500/20">
-                            DT
-                        </div>
-                        <span class="text-2xl font-bold font-display tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-100 to-zinc-400">
-                            DODITECH<span class="text-violet-500">.</span>
-                        </span>
-                    </a>
-                </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#servicios" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Servicios</a>
-                    <a href="#portafolio" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Portafolio</a>
-                    <a href="#tecnologias" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Tecnologías</a>
-                    <a href="#calculadora" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Cotizador</a>
-                    <a href="#contacto" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Contacto</a>
-                </div>
-
-                <!-- CTA Button -->
-                <div class="hidden md:block">
-                    <a href="#calculadora" class="relative group inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-xl group bg-gradient-to-br from-violet-600 to-blue-500 group-hover:from-violet-600 group-hover:to-blue-500 text-white focus:ring-4 focus:outline-none focus:ring-blue-800">
-                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-zinc-950 rounded-xl group-hover:bg-opacity-0">
-                            Iniciar Proyecto
-                        </span>
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-zinc-400 hover:text-white focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+    <header>
+        <div class="logo">
+            <h2>Doditech</h2>
         </div>
-
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-zinc-950 border-b border-zinc-800 px-4 pt-2 pb-6 space-y-3">
-            <a href="#servicios" class="block text-base font-medium text-zinc-400 hover:text-white py-2">Servicios</a>
-            <a href="#portafolio" class="block text-base font-medium text-zinc-400 hover:text-white py-2">Portafolio</a>
-            <a href="#tecnologias" class="block text-base font-medium text-zinc-400 hover:text-white py-2">Tecnologías</a>
-            <a href="#calculadora" class="block text-base font-medium text-zinc-400 hover:text-white py-2">Cotizador</a>
-            <a href="#contacto" class="block text-base font-medium text-zinc-400 hover:text-white py-2">Contacto</a>
-            <div class="pt-4">
-                <a href="#calculadora" class="w-full text-center block px-5 py-3 bg-gradient-to-r from-violet-600 to-blue-500 rounded-xl text-white font-medium hover:from-violet-700 hover:to-blue-600 transition-colors">
-                    Iniciar Proyecto
-                </a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <!-- Badge -->
-            <div class="inline-flex items-center space-x-2 bg-violet-500/10 border border-violet-500/20 px-3 py-1.5 rounded-full mb-6">
-                <span class="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
-                <span class="text-xs font-semibold text-violet-300 uppercase tracking-wider">Agencia Digital Premium</span>
-            </div>
-
-            <!-- Main Heading -->
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-white mb-6 leading-tight">
-                Forjamos Software que <br class="hidden sm:inline">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-400">
-                    Define el Futuro Digital
-                </span>
-            </h1>
-
-            <!-- Subtitle -->
-            <p class="max-w-2xl mx-auto text-base sm:text-lg text-zinc-400 mb-10">
-                Creamos aplicaciones a medida, software escalable de alta gama y sitios web profesionales con diseño de vanguardia que impulsan el crecimiento real de tu negocio.
-            </p>
-
-            <!-- CTA Actions -->
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16">
-                <a href="#calculadora" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 text-white font-medium shadow-lg shadow-violet-600/20 hover:from-violet-700 hover:to-blue-600 hover:shadow-violet-600/30 transition-all transform hover:-translate-y-0.5 text-center">
-                    Cotizar Proyecto Ahora
-                </a>
-                <a href="#portafolio" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 font-medium hover:bg-zinc-800 hover:text-white transition-all text-center">
-                    Ver Portafolio
-                </a>
-            </div>
-
-            <!-- LIVE INTERACTIVE SOFTWARE DEMO SHOWCASE -->
-            <div class="relative mx-auto max-w-5xl rounded-3xl border border-zinc-800/80 bg-zinc-900/30 p-1 backdrop-blur-xl shadow-2xl">
-                <!-- Top Window Bar -->
-                <div class="rounded-t-2xl border-b border-zinc-800 bg-zinc-950 p-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-                    <div class="flex items-center space-x-3">
-                        <div class="flex space-x-1.5">
-                            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
-                            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
-                            <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
-                        </div>
-                        <span class="text-xs text-zinc-500 font-mono">|</span>
-                        <div class="flex items-center space-x-2 bg-zinc-900/80 px-3 py-1 rounded-md border border-zinc-800/80">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span class="text-xs text-zinc-300 font-semibold uppercase tracking-wider font-display">Demostración en Vivo</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2 bg-violet-950/40 border border-violet-500/30 px-3 py-1 rounded-lg">
-                        <span class="text-[11px] text-violet-300 font-semibold uppercase tracking-wider">Demo: Simulador de Ganancias y Pérdidas 📊</span>
-                    </div>
-                </div>
-
-                <div class="p-6 sm:p-8 bg-zinc-950/40 rounded-b-3xl text-left grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <!-- Left: Control Panel (Sliders) -->
-                    <div class="lg:col-span-5 space-y-6 bg-zinc-900/60 p-6 rounded-2xl border border-zinc-800">
-                        <div class="border-b border-zinc-800/80 pb-3">
-                            <h4 class="text-base font-bold font-display text-white">Consola de Control del Negocio</h4>
-                            <p class="text-xs text-zinc-500">Ajusta los controles deslizantes para ver tus métricas financieras recalculadas al instante.</p>
-                        </div>
-
-                        <!-- 1. Inversión -->
-                        <div>
-                            <div class="flex justify-between items-center mb-1.5">
-                                <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider">📥 Inversión Inicial</label>
-                                <span id="val-inversion" class="text-sm font-extrabold text-blue-400 font-mono">$10,000 USD</span>
-                            </div>
-                            <input id="slide-inversion" type="range" min="1000" max="50000" step="500" value="10000" oninput="updateDemoApp()" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
-                            <div class="flex justify-between text-[10px] text-zinc-600 font-mono mt-1">
-                                <span>$1k</span>
-                                <span>$50k Max</span>
-                            </div>
-                        </div>
-
-                        <!-- 2. Ganancias Brutas -->
-                        <div>
-                            <div class="flex justify-between items-center mb-1.5">
-                                <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider">💰 Ventas / Ganancias Brutas</label>
-                                <span id="val-ventas" class="text-sm font-extrabold text-emerald-400 font-mono">$25,000 USD</span>
-                            </div>
-                            <input id="slide-ventas" type="range" min="1000" max="100000" step="1000" value="25000" oninput="updateDemoApp()" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
-                            <div class="flex justify-between text-[10px] text-zinc-600 font-mono mt-1">
-                                <span>$1k</span>
-                                <span>$100k Max</span>
-                            </div>
-                        </div>
-
-                        <!-- 3. Mermas -->
-                        <div>
-                            <div class="flex justify-between items-center mb-1.5">
-                                <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider">⚠️ Merma / Pérdidas</label>
-                                <span id="val-merma" class="text-sm font-extrabold text-rose-400 font-mono">$1,500 USD</span>
-                            </div>
-                            <input id="slide-merma" type="range" min="0" max="15000" step="100" value="1500" oninput="updateDemoApp()" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-rose-500">
-                            <div class="flex justify-between text-[10px] text-zinc-600 font-mono mt-1">
-                                <span>$0 (Sin Merma)</span>
-                                <span>$15k Max</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right: Live Graphics Screen -->
-                    <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
-                        <!-- Dashboard Cards Grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <!-- Card 1: Net profit -->
-                            <div class="p-5 bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-2xl relative overflow-hidden">
-                                <span class="absolute top-2 right-3 text-2xl" id="icon-profit">💸</span>
-                                <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Ganancia Neta Real</p>
-                                <p id="result-neta" class="text-3xl font-extrabold font-display tracking-tight text-emerald-400 mt-2 font-mono">$13,500</p>
-                                <p class="text-[11px] text-zinc-400 mt-1" id="subtext-neta">Ventas totales menos inversión y mermas.</p>
-                            </div>
-
-                            <!-- Card 2: ROI -->
-                            <div class="p-5 bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-2xl relative overflow-hidden">
-                                <span class="absolute top-2 right-3 text-2xl">📈</span>
-                                <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Retorno de Inversión (ROI)</p>
-                                <p id="result-roi" class="text-3xl font-extrabold font-display tracking-tight text-violet-400 mt-2 font-mono">135.0%</p>
-                                <p class="text-[11px] text-zinc-400 mt-1">Eficiencia del capital invertido.</p>
-                            </div>
-                        </div>
-
-                        <!-- Business Health Alert Banner -->
-                        <div id="demo-status-card" class="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 flex items-center space-x-3 transition-all duration-300">
-                            <div id="demo-status-icon" class="text-2xl">🚀</div>
-                            <div>
-                                <h5 id="demo-status-title" class="text-sm font-bold text-emerald-400">Excelente Rendimiento</h5>
-                                <p id="demo-status-desc" class="text-xs text-zinc-400 mt-0.5">La ganancia neta es muy saludable y las mermas están bajo control (6.0% de las ventas).</p>
-                            </div>
-                        </div>
-
-                        <!-- Comparative Dynamic Graph Bar -->
-                        <div class="bg-zinc-900/40 p-5 rounded-2xl border border-zinc-800/80">
-                            <div class="flex justify-between items-center mb-3">
-                                <span class="text-xs font-semibold text-zinc-400">Distribución de Recursos</span>
-                                <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded font-mono">Visualización Proporcional</span>
-                            </div>
-                            <!-- Bar Stack -->
-                            <div class="w-full bg-zinc-950 h-5 rounded-full flex overflow-hidden border border-zinc-800">
-                                <div id="bar-inversion" class="bg-blue-500 h-full transition-all duration-300" style="width: 40%" title="Inversión"></div>
-                                <div id="bar-merma" class="bg-rose-500 h-full transition-all duration-300" style="width: 6%" title="Mermas"></div>
-                                <div id="bar-neta" class="bg-emerald-500 h-full transition-all duration-300" style="width: 54%" title="Ganancia Neta"></div>
-                            </div>
-                            <div class="flex flex-wrap gap-4 mt-3 text-[11px] text-zinc-400">
-                                <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-blue-500 mr-1.5"></span> Inversión (<span id="lbl-pct-inversion">40%</span>)</div>
-                                <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-rose-500 mr-1.5"></span> Merma (<span id="lbl-pct-merma">6%</span>)</div>
-                                <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-emerald-500 mr-1.5"></span> Ganancia Neta (<span id="lbl-pct-neta">54%</span>)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#caracteristicas">Características</a></li>
+                <li><a href="#para-quien">Servicios</a></li>
+                <li><a href="#soporte">Contacto</a></li>
+                <li><a href="#soporte" class="btn-nav">Adquirir Software</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Social Proof / Logos -->
-    <section class="py-12 border-y border-zinc-800/50 bg-zinc-950/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-xs font-semibold tracking-wider text-zinc-500 uppercase mb-8">
-                Tecnología de punta respaldando marcas competitivas
-            </p>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-                <span class="text-lg font-bold font-display text-zinc-300">NEXUS LABS</span>
-                <span class="text-lg font-bold font-display text-zinc-300">VERTEX CO.</span>
-                <span class="text-lg font-bold font-display text-zinc-300">APEX ENGINE</span>
-                <span class="text-lg font-bold font-display text-zinc-300">SPHERE SYSTEMS</span>
-                <span class="text-lg font-bold font-display text-zinc-300">ELEVATE DIGITAL</span>
+    <section id="inicio" class="hero">
+        <div class="hero-circles">
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Impulsa tu negocio con soluciones digitales profesionales</h1>
+            <p>Gestiona inventarios con márgenes reales, automatiza tu consultorio o estrena una página web profesional de alta calidad. En Doditech creamos la tecnología del futuro para tu proyecto.</p>
+            <div class="hero-buttons">
+                <a href="#soporte" class="btn-primario">Comprar Licencia</a>
+                <a href="#para-quien" class="btn-secundario">Ver Servicios</a>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="servicios" class="py-24 md:py-32 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <h2 class="text-xs font-bold uppercase tracking-widest text-violet-500 mb-3">Qué Ofrecemos</h2>
-                <p class="text-3xl sm:text-5xl font-extrabold font-display text-white tracking-tight mb-4">
-                    Soluciones de Software y Web a la Medida
-                </p>
-                <p class="text-zinc-400">
-                    Combinamos ingeniería de software robusta con diseños visuales cautivadores para entregar productos digitales incomparables.
-                </p>
+    <section id="caracteristicas" class="features">
+        <h2 class="animar-subir">¿Por qué elegir las soluciones de Doditech?</h2>
+        <div class="grid-features">
+            <div class="card animar-subir">
+                <h3>Base de Datos Blindada</h3>
+                <p>Tus datos de ventas, inventarios o expedientes médicos se almacenan de forma local y segura, garantizando total privacidad sin depender de internet.</p>
             </div>
-
-            <!-- Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="group bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/40 p-8 rounded-2xl transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-500/5">
-                    <div class="w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center text-violet-400 mb-6 group-hover:bg-violet-500 group-hover:text-white transition-all duration-300">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold font-display text-white mb-3">Desarrollo Web Premium</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">
-                        Páginas web corporativas de ultra-alto rendimiento, sitios dinámicos y experiencias de e-commerce veloces que convierten visitantes en clientes.
-                    </p>
-                    <ul class="text-xs text-zinc-500 space-y-2 mt-4">
-                        <li class="flex items-center"><span class="text-violet-500 mr-2">✓</span> Optimización SEO Avanzada</li>
-                        <li class="flex items-center"><span class="text-violet-500 mr-2">✓</span> Diseño Totalmente Adaptativo (Mobile-First)</li>
-                        <li class="flex items-center"><span class="text-violet-500 mr-2">✓</span> CMS Amigables & Autoadministrables</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="group bg-zinc-900/50 border border-zinc-800 hover:border-blue-500/40 p-8 rounded-2xl transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/5">
-                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold font-display text-white mb-3">Software a la Medida (SaaS)</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">
-                        Plataformas digitales complejas, intranets, ERPs y soluciones corporativas escalables construidas específicamente para tus operaciones comerciales.
-                    </p>
-                    <ul class="text-xs text-zinc-500 space-y-2 mt-4">
-                        <li class="flex items-center"><span class="text-blue-500 mr-2">✓</span> Integración de APIs complejas</li>
-                        <li class="flex items-center"><span class="text-blue-500 mr-2">✓</span> Arquitectura Cloud (AWS, Azure)</li>
-                        <li class="flex items-center"><span class="text-blue-500 mr-2">✓</span> Base de datos robustas & Seguridad SSL</li>
-                    </ul>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="group bg-zinc-900/50 border border-zinc-800 hover:border-fuchsia-500/40 p-8 rounded-2xl transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-fuchsia-500/5">
-                    <div class="w-12 h-12 bg-fuchsia-500/10 rounded-xl flex items-center justify-center text-fuchsia-400 mb-6 group-hover:bg-fuchsia-500 group-hover:text-white transition-all duration-300">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold font-display text-white mb-3">Aplicaciones Móviles</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">
-                        Aplicaciones nativas e híbridas para iOS y Android con una experiencia de usuario (UX) excepcional y animaciones fluidas e intuitivas.
-                    </p>
-                    <ul class="text-xs text-zinc-500 space-y-2 mt-4">
-                        <li class="flex items-center"><span class="text-fuchsia-500 mr-2">✓</span> Desarrollo multiplataforma eficiente</li>
-                        <li class="flex items-center"><span class="text-fuchsia-500 mr-2">✓</span> Publicación garantizada en App Store & Play Store</li>
-                        <li class="flex items-center"><span class="text-fuchsia-500 mr-2">✓</span> Notificaciones push personalizadas</li>
-                    </ul>
-                </div>
+            <div class="card animar-subir">
+                <h3>Márgenes y Control Exacto</h3>
+                <p>Algoritmos optimizados para calcular el beneficio neto de tus productos al instante y herramientas diseñadas para la alta productividad.</p>
+            </div>
+            <div class="card animar-subir">
+                <h3>Soporte Directo</h3>
+                <p>Atención personalizada, rápida y sin intermediarios, directamente con el desarrollador encargado de tu proyecto.</p>
             </div>
         </div>
     </section>
 
-    <!-- Filterable Portfolio Section -->
-    <section id="portafolio" class="py-24 md:py-32 bg-zinc-950/60 border-y border-zinc-800/60">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
-                <div>
-                    <h2 class="text-xs font-bold uppercase tracking-widest text-violet-500 mb-3">Nuestra Trayectoria</h2>
-                    <p class="text-3xl sm:text-5xl font-extrabold font-display text-white tracking-tight">
-                        Proyectos Destacados
-                    </p>
-                </div>
-                <!-- Filter Buttons -->
-                <div class="flex flex-wrap gap-2 mt-6 md:mt-0">
-                    <button onclick="filterPortfolio('all')" id="btn-all" class="portfolio-filter-btn px-4 py-2 text-sm font-medium rounded-xl bg-violet-600 text-white transition-all">Todos</button>
-                    <button onclick="filterPortfolio('web')" id="btn-web" class="portfolio-filter-btn px-4 py-2 text-sm font-medium rounded-xl bg-zinc-900 text-zinc-400 hover:text-white transition-all">Páginas Web</button>
-                    <button onclick="filterPortfolio('software')" id="btn-software" class="portfolio-filter-btn px-4 py-2 text-sm font-medium rounded-xl bg-zinc-900 text-zinc-400 hover:text-white transition-all">Software SaaS</button>
-                    <button onclick="filterPortfolio('mobile')" id="btn-mobile" class="portfolio-filter-btn px-4 py-2 text-sm font-medium rounded-xl bg-zinc-900 text-zinc-400 hover:text-white transition-all">Apps Móviles</button>
-                </div>
+    <section id="para-quien" class="for-who">
+        <h2 class="animar-subir">Servicios tecnológicos para cualquier necesidad</h2>
+        <p class="subtitulo animar-subir">No importa el tamaño o el giro de tu proyecto, nos adaptamos exactamente a lo que estás buscando.</p>
+        
+        <div class="grid-for-who">
+            <div class="box-target animar-subir">
+                <div class="icon-box">🛍️</div>
+                <h3>Comercios y Tiendas</h3>
+                <p>Ideal para tiendas de ropa, abarrotes, tecnología, papelerías o refaccionarias que necesitan saber exactamente qué hay en existencia y evitar pérdidas.</p>
             </div>
 
-            <!-- Portfolio Grid -->
-            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="box-target animar-subir demo-container">
+                <div class="icon-box">📦</div>
+                <h3>Emprendedores por Lotes</h3>
+                <p>Prueba nuestro algoritmo matemático. Introduce tus datos reales y calcula tu margen al instante.</p>
                 
-                <!-- ======================================================== -->
-                <!-- PROYECTO 1: DEMOSTRACIÓN DE APP DE FINANZAS PARA EMPRENDER -->
-                <!-- ======================================================== -->
-                <div class="portfolio-item group bg-zinc-900/30 border border-violet-500/30 rounded-2xl overflow-hidden transition-all duration-500 hover:border-violet-500" data-category="software">
-                    <div class="aspect-video bg-zinc-800/50 relative overflow-hidden flex items-center justify-center">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-violet-900/40 to-black/40 z-10"></div>
-                        
-                        <div class="z-20 text-center p-4">
-                            <span class="inline-block bg-violet-600/20 border border-violet-500/40 text-violet-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
-                                Demo Disponible en el Hero ⚡
-                            </span>
-                            <div class="text-3xl mb-1">💰📊</div>
+                <div class="app-simulator">
+                    <div class="simulator-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="simulator-title">Doditech Lotes Engine v2.0</span>
+                    </div>
+                    <div class="simulator-body">
+                        <div class="sim-input-group">
+                            <label>Costo del Lote ($):</label>
+                            <input type="number" id="sim-costo" value="5000" oninput="calcularMargenVivo()">
                         </div>
-                        
-                        <span class="absolute bottom-3 left-3 bg-zinc-950/80 text-zinc-300 text-xs px-3 py-1 rounded-full border border-zinc-800 z-20">Software / SaaS</span>
-                    </div>
-                    <div class="p-6">
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">Demostración Interactiva</span>
-                        <h4 class="text-xl font-bold font-display text-white mt-2 mb-2">Calculadora de Rentabilidad Comercial</h4>
-                        <p class="text-zinc-400 text-sm mb-4">Herramienta intuitiva para pymes y emprendedores que consolida ganancias, calcula mermas del inventario y mide el retorno de inversión del capital de arranque en tiempo real.</p>
-                        <a href="#" class="text-sm font-semibold text-violet-400 hover:text-violet-300 inline-flex items-center group-hover:translate-x-1 transition-transform">Probar Demo arriba <span class="ml-1">↑</span></a>
-                    </div>
-                </div>
-                <!-- ======================================================== -->
-                <!-- FIN PROYECTO 1 -->
-                <!-- ======================================================== -->
+                        <div class="sim-input-group">
+                            <label>Total de Piezas:</label>
+                            <input type="number" id="sim-piezas" value="100" oninput="calcularMargenVivo()">
+                        </div>
+                        <div class="sim-input-group">
+                            <label>Precio de Venta c/u ($):</label>
+                            <input type="number" id="sim-venta" value="85" oninput="calcularMargenVivo()">
+                        </div>
 
-                <!-- Project 2 (Software) -->
-                <div class="portfolio-item group bg-zinc-900/30 border border-zinc-800/80 rounded-2xl overflow-hidden transition-all duration-500 hover:border-zinc-700/80" data-category="software">
-                    <div class="aspect-video bg-zinc-800 relative overflow-hidden flex items-center justify-center">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/40 to-black/40 z-10"></div>
-                        <svg class="w-20 h-20 text-blue-500/40 group-hover:scale-110 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span class="absolute bottom-3 left-3 bg-zinc-950/80 text-zinc-300 text-xs px-3 py-1 rounded-full border border-zinc-800 z-20">Software SaaS</span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold font-display text-white mb-2">Financely Analytics</h4>
-                        <p class="text-zinc-400 text-sm mb-4">Pla</p>
+                        <div class="sim-screen" id="sim-pantalla">
+                            Costo u.: <strong>$50.00</strong> | Ganancia: <strong>+$3,500.00</strong>
+                        </div>
+                        <p class="sim-text highlight">Margen de Utilidad: <span id="demo-margen">41.18%</span></p>
                     </div>
                 </div>
+            </div>
+
+            <div class="box-target animar-subir">
+                <div class="icon-box">🛠️</div>
+                <h3>Talleres y Servicios</h3>
+                <p>Perfecto para administrar los insumos, refacciones o herramientas que utilizas en tu día a día, manteniendo tus costos bajo control.</p>
+            </div>
+
+            <div class="box-target animar-subir">
+                <div class="icon-box">🩺</div>
+                <h3>Consultorios y Salud</h3>
+                <p>Optimizado para médicos, dentistas y clínicas que buscan digitalizar el control de sus pacientes, agendar citas y administrar el inventario de medicamentos de forma segura.</p>
+            </div>
+
+            <div class="box-target animar-subir">
+                <div class="icon-box">🌐</div>
+                <h3>Páginas Web Profesionales</h3>
+                <p>¿Tu negocio aún no está en internet? Diseñamos y construimos tu sitio web profesional, moderno, responsivo y optimizado a la medida para atraer más clientes.</p>
+            </div>
+
+            <div class="box-target especial animar-subir">
+                <div class="icon-box">🚀</div>
+                <h3>¿Tienes otra idea en mente?</h3>
+                <p>Nuestras soluciones en desarrollo de software y entorno web son completamente versátiles. Si necesitas orden, control o presencia digital, <strong>¡estamos listos!</strong></p>
+                <a href="#soporte" class="btn-consulta">Preguntar por mi caso</a>
             </div>
         </div>
     </section>
 
+    <section id="soporte" class="support">
+        <div class="bg-gradient-decoration"></div>
+        <h2 class="animar-subir">¿Necesitas asesoría? Contáctanos</h2>
+        <p class="animar-subir">Si tienes dudas sobre las licencias de software o requieres la cotización de una página web, déjame un mensaje.</p>
+        
+        <form id="form-soporte" class="form-contacto animar-subir">
+            <label for="nombre">Nombre Completo:</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" name="correo" required placeholder="ejemplo@correo.com">
+
+            <label for="mensaje">¿En qué podemos ayudarte?:</label>
+            <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escribe tu duda, el tipo de software que necesitas..."></textarea>
+
+            <button type="submit" class="btn-enviar">Enviar Mensaje a Doditech</button>
+        </form>
+    </section>
+
+    <a href="https://wa.me/520000000000?text=%C2%A1Hola%2C%20Doditech%21%20Vi%20tu%20p%C3%A1gina%20web%20y%20me%20interesa%20m%C3%A1s%20informaci%C3%B3n." class="btn-whatsapp" target="_blank">
+        <span>WA</span>
+    </a>
+
+    <footer>
+        <p>&copy; 2026 Doditech. Todos los derechos reservados. Creado por el Autor.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
