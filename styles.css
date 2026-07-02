@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. RESETEO, VARIABLES Y ANIMACIONES DE INTERFAZ
+   1. RESETEO, VARIABLES Y CONFIGURACIÓN BASE
    ========================================================================== */
 * {
     margin: 0;
@@ -17,96 +17,102 @@ body {
     background-color: #070a13;
     color: #f1f5f9;
     line-height: 1.6;
+    padding-top: 95px; /* Evita que el encabezado fijo tape el contenido superior */
 }
 
+/* Animación de pulso sutil para elementos de marca */
 @keyframes pulseGlow {
     0% { text-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
-    50% { text-shadow: 0 0 25px rgba(56, 189, 248, 0.6); }
+    50% { text-shadow: 0 0 25px rgba(56, 189, 248, 0.5); }
     100% { text-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
 }
 
 /* ==========================================================================
-   2. BARRA DE NAVEGACIÓN ENCAPSULADA CON CRISTAL
+   2. ENCABEZADO Y NAVEGACIÓN (LOGO MAXIMIZADO Y MENÚ LIMPIO)
    ========================================================================== */
 header {
-    background-color: rgba(11, 17, 32, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 18px 8%;
+    background: rgba(7, 10, 19, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 8%;
-    position: sticky;
-    top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .logo img {
-    height: 60px;
+    height: 55px; /* Tamaño grande y de alta visibilidad */
     width: auto;
     display: block;
-    filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.65));
+    filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.45));
 }
 
 .logo-text {
+    font-size: 26px; /* Tipografía imponente para la marca */
     font-weight: 800;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     color: #38bdf8;
     margin-bottom: 0;
     animation: pulseGlow 3s infinite ease-in-out;
 }
 
 nav ul {
-    list-style: none;
     display: flex;
+    list-style: none;
     align-items: center;
-}
-
-nav ul li {
-    margin-left: 25px;
+    gap: 35px;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li a {
     color: #94a3b8;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #38bdf8;
+    color: #ffffff;
 }
 
+/* ENLACE DE NAVEGACIÓN TOTALMENTE LIMPIO (SIN FONDO VERDE NI SOMBRAS) */
 .btn-nav {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white !important;
-    padding: 8px 18px;
-    border-radius: 6px;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
-    transition: all 0.3s ease !important;
+    background: none !important;
+    box-shadow: none !important;
+    color: #38bdf8 !important; /* Resalta elegantemente en el azul de la marca */
+    font-weight: 600 !important;
+    padding: 0 !important;
+    border: none !important;
+    transition: color 0.3s ease !important;
 }
 
 .btn-nav:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+    color: #ffffff !important; /* Pasa a blanco brillante al posicionarse sobre él */
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 /* ==========================================================================
-   3. SECCIÓN HERO DE ALTA PROFUNDIDAD VISUAL
+   3. SECCIÓN HERO (ENTORNO DE PRESENTACIÓN INMERSIVO)
    ========================================================================== */
 .hero {
     position: relative;
     background: radial-gradient(circle at 50% 40%, #151f32 0%, #070a13 100%);
-    padding: 150px 8%;
+    padding: 120px 8%;
     text-align: center;
     overflow: hidden;
 }
@@ -205,7 +211,7 @@ nav ul li a:hover {
 }
 
 /* ==========================================================================
-   4. SECCIÓN TARJETAS CON EFECTO MAGNÉTICO
+   4. SECCIÓN CARACTERÍSTICAS (TARJETAS CON REACCIÓN DINÁMICA)
    ========================================================================== */
 .features {
     padding: 90px 8%;
@@ -257,7 +263,7 @@ nav ul li a:hover {
 }
 
 /* ==========================================================================
-   5. SECCIÓN SERVICIOS Y PANEL INTERACTIVO DE SIMULACIÓN
+   5. SECCIÓN SERVICIOS Y SIMULADOR INTERACTIVO LIVE
    ========================================================================== */
 .for-who {
     padding: 90px 8%;
@@ -331,7 +337,7 @@ nav ul li a:hover {
     transform: scale(1.04);
 }
 
-/* INTERACTIVIDAD AVANZADA ENGINE V2 */
+/* INTERACTIVIDAD DEL SIMULADOR DE LOTES (Estilo Computadora) */
 .demo-container {
     display: flex;
     flex-direction: column;
@@ -379,7 +385,7 @@ nav ul li a:hover {
     margin-bottom: 10px;
 }
 
-.sim-input-group label { font-size: 11.5px; color: #64748b; font-family: monospace; margin-bottom: 0 !important; }
+.sim-input-group label { font-size: 11.5px; color: #64748b; font-family: monospace; margin-bottom: 0; }
 
 .sim-input-group input {
     width: 90px;
@@ -391,7 +397,7 @@ nav ul li a:hover {
     font-family: monospace;
     font-size: 12.5px;
     text-align: right;
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
 }
 
 .sim-input-group input:focus {
@@ -422,7 +428,7 @@ nav ul li a:hover {
 .sim-text.highlight span { font-weight: bold; color: #10b981; }
 
 /* ==========================================================================
-   6. FORMULARIO GLASSMORPHISM E INPUTS FLUIDOS
+   6. FORMULARIO EN CRISTAL (GLASSMORPHISM PREMIUM)
    ========================================================================== */
 .support {
     position: relative;
@@ -501,7 +507,7 @@ nav ul li a:hover {
 }
 
 /* ==========================================================================
-   7. WHATSAPP FLOTANTE Y PIE DE PÁGINA
+   7. WHATSAPP FLOTANTE Y FOOTER DE MARCA
    ========================================================================== */
 .btn-whatsapp {
     position: fixed;
@@ -534,7 +540,7 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.01);
 }
 
-/* ANIMACIÓN INTERACTIVE SCROLL REVEAL VIA SCRIPT */
+/* EFECTO DE APARICIÓN FLUIDA AL HACER SCROLL (Activado por JS) */
 .animar-subir {
     opacity: 0;
     transform: translateY(30px);
@@ -546,12 +552,11 @@ footer {
     transform: translateY(0);
 }
 
-/* RESPONSIVE DESIGN */
+/* DISPOSITIVOS MÓVILES (RESPONSIVO) */
 @media (max-width: 768px) {
     header { flex-direction: column; gap: 12px; padding: 15px; }
-    nav ul { flex-wrap: wrap; justify-content: center; gap: 8px; }
-    nav ul li { margin: 0 8px; }
-    .hero { padding: 110px 4%; }
+    nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
+    .hero { padding: 90px 4%; }
     .hero h1 { font-size: 30px; }
     .form-contacto { padding: 30px 20px; }
 }
