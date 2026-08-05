@@ -1,96 +1,80 @@
-// ==========================================================================
-// MOTOR DE INTERACTIVIDAD INTERNA Y REVELACIÓN DE CONTENIDO - DODITECH
-// ==========================================================================
+const CONFIG = {
+  whatsappNumber: "527442320022", // WhatsApp Business de DODITECH
+  contactEmail: ""     // Opcional: ejemplo contacto@doditech.mx
+};
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. ALGORITMO INTERSECTION OBSERVER (Scroll Reveal Avanzado)
-    const elementosParaAnimar = document.querySelectorAll('.animar-subir');
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("year")?.replaceChildren(String(new Date().getFullYear()));
 
-    const configuracionObservador = {
-        root: null, 
-        threshold: 0.12, 
-        rootMargin: "0px 0px -40px 0px" 
-    };
+  const toggle = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".main-nav");
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!open));
+    nav?.classList.toggle("open", !open);
+  });
+  nav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+    nav.classList.remove("open");
+    toggle?.setAttribute("aria-expanded", "false");
+  }));
 
-    const observadorDePantalla = new IntersectionObserver((entradas, observador) => {
-        entradas.forEach(entrada => {
-            if (entrada.isIntersecting) {
-                entrada.target.classList.add('activo');
-                observador.unobserve(entrada.target); // Detiene la observación una vez animado
-            }
-        });
-    }, configuracionObservador);
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+  }), { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-    elementosParaAnimar.forEach(elemento => {
-        observadorDePantalla.observe(elemento);
-    });
+  const money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+  const calculator = document.getElementById("margin-calculator");
+  const calculate = () => {
+    const cost = Number(document.getElementById("lot-cost")?.value || 0);
+    const pieces = Number(document.getElementById("pieces")?.value || 0);
+    const price = Number(document.getElementById("sale-price")?.value || 0);
+    const unit = pieces > 0 ? cost / pieces : 0;
+    const revenue = pieces * price;
+    const profit = revenue - cost;
+    const margin = revenue > 0 ? profit / revenue * 100 : 0;
+    document.getElementById("unit-cost")?.replaceChildren(money.format(unit));
+    document.getElementById("profit")?.replaceChildren(money.format(profit));
+    document.getElementById("margin")?.replaceChildren(`${margin.toFixed(2)}%`);
+  };
+  calculator?.addEventListener("input", calculate);
+  calculate();
 
-    // 2. CAPTURA Y PROCESAMIENTO DEL FORMULARIO DE CONTACTO PREMIUM
-    const formularioContacto = document.getElementById('form-soporte');
+  document.querySelectorAll("[data-service]").forEach(link => link.addEventListener("click", () => {
+    const select = document.getElementById("service");
+    if (select) select.value = link.dataset.service || "";
+  }));
 
-    formularioContacto.addEventListener('submit', (evento) => {
-        evento.preventDefault();
+  document.querySelectorAll("[data-product]").forEach(link => link.addEventListener("click", () => {
+    sessionStorage.setItem("doditechProduct", link.dataset.product || "");
+  }));
+  const storedProduct = sessionStorage.getItem("doditechProduct");
+  if (storedProduct && document.getElementById("message")) {
+    document.getElementById("service").value = "Software a la medida";
+    document.getElementById("message").value = `Me interesa conocer más sobre ${storedProduct}.`;
+    sessionStorage.removeItem("doditechProduct");
+  }
 
-        const clienteNombre = document.getElementById('nombre').value.trim();
-        const clienteCorreo = document.getElementById('correo').value.trim();
-        const clienteMensaje = document.getElementById('mensaje').value.trim();
+  const form = document.getElementById("quote-form");
+  form?.addEventListener("submit", event => {
+    event.preventDefault();
+    const status = document.getElementById("form-status");
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const name = document.getElementById("name").value.trim();
+    const business = document.getElementById("business").value.trim();
+    const service = document.getElementById("service").value;
+    const message = document.getElementById("message").value.trim();
+    const text = `Hola DODITECH, soy ${name}${business ? ` de ${business}` : ""}.\n\nMe interesa: ${service}.\n\nNecesidad: ${message}`;
 
-        if (clienteNombre === '' || clienteCorreo === '' || clienteMensaje === '') {
-            alert('Por favor, rellene todos los campos del formulario.');
-            return;
-        }
-
-        // Simulación de trazabilidad interna en consola
-        console.log('--- NUEVO LEAD RECIBIDO EN DODITECH ---');
-        console.log(`Nombre: ${clienteNombre}`);
-        console.log(`Contacto: ${clienteCorreo}`);
-        console.log(`Consulta: ${clienteMensaje}`);
-
-        alert(`¡Excelente elección, ${clienteNombre}! Tu requerimiento ha sido enviado con éxito a DODITECH. Analizaremos tu caso de inmediato y nos comunicaremos contigo al correo electrónico ${clienteCorreo}.`);
-        
-        formularioContacto.reset();
-    });
-});
-
-// ==========================================================================
-// MOTOR MATEMÁTICO EN TIEMPO REAL - SIMULADOR DE LOTES DODITECH
-// ==========================================================================
-function calcularMargenVivo() {
-    const costoLote = parseFloat(document.getElementById('sim-costo').value) || 0;
-    const piezasLote = parseInt(document.getElementById('sim-piezas').value) || 0;
-    const precioVentaU = parseFloat(document.getElementById('sim-venta').value) || 0;
-
-    const visualPantalla = document.getElementById('sim-pantalla');
-    const visualMargen = document.getElementById('demo-margen');
-
-    // Validación matemática preventiva
-    if (costoLote <= 0 || piezasLote <= 0 || precioVentaU <= 0) {
-        visualPantalla.innerHTML = "⚠️ Ingrese valores numéricos superiores a 0";
-        visualMargen.innerText = "0.00%";
-        visualMargen.style.color = "#ef4444";
-        return;
-    }
-
-    // Fórmulas aritméticas de negocio
-    const costoPorUnidad = costoLote / piezasLote;
-    const ingresosBrutos = precioVentaU * piezasLote;
-    const utilidadNeta = ingresosBrutos - costoLote;
-    const porcentajeUtilidad = (utilidadNeta / ingresosBrutos) * 100;
-
-    // Formateo bajo estándar regional de moneda
-    const costoUnidadFormato = costoPorUnidad.toFixed(2);
-    const utilidadFormato = utilidadNeta.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const porcentajeFormato = porcentajeUtilidad.toFixed(2);
-
-    // Renderizado reactivo según estado financiero (Ganancia o Pérdida)
-    if (utilidadNeta < 0) {
-        visualPantalla.innerHTML = `Costo u.: <strong>$${costoUnidadFormato}</strong> | Pérdida: <strong style="color:#ef4444;">$${utilidadFormato}</strong>`;
-        visualMargen.innerText = `${porcentajeFormato}%`;
-        visualMargen.style.color = "#ef4444";
+    if (CONFIG.whatsappNumber) {
+      window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+      status.textContent = "Tu mensaje está listo en WhatsApp.";
+    } else if (CONFIG.contactEmail) {
+      window.location.href = `mailto:${CONFIG.contactEmail}?subject=${encodeURIComponent(`Cotización: ${service}`)}&body=${encodeURIComponent(text)}`;
+      status.textContent = "Abrimos tu aplicación de correo.";
     } else {
-        visualPantalla.innerHTML = `Costo u.: <strong>$${costoUnidadFormato}</strong> | Ganancia: <strong style="color:#10b981;">+$${utilidadFormato}</strong>`;
-        visualMargen.innerText = `${porcentajeFormato}%`;
-        visualMargen.style.color = "#10b981";
+      navigator.clipboard?.writeText(text);
+      status.textContent = "Mensaje preparado y copiado. Falta configurar el WhatsApp de DODITECH en script.js.";
     }
-}
+  });
+});

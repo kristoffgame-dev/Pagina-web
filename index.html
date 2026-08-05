@@ -1,168 +1,228 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="es-MX">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DODITECH Engine | Soluciones de Software de Alta Ingeniería</title>
-    <meta name="description" content="Desarrollo de software a la medida, sistemas blindados y automatización digital por DODITECH Engine. Creamos el motor tecnológico de tu negocio.">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DODITECH | Tecnología que hace avanzar tu negocio</title>
+  <meta name="description" content="Desarrollo web, software a medida, automatización y soporte tecnológico para emprendedores, consultorios y negocios.">
+  <meta name="theme-color" content="#07111f">
+  <meta property="og:title" content="DODITECH | Tecnología que hace avanzar tu negocio">
+  <meta property="og:description" content="Soluciones digitales claras, útiles y hechas a la medida de tu negocio.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/logo.png">
+  <link rel="preload" href="assets/logo.png" as="image">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-    <header>
-        <div class="logo">
-            <img src="logo.png" alt="DODITECH Logo">
-            <h2 class="logo-text">DODITECH</h2>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#caracteristicas">Características</a></li>
-                <li><a href="#para-quien">Servicios</a></li>
-                <li><a href="#soporte">Contacto</a></li>
-                <li><a href="productos.html" class="btn-nav">Catálogo de Software</a></li>
-                <li><a href="#soporte" class="btn-nav">Adquirir Software</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="DODITECH, inicio">
+        <img src="assets/logo.png" alt="" width="54" height="54">
+        <span>DODITECH</span>
+      </a>
 
-    <section id="inicio" class="hero">
-        <div class="hero-circles">
-            <div class="circle c1"></div>
-            <div class="circle c2"></div>
-            <div class="circle c3"></div>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+
+      <nav id="main-nav" class="main-nav" aria-label="Navegación principal">
+        <a href="#soluciones">Soluciones</a>
+        <a href="#como-trabajamos">Proceso</a>
+        <a href="#demostracion">Demostración</a>
+        <a href="#preguntas">Preguntas</a>
+        <a class="nav-cta" href="#cotizar">Solicitar cotización</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero section-dark">
+      <div class="hero-grid container">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span> Soluciones digitales para negocios reales</p>
+          <h1>Haz que la tecnología trabaje <em>a favor de tu negocio.</em></h1>
+          <p class="hero-lead">Creamos páginas web, sistemas, automatizaciones y soporte tecnológico para ayudarte a vender, organizarte y ahorrar tiempo sin complicaciones.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#cotizar">Cuéntanos tu proyecto</a>
+            <a class="button button-secondary" href="#soluciones">Explorar soluciones</a>
+          </div>
+          <ul class="trust-list" aria-label="Ventajas de DODITECH">
+            <li>Atención directa</li>
+            <li>Soluciones a medida</li>
+            <li>Acompañamiento claro</li>
+          </ul>
         </div>
-        <div class="hero-content">
-            <span class="badge-tech">SOFTWARE ENTORNO WEB & DIGITAL</span>
-            <h1>Impulsa tu negocio con soluciones digitales profesionales</h1>
-            <p>Gestiona inventarios con márgenes reales, automatiza tu consultorio o estrena una página web profesional de alta calidad. En DODITECH creamos la tecnología del futuro para tu proyecto.</p>
-            <div class="hero-buttons">
-                <a href="#soporte" class="btn-primario">Comprar Licencia</a>
-                <a href="#para-quien" class="btn-secundario">Ver Servicios</a>
+
+        <div class="hero-panel reveal" aria-label="Panel de soluciones DODITECH">
+          <div class="panel-top"><span></span><span></span><span></span><small>DODITECH / soluciones</small></div>
+          <div class="panel-body">
+            <p class="panel-label">TU NEGOCIO HOY</p>
+            <div class="flow-card problem"><b>Procesos manuales</b><span>Tiempo perdido, desorden y poca visibilidad.</span></div>
+            <div class="flow-arrow">↓</div>
+            <p class="panel-label">CON DODITECH</p>
+            <div class="flow-card solution"><b>Una solución conectada</b><span>Web, automatización, control y soporte en un solo plan.</span></div>
+            <div class="mini-stats">
+              <div><strong>01</strong><span>Entendemos</span></div>
+              <div><strong>02</strong><span>Construimos</span></div>
+              <div><strong>03</strong><span>Acompañamos</span></div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section id="caracteristicas" class="features">
-        <h2 class="animar-subir">¿Por qué elegir las soluciones de DODITECH?</h2>
-        <div class="grid-features">
-            <div class="card animar-subir">
-                <div class="card-glow"></div>
-                <h3>Base de Datos Blindada</h3>
-                <p>Tus datos de ventas, inventarios o expedientes médicos se almacenan de forma local y segura, garantizando total privacidad sin depender de internet.</p>
-            </div>
-            <div class="card animar-subir">
-                <div class="card-glow"></div>
-                <h3>Márgenes y Control Exacto</h3>
-                <p>Algoritmos optimizados para calcular el beneficio neto de tus productos al instante y herramientas diseñadas para la alta productividad.</p>
-            </div>
-            <div class="card animar-subir">
-                <div class="card-glow"></div>
-                <h3>Soporte Directo</h3>
-                <p>Atención personalizada, rápida y sin intermediarios, directamente con el desarrollador encargado de tu proyecto.</p>
-            </div>
-        </div>
+    <section class="value-strip" aria-label="Propuesta de valor">
+      <div class="container value-grid">
+        <p><strong>Menos fricción.</strong> Te explicamos la tecnología con claridad.</p>
+        <p><strong>Más control.</strong> Diseñamos alrededor de tu operación.</p>
+        <p><strong>Mejor presencia.</strong> Tu negocio se ve profesional y confiable.</p>
+      </div>
     </section>
 
-    <section id="para-quien" class="for-who">
-        <h2 class="animar-subir">Servicios tecnológicos para cualquier necesidad</h2>
-        <p class="subtitulo animar-subir">No importa el tamaño o el giro de tu proyecto, nos adaptamos exactamente a lo que estás buscando.</p>
-        
-        <div class="grid-for-who">
-            <div class="box-target animar-subir">
-                <div class="icon-box">🛍️</div>
-                <h3>Comercios y Tiendas</h3>
-                <p>Ideal para tiendas de ropa, abarrotes, tecnología, papelerías o refaccionarias que necesitan saber exactamente qué hay en existencia y evitar pérdidas.</p>
-            </div>
+    <section id="soluciones" class="section container">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow"><span></span> Lo que podemos resolver</p><h2>Servicios pensados para generar resultados, no solo para “tener tecnología”.</h2></div>
+        <p>Empezamos con lo que tu negocio necesita hoy y construimos una base que pueda crecer mañana.</p>
+      </div>
 
-            <div class="box-target animar-subir demo-container">
-                <div class="icon-box">📦</div>
-                <h3>Emprendedores por Lotes</h3>
-                <p>Prueba nuestro algoritmo matemático. Introduce tus datos reales y calcula tu margen al instante.</p>
-                
-                <div class="app-simulator">
-                    <div class="simulator-header">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
-                        <span class="simulator-title">DODITECH Lotes Engine v2.0</span>
-                    </div>
-                    <div class="simulator-body">
-                        <div class="sim-input-group">
-                            <label>Costo del Lote ($):</label>
-                            <input type="number" id="sim-costo" value="5000" oninput="calcularMargenVivo()">
-                        </div>
-                        <div class="sim-input-group">
-                            <label>Total de Piezas:</label>
-                            <input type="number" id="sim-piezas" value="100" oninput="calcularMargenVivo()">
-                        </div>
-                        <div class="sim-input-group">
-                            <label>Precio de Venta c/u ($):</label>
-                            <input type="number" id="sim-venta" value="85" oninput="calcularMargenVivo()">
-                        </div>
+      <div class="services-grid">
+        <article class="service-card featured reveal">
+          <span class="service-number">01</span>
+          <div class="service-icon">↗</div>
+          <h3>Páginas web que convierten</h3>
+          <p>Sitios modernos, rápidos y diseñados para que tus visitantes entiendan tu oferta y soliciten una cotización.</p>
+          <ul><li>Diseño adaptable a celular</li><li>Botones de contacto y WhatsApp</li><li>SEO técnico básico</li></ul>
+          <a href="#cotizar" data-service="Página web profesional">Cotizar una página <span>→</span></a>
+        </article>
 
-                        <div class="sim-screen" id="sim-pantalla">
-                            Costo u.: <strong>$50.00</strong> | Ganancia: <strong>+$3,500.00</strong>
-                        </div>
-                        <p class="sim-text highlight">Margen de Utilidad: <span id="demo-margen">41.18%</span></p>
-                    </div>
-                </div>
-            </div>
+        <article class="service-card reveal">
+          <span class="service-number">02</span>
+          <div class="service-icon">⚙</div>
+          <h3>Software a la medida</h3>
+          <p>Sistemas para inventarios, consultorios, administración, seguimiento y procesos específicos de tu operación.</p>
+          <a href="#cotizar" data-service="Software a la medida">Hablar de mi sistema <span>→</span></a>
+        </article>
 
-            <div class="box-target animar-subir">
-                <div class="icon-box">🛠️</div>
-                <h3>Talleres y Servicios</h3>
-                <p>Perfecto para administrar los insumos, refacciones o herramientas que utilizas en tu día a día, manteniendo tus costos bajo control.</p>
-            </div>
+        <article class="service-card reveal">
+          <span class="service-number">03</span>
+          <div class="service-icon">◎</div>
+          <h3>Automatización e IA</h3>
+          <p>Conectamos tareas repetitivas, formularios, respuestas, datos y herramientas para ahorrar horas de trabajo.</p>
+          <a href="#cotizar" data-service="Automatización e inteligencia artificial">Automatizar un proceso <span>→</span></a>
+        </article>
 
-            <div class="box-target animar-subir">
-                <div class="icon-box">🩺</div>
-                <h3>Consultorios y Salud</h3>
-                <p>Optimizado para médicos, dentistas y clínicas que buscan digitalizar el control de sus pacientes, agendar citas y administrar el inventario de medicamentos de forma segura.</p>
-            </div>
-
-            <div class="box-target animar-subir">
-                <div class="icon-box">🌐</div>
-                <h3>Páginas Web Profesionales</h3>
-                <p>¿Tu negocio aún no está en internet? Diseñamos y construimos tu sitio web profesional, moderno, responsivo y optimizado a la medida para atraer más clientes.</p>
-            </div>
-
-            <div class="box-target especial animar-subir">
-                <div class="icon-box">🚀</div>
-                <h3>¿Tienes otra idea en mente?</h3>
-                <p>Nuestras soluciones en desarrollo de software y entorno web son completamente versátiles. Si necesitas orden, control o presencia digital, <strong>¡estamos listos!</strong></p>
-                <a href="#soporte" class="btn-consulta">Preguntar por mi caso</a>
-            </div>
-        </div>
+        <article class="service-card reveal">
+          <span class="service-number">04</span>
+          <div class="service-icon">⌁</div>
+          <h3>Soporte tecnológico</h3>
+          <p>Diagnóstico, mantenimiento, redes, respaldos y acompañamiento para que la tecnología no detenga tu trabajo.</p>
+          <a href="#cotizar" data-service="Soporte tecnológico">Solicitar soporte <span>→</span></a>
+        </article>
+      </div>
     </section>
 
-    <section id="soporte" class="support">
-        <div class="bg-gradient-decoration"></div>
-        <h2 class="animar-subir">¿Necesitas asesoría? Contáctanos</h2>
-        <p class="animar-subir">Si tienes dudas sobre las licencias de software o requieres la cotización de una página web, déjame un mensaje.</p>
-        
-        <form id="form-soporte" class="form-contacto animar-subir">
-            <label for="nombre">Nombre Completo:</label>
-            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+    <section id="como-trabajamos" class="section section-soft">
+      <div class="container">
+        <div class="section-heading compact reveal">
+          <div><p class="eyebrow"><span></span> Un proceso sencillo</p><h2>De una necesidad a una solución funcional.</h2></div>
+        </div>
+        <div class="steps-grid">
+          <article class="step reveal"><span>01</span><h3>Escuchamos</h3><p>Conocemos tu problema, tu negocio y el resultado que buscas.</p></article>
+          <article class="step reveal"><span>02</span><h3>Proponemos</h3><p>Definimos alcance, prioridades, tiempo estimado y una cotización clara.</p></article>
+          <article class="step reveal"><span>03</span><h3>Construimos</h3><p>Desarrollamos por etapas para que puedas revisar avances reales.</p></article>
+          <article class="step reveal"><span>04</span><h3>Entregamos y apoyamos</h3><p>Probamos, explicamos y te acompañamos después de la entrega.</p></article>
+        </div>
+      </div>
+    </section>
 
-            <label for="correo">Correo Electrónico:</label>
-            <input type="email" id="correo" name="correo" required placeholder="ejemplo@correo.com">
+    <section id="demostracion" class="section container demo-section">
+      <div class="demo-copy reveal">
+        <p class="eyebrow"><span></span> Prueba una idea</p>
+        <h2>No solo lo decimos: construimos herramientas que puedes usar.</h2>
+        <p>Este simulador muestra cómo una solución sencilla puede convertir datos cotidianos en información útil para decidir mejor.</p>
+        <div class="demo-benefit"><span>✓</span><div><b>Resultado inmediato</b><p>Calcula costo unitario, utilidad y margen.</p></div></div>
+        <div class="demo-benefit"><span>✓</span><div><b>Aplicable a tu operación</b><p>Podemos adaptar la lógica a inventarios, ventas o servicios.</p></div></div>
+      </div>
 
-            <label for="mensaje">¿En qué podemos ayudarte?:</label>
-            <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escribe tu duda, el tipo de software que necesitas..."></textarea>
-
-            <button type="submit" class="btn-enviar">Enviar Mensaje a DODITECH</button>
+      <div class="calculator-card reveal">
+        <div class="calculator-bar"><span></span><span></span><span></span><small>SmartMargen / demo</small></div>
+        <form id="margin-calculator">
+          <label>Costo total del lote <span>MXN</span><input id="lot-cost" type="number" min="0" step="0.01" value="5000"></label>
+          <label>Número de piezas <span>UNIDADES</span><input id="pieces" type="number" min="1" step="1" value="100"></label>
+          <label>Precio de venta por pieza <span>MXN</span><input id="sale-price" type="number" min="0" step="0.01" value="85"></label>
         </form>
+        <div class="calculator-result">
+          <div><span>Costo unitario</span><strong id="unit-cost">$50.00</strong></div>
+          <div><span>Utilidad estimada</span><strong id="profit">$3,500.00</strong></div>
+          <div class="result-highlight"><span>Margen sobre venta</span><strong id="margin">41.18%</strong></div>
+        </div>
+        <a class="text-link" href="#cotizar" data-service="Sistema de control y márgenes">Quiero una herramienta para mi negocio →</a>
+      </div>
     </section>
 
-    <a href="https://wa.me/520000000000?text=%C2%A1Hola%2C%20DODITECH%21%20Vi%20tu%20p%C3%A1gina%20web%20y%20me%20interesa%20m%C3%A1s%20informaci%C3%B3n." class="btn-whatsapp" target="_blank">
-        <span>WA</span>
-    </a>
+    <section class="section section-dark cta-band">
+      <div class="container cta-grid reveal">
+        <div><p class="eyebrow"><span></span> Tecnología sin complicaciones</p><h2>No necesitas saber qué sistema comprar. Solo cuéntanos qué quieres resolver.</h2></div>
+        <a class="button button-primary" href="#cotizar">Recibir orientación inicial</a>
+      </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2026 DODITECH. Todos los derechos reservados. Diseñado bajo estándares de ingeniería de software.</p>
-    </footer>
+    <section id="preguntas" class="section container faq-section">
+      <div class="section-heading compact reveal"><div><p class="eyebrow"><span></span> Preguntas frecuentes</p><h2>Antes de empezar.</h2></div></div>
+      <div class="faq-list">
+        <details class="reveal"><summary>¿Trabajan con negocios pequeños o personas que apenas empiezan?</summary><p>Sí. La solución se ajusta al tamaño, etapa y presupuesto razonable del proyecto. Podemos comenzar con una versión esencial y evolucionarla después.</p></details>
+        <details class="reveal"><summary>¿La cotización tiene costo?</summary><p>La conversación inicial para entender tu necesidad no tiene costo. Después recibirás una propuesta con alcance y precio antes de iniciar.</p></details>
+        <details class="reveal"><summary>¿Pueden mejorar una página o sistema que ya existe?</summary><p>Sí. Primero revisamos el estado actual y te proponemos qué conviene conservar, corregir o reconstruir.</p></details>
+        <details class="reveal"><summary>¿Dan soporte después de entregar?</summary><p>Sí. El tipo de acompañamiento se define desde la propuesta para que sepas qué incluye y cómo solicitar ayuda.</p></details>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="cotizar" class="section section-soft contact-section">
+      <div class="container contact-grid">
+        <div class="contact-copy reveal">
+          <p class="eyebrow"><span></span> Empecemos</p>
+          <h2>Cuéntanos qué necesitas mejorar.</h2>
+          <p>No hace falta que conozcas términos técnicos. Describe el problema con tus propias palabras y prepararemos el mensaje para iniciar tu cotización.</p>
+          <div class="contact-note"><b>Respuesta personalizada</b><span>Revisamos cada solicitud para entender el contexto antes de proponer.</span></div>
+        </div>
+
+        <form id="quote-form" class="quote-form reveal" novalidate>
+          <div class="field-row">
+            <label>Nombre<input id="name" name="name" type="text" autocomplete="name" required placeholder="Tu nombre"></label>
+            <label>Negocio o proyecto<input id="business" name="business" type="text" placeholder="Nombre del negocio"></label>
+          </div>
+          <label>¿Qué necesitas?
+            <select id="service" name="service" required>
+              <option value="">Selecciona una opción</option>
+              <option>Página web profesional</option>
+              <option>Software a la medida</option>
+              <option>Automatización e inteligencia artificial</option>
+              <option>Soporte tecnológico</option>
+              <option>Otro proyecto</option>
+            </select>
+          </label>
+          <label>Describe brevemente tu necesidad<textarea id="message" name="message" rows="5" required placeholder="Ejemplo: necesito que mis clientes puedan conocer mis servicios y pedirme una cotización..."></textarea></label>
+          <button class="button button-primary form-button" type="submit">Preparar mensaje de cotización</button>
+          <p class="form-status" id="form-status" role="status"></p>
+          <p class="privacy-note">Tus datos se usan únicamente para responder a tu solicitud.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand"><a class="brand" href="#top"><img src="assets/logo.png" alt="" width="48" height="48"><span>DODITECH</span></a><p>No te preocupes por la tecnología. Nosotros nos encargamos.</p></div>
+      <div><b>Soluciones</b><a href="#soluciones">Desarrollo web</a><a href="#soluciones">Software</a><a href="#soluciones">Automatización</a><a href="#soluciones">Soporte</a></div>
+      <div><b>Contacto</b><a href="#cotizar">Solicitar cotización</a><a href="productos.html">Ver productos</a><a href="#preguntas">Preguntas frecuentes</a></div>
+    </div>
+    <div class="container footer-bottom"><span>© <span id="year"></span> DODITECH.</span><span>Construido para evolucionar.</span></div>
+  </footer>
+
+  <a class="floating-contact" href="#cotizar" aria-label="Solicitar cotización"><span>↗</span><b>Cotizar</b></a>
+  <script src="script.js"></script>
 </body>
 </html>
