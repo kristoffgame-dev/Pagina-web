@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Productos & Software | DODI SYSTEM</title>
-  <meta name="description" content="Catálogo de productos de software a la medida desarrollados por DODI SYSTEM.">
+  <meta name="description" content="Catálogo de productos y soluciones tecnológicas de DODI SYSTEM.">
   <link rel="icon" href="assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -26,24 +26,29 @@
   </script>
 </head>
 <body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
+
 <!-- Botón Flotante de WhatsApp -->
 <a href="https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20quisiera%20solicitar%20información%20y%20una%20cotización." 
    target="_blank" 
    rel="noopener noreferrer"
-   class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl shadow-emerald-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+   class="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl shadow-emerald-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center group"
    aria-label="Contactar por WhatsApp">
-  <!-- Icono de WhatsApp -->
   <svg class="w-7 h-7 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
     <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18.1-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18.1-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
   </svg>
 </a>
-  <!-- Header / Navegación Unificada -->
-  <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50">
+
+<!-- Botón Flotante del Carrito -->
+<button id="btn-carrito-flotante" onclick="abrirCarrito()" class="fixed bottom-6 left-6 z-40 bg-brand-blue hover:bg-blue-600 text-white p-4 rounded-full shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center gap-2 group">
+  <svg class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+  <span id="carrito-contador" class="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">0</span>
+</button>
+
+  <!-- Header / Navegación -->
+  <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      
-      <!-- Logo + Marca -->
       <a class="flex items-center gap-3.5 group" href="index.html">
-        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-cyan/20 to-brand-blue/20 border border-brand-cyan/30 flex items-center justify-center p-1.5 shadow-lg shadow-brand-blue/10 group-hover:scale-105 group-hover:border-brand-cyan transition-all duration-300">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-cyan/20 to-brand-blue/20 border border-brand-cyan/30 flex items-center justify-center p-1.5 shadow-lg shadow-brand-blue/10 group-hover:scale-105 group-hover:border-brand-cyan transition-all duration-300">
           <img src="assets/logo.png" alt="Logo DODI SYSTEM" class="w-full h-full object-contain filter drop-shadow" onerror="this.onerror=null; this.src='logo.png'; this.parentElement.innerHTML='<span class=\'font-black text-brand-cyan text-xl\'>DS</span>';">
         </div>
         <div class="flex flex-col">
@@ -56,7 +61,6 @@
         </div>
       </a>
 
-      <!-- Menú de Navegación -->
       <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
         <a href="index.html" class="text-slate-400 hover:text-white transition-colors">Inicio</a>
         <a href="productos.html" class="text-white hover:text-brand-cyan transition-colors">Productos</a>
@@ -67,138 +71,98 @@
           Solicitar Cotización
         </a>
       </nav>
-
     </div>
   </header>
 
   <!-- Contenido Principal -->
   <main class="max-w-6xl mx-auto px-4 py-16 w-full space-y-12">
     <div class="text-center max-w-2xl mx-auto space-y-4">
-      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo de <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">Software</span></h1>
-      <p class="text-slate-400">Soluciones en la nube e instalables a la medida creadas para optimizar procesos comerciales y médicos.</p>
+      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo de <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">Productos & Software</span></h1>
+      <p class="text-slate-400">Soluciones tecnológicas, equipos y software a la medida desarrollados para optimizar tu negocio.</p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8">
-      <!-- Producto 1: MediSync / MediAssist -->
+    <!-- Contenedor Dinámico -->
+    <div id="catalogo-productos" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Tarjetas estáticas iniciales (Se actualizan en vivo con Google Sheets) -->
       <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-8 space-y-6 flex flex-col justify-between">
         <div class="space-y-4">
-          <div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-xl">
-            🩺
-          </div>
+          <div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-xl">🩺</div>
           <h2 class="text-2xl font-bold text-white">MediSync / MediAssist</h2>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Sistema integral para la administración de clínicas y consultorios médicos. Gestión de expedientes clínicos electrónicos, agenda de citas, historial de pacientes y facturación rápida.
-          </p>
-          <ul class="text-xs text-slate-400 space-y-2">
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Control de citas y recordatorios</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Expediente clínico digital seguro</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Módulo de recetas y consultas</li>
-          </ul>
+          <p class="text-slate-300 text-sm leading-relaxed">Sistema integral para la administración de clínicas y consultorios médicos.</p>
+          <div class="text-xl font-black text-brand-cyan">$2,500 MXN</div>
         </div>
-        <a href="index.html#cotizar" class="block text-center bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all">Solicitar Demo</a>
+        <button onclick="agregarAlCarrito('MediSync / MediAssist', 2500)" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Agregar al Carrito</button>
       </div>
 
-      <!-- Producto 2: SmartMargen -->
       <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-8 space-y-6 flex flex-col justify-between">
         <div class="space-y-4">
-          <div class="w-12 h-12 bg-brand-blue/10 border border-brand-blue/30 rounded-xl flex items-center justify-center text-brand-blue font-bold text-xl">
-            📊
-          </div>
+          <div class="w-12 h-12 bg-brand-blue/10 border border-brand-blue/30 rounded-xl flex items-center justify-center text-brand-blue font-bold text-xl">📊</div>
           <h2 class="text-2xl font-bold text-white">SmartMargen</h2>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Plataforma financiera y calculadora de márgenes para comercios y PyMEs. Calcula costos exactos, utilidad neta, precios de venta óptimos y proyecciones de ganancia.
-          </p>
-          <ul class="text-xs text-slate-400 space-y-2">
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Análisis automático de utilidades</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Estimación de costos fijos y variables</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Reportes exportables para toma de decisiones</li>
-          </ul>
+          <p class="text-slate-300 text-sm leading-relaxed">Plataforma financiera y calculadora de márgenes para comercios y PyMEs.</p>
+          <div class="text-xl font-black text-brand-cyan">$1,800 MXN</div>
         </div>
-        <a href="index.html#cotizar" class="block text-center bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all">Solicitar Demo</a>
+        <button onclick="agregarAlCarrito('SmartMargen', 1800)" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Agregar al Carrito</button>
       </div>
-    </div>   
-<script>
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/library/d/14gkdS4uhN53auLLFNrOv5KAKUfKBopiZ69iH25l5iO4MqTp4RC5cyqjk/1";
-
-  // Función para obtener y renderizar los productos
-  async function cargarProductos() {
-    const loadingEl = document.getElementById("loading");
-    const gridEl = document.getElementById("catalogo-grid");
-
-    try {
-      const response = await fetch(APPS_SCRIPT_URL);
-      const productos = await response.json();
-
-      // Limpiar contenedor
-      gridEl.innerHTML = "";
-
-      productos.forEach(prod => {
-        // Ignorar productos desactivados si agregas una columna 'estado'
-        if (prod.estado && prod.estado.toLowerCase() === "inactivo") return;
-
-        const stockDisponible = Number(prod.stock) > 0;
-
-        // Crear la tarjeta HTML
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col justify-between";
-
-        tarjeta.innerHTML = `
-          <div>
-            <img src="${prod.imagen_url || 'https://via.placeholder.com/300x200?text=Sin+Imagen'}" 
-                 alt="${prod.nombre}" 
-                 class="w-full h-48 object-cover">
-            
-            <div class="p-4">
-              <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">${prod.id || 'PROD'}</span>
-              <h3 class="text-lg font-bold text-gray-800 mt-1">${prod.nombre}</h3>
-              <p class="text-gray-600 text-sm mt-2 line-clamp-3">${prod.descripcion || ''}</p>
-            </div>
-          </div>
-
-          <div class="p-4 border-t border-gray-100 mt-auto">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xl font-bold text-gray-900">$${Number(prod.precio).toLocaleString('es-MX')} MXN</span>
-              
-              <!-- Badge de Stock -->
-              <span class="px-2 py-1 text-xs font-semibold rounded-full ${stockDisponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                ${stockDisponible ? `Disponibles: ${prod.stock}` : 'Agotado'}
-              </span>
-            </div>
-
-            <!-- Boton de accion -->
-            <button ${!stockDisponible ? 'disabled' : ''} 
-                    onclick="solicitarCotizacion('${prod.nombre}')"
-                    class="w-full py-2 px-4 rounded font-semibold text-white transition-colors duration-200 
-                           ${stockDisponible ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}">
-              ${stockDisponible ? 'Cotizar / Comprar' : 'Agotado'}
-            </button>
-          </div>
-        `;
-
-        gridEl.appendChild(tarjeta);
-      });
-
-      // Ocultar cargando y mostrar cuadrícula
-      loadingEl.classList.add("hidden");
-      gridEl.classList.remove("hidden");
-
-    } catch (error) {
-      console.error("Error al cargar productos:", error);
-      loadingEl.innerHTML = `<p class="text-red-500">Error al conectar con el inventario. Por favor reintenta más tarde.</p>`;
-    }
-  }
-
-  // Redirigir al formulario de cotización pasando el nombre del producto
-  function solicitarCotizacion(nombreProducto) {
-    // Redirige o desplaza hacia la sección del formulario Web3Forms
-    const mensaje = encodeURIComponent(`Hola, me interesa cotizar el producto: ${nombreProducto}`);
-    window.location.href = `#cotizar?asunto=${mensaje}`;
-  }
-
-  // Ejecutar al cargar la página
-  document.addEventListener("DOMContentLoaded", cargarProductos);
-</script>
+    </div>
   </main>
+
+  <!-- MODAL DE CHECKOUT EN 2 PASOS -->
+  <div id="modal-checkout" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-lg w-full p-6 shadow-2xl relative text-slate-100">
+      <button onclick="cerrarCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-2xl">&times;</button>
+
+      <!-- PASO 1 -->
+      <div id="paso-1-carrito">
+        <h3 class="text-xl font-black text-white mb-3 flex items-center gap-2">🛒 Tu Carrito de Compras</h3>
+        <div id="lista-carrito" class="space-y-3 max-h-56 overflow-y-auto mb-4 border-b border-slate-700 pb-4 pr-1"></div>
+        <div class="flex justify-between items-center mb-4">
+          <span class="font-bold text-slate-400">Total a Pagar:</span>
+          <span id="carrito-total" class="text-2xl font-black text-brand-cyan">$0 MXN</span>
+        </div>
+        <div class="mb-5">
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-2">Selecciona tu Forma de Pago:</label>
+          <select id="metodo-pago-seleccionado" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-brand-cyan text-white focus:outline-none">
+            <option value="Transferencia SPEI">Transferencia SPEI (Sin comisiones)</option>
+            <option value="Depósito OXXO / Banco">Depósito en OXXO / Ventanilla</option>
+            <option value="Pago Contra Entrega">Pago contra entrega en Acapulco (Efectivo / Terminal)</option>
+          </select>
+        </div>
+        <button onclick="irAlPaso2Datos()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all">Pagar y Registrar Datos de Envío</button>
+      </div>
+
+      <!-- PASO 2 -->
+      <div id="paso-2-envio" class="hidden">
+        <div id="instrucciones-pago" class="bg-slate-900/90 border border-brand-cyan/40 p-4 rounded-xl mb-4 text-xs space-y-1">
+          <p class="font-bold text-brand-cyan text-sm mb-1">💳 Datos de Cuenta para Realizar tu Pago:</p>
+          <p class="text-slate-300"><strong>Banco:</strong> BBVA</p>
+          <p class="text-slate-300"><strong>CLABE SPEI:</strong> <span class="font-mono bg-slate-800 px-1.5 py-0.5 rounded text-brand-cyan">0121 8001 2345 6789 01</span></p>
+          <p class="text-slate-300"><strong>Titular:</strong> DODI SYSTEM</p>
+        </div>
+        <h4 class="text-md font-black text-white mb-2">Datos de Entrega (Sin Registro)</h4>
+        <form id="form-datos-envio" onsubmit="finalizarPedido(event)" class="space-y-3">
+          <div>
+            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nombre Completo</label>
+            <input type="text" id="envio-nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Dirección de Entrega y Referencias (Acapulco)</label>
+            <textarea id="envio-direccion" required rows="2" placeholder="Calle, Número, Colonia" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none"></textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">WhatsApp</label>
+              <input type="tel" id="envio-telefono" required placeholder="7441234567" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Correo</label>
+              <input type="email" id="envio-correo" required placeholder="correo@email.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
+            </div>
+          </div>
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 rounded-xl shadow-lg transition-all mt-2">Confirmar Pedido & Enviar Datos</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="border-t border-slate-800 bg-slate-950/80 py-8 mt-12">
@@ -208,13 +172,152 @@
         <a href="index.html" class="hover:text-slate-300 transition-colors">Inicio</a>
         <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
         <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
-        <a href="educacion.html" class="hover:text-slate-300 transition-colors">Educación</a>
-        <a href="wifi.html" class="hover:text-slate-300 transition-colors">Wi-Fi</a>
+        <a href="edu.html" class="hover:text-slate-300 transition-colors">Educación</a>
+        <a href="portal.html" class="hover:text-slate-300 transition-colors">Wi-Fi</a>
       </div>
     </div>
   </footer>
+
+  <!-- SCRIPT DE CONEXIÓN DINÁMICA -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 🔗 PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (TERMINADA EN /exec)
+    const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec";
+
+    let carrito = [];
+
+    async function cargarProductosDesdeSheets() {
+      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec")) return;
+
+      try {
+        const res = await fetch(GOOGLE_SHEETS_API_URL);
+        const productos = await res.json();
+        
+        if (productos && productos.length > 0) {
+          const contenedor = document.getElementById('catalogo-productos');
+          contenedor.innerHTML = "";
+
+          productos.forEach(p => {
+            const tieneOferta = p.precio_regular && Number(p.precio_regular) > Number(p.precio);
+            const insignia = p.etiqueta_oferta ? `<span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${p.etiqueta_oferta}</span>` : '';
+            const imagenHTML = p.imagen_url && p.imagen_url.startsWith('http') 
+              ? `<img src="${p.imagen_url}" alt="${p.nombre}" class="w-full h-40 object-cover rounded-xl mb-4 border border-slate-700">`
+              : `<div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-xl mb-4">📦</div>`;
+
+            contenedor.innerHTML += `
+              <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-6 space-y-4 flex flex-col justify-between relative">
+                <div>
+                  ${imagenHTML}
+                  <div class="flex justify-between items-start mb-2">
+                    <h2 class="text-xl font-bold text-white">${p.nombre}</h2>
+                    ${insignia}
+                  </div>
+                  <p class="text-slate-300 text-sm leading-relaxed mb-4">${p.descripcion || ''}</p>
+                  <div class="flex items-baseline gap-2">
+                    <span class="text-2xl font-black text-brand-cyan">$${Number(p.precio).toLocaleString('es-MX')} MXN</span>
+                    ${tieneOferta ? `<span class="text-sm text-slate-500 line-through">$${Number(p.precio_regular).toLocaleString('es-MX')}</span>` : ''}
+                  </div>
+                </div>
+                <button onclick="agregarAlCarrito('${p.nombre}', ${p.precio})" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg mt-4">
+                  Agregar al Carrito
+                </button>
+              </div>
+            `;
+          });
+        }
+      } catch (error) {
+        console.log("Usando catálogo local de respaldo.");
+      }
+    }
+
+    function agregarAlCarrito(nombre, precio) {
+      carrito.push({ nombre, precio: Number(precio) });
+      actualizarCarritoUI();
+      abrirCarrito();
+    }
+
+    function actualizarCarritoUI() {
+      const lista = document.getElementById('lista-carrito');
+      const contador = document.getElementById('carrito-contador');
+      const totalEl = document.getElementById('carrito-total');
+      contador.innerText = carrito.length;
+      lista.innerHTML = "";
+      let total = 0;
+      carrito.forEach((item, index) => {
+        total += item.precio;
+        lista.innerHTML += `
+          <div class="flex justify-between items-center text-sm py-1 border-b border-slate-800">
+            <span class="font-semibold text-slate-200">${item.nombre}</span>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-brand-cyan">$${item.precio.toLocaleString('es-MX')}</span>
+              <button onclick="eliminarDelCarrito(${index})" class="text-red-400 font-bold text-lg">&times;</button>
+            </div>
+          </div>
+        `;
+      });
+      totalEl.innerText = `$${total.toLocaleString('es-MX')} MXN`;
+    }
+
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarCarritoUI();
+    }
+
+    function abrirCarrito() {
+      if (carrito.length === 0) {
+        alert("Tu carrito está vacío. Elige un producto para continuar.");
+        return;
+      }
+      document.getElementById('modal-checkout').classList.remove('hidden');
+      document.getElementById('modal-checkout').classList.add('flex');
+      document.getElementById('paso-1-carrito').classList.remove('hidden');
+      document.getElementById('paso-2-envio').classList.add('hidden');
+    }
+
+    function cerrarCheckout() {
+      document.getElementById('modal-checkout').classList.add('hidden');
+      document.getElementById('modal-checkout').classList.remove('flex');
+    }
+
+    function irAlPaso2Datos() {
+      document.getElementById('paso-1-carrito').classList.add('hidden');
+      document.getElementById('paso-2-envio').classList.remove('hidden');
+    }
+
+    async function finalizarPedido(e) {
+      e.preventDefault();
+      const pedido = {
+        productos: carrito.map(p => p.nombre).join(", "),
+        total: carrito.reduce((sum, p) => sum + p.precio, 0),
+        metodoPago: document.getElementById('metodo-pago-seleccionado').value,
+        nombre: document.getElementById('envio-nombre').value,
+        direccion: document.getElementById('envio-direccion').value,
+        telefono: document.getElementById('envio-telefono').value,
+        correo: document.getElementById('envio-correo').value,
+        fecha: new Date().toLocaleString('es-MX')
+      };
+
+      if (!GOOGLE_SHEETS_API_URL.includes("TU_APPS_SCRIPT")) {
+        try {
+          await fetch(GOOGLE_SHEETS_API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pedido)
+          });
+        } catch (err) {
+          console.error("Error al registrar pedido:", err);
+        }
+      }
+
+      alert(`¡Muchas gracias ${pedido.nombre}! Tu pedido ha sido registrado. Te contactaremos por WhatsApp.`);
+      carrito = [];
+      actualizarCarritoUI();
+      cerrarCheckout();
+    }
+
+    cargarProductosDesdeSheets();
   </script>
 </body>
 </html>
