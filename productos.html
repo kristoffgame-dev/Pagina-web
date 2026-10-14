@@ -116,7 +116,89 @@
         </div>
         <a href="index.html#cotizar" class="block text-center bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all">Solicitar Demo</a>
       </div>
-    </div>
+    </div>   
+<script>
+  // 1. REEMPLAZA ESTA CONSTANTE CON TU URL DE APPS SCRIPT (la que termina en /exec)
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec";
+
+  // Función para obtener y renderizar los productos
+  async function cargarProductos() {
+    const loadingEl = document.getElementById("loading");
+    const gridEl = document.getElementById("catalogo-grid");
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL);
+      const productos = await response.json();
+
+      // Limpiar contenedor
+      gridEl.innerHTML = "";
+
+      productos.forEach(prod => {
+        // Ignorar productos desactivados si agregas una columna 'estado'
+        if (prod.estado && prod.estado.toLowerCase() === "inactivo") return;
+
+        const stockDisponible = Number(prod.stock) > 0;
+
+        // Crear la tarjeta HTML
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col justify-between";
+
+        tarjeta.innerHTML = `
+          <div>
+            <img src="${prod.imagen_url || 'https://via.placeholder.com/300x200?text=Sin+Imagen'}" 
+                 alt="${prod.nombre}" 
+                 class="w-full h-48 object-cover">
+            
+            <div class="p-4">
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">${prod.id || 'PROD'}</span>
+              <h3 class="text-lg font-bold text-gray-800 mt-1">${prod.nombre}</h3>
+              <p class="text-gray-600 text-sm mt-2 line-clamp-3">${prod.descripcion || ''}</p>
+            </div>
+          </div>
+
+          <div class="p-4 border-t border-gray-100 mt-auto">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xl font-bold text-gray-900">$${Number(prod.precio).toLocaleString('es-MX')} MXN</span>
+              
+              <!-- Badge de Stock -->
+              <span class="px-2 py-1 text-xs font-semibold rounded-full ${stockDisponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                ${stockDisponible ? `Disponibles: ${prod.stock}` : 'Agotado'}
+              </span>
+            </div>
+
+            <!-- Boton de accion -->
+            <button ${!stockDisponible ? 'disabled' : ''} 
+                    onclick="solicitarCotizacion('${prod.nombre}')"
+                    class="w-full py-2 px-4 rounded font-semibold text-white transition-colors duration-200 
+                           ${stockDisponible ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}">
+              ${stockDisponible ? 'Cotizar / Comprar' : 'Agotado'}
+            </button>
+          </div>
+        `;
+
+        gridEl.appendChild(tarjeta);
+      });
+
+      // Ocultar cargando y mostrar cuadrícula
+      loadingEl.classList.add("hidden");
+      gridEl.classList.remove("hidden");
+
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+      loadingEl.innerHTML = `<p class="text-red-500">Error al conectar con el inventario. Por favor reintenta más tarde.</p>`;
+    }
+  }
+
+  // Redirigir al formulario de cotización pasando el nombre del producto
+  function solicitarCotizacion(nombreProducto) {
+    // Redirige o desplaza hacia la sección del formulario Web3Forms
+    const mensaje = encodeURIComponent(`Hola, me interesa cotizar el producto: ${nombreProducto}`);
+    window.location.href = `#cotizar?asunto=${mensaje}`;
+  }
+
+  // Ejecutar al cargar la página
+  document.addEventListener("DOMContentLoaded", cargarProductos);
+</script>
   </main>
 
   <!-- Footer -->
@@ -132,7 +214,6 @@
       </div>
     </div>
   </footer>
-
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
