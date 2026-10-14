@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Productos & Software | DODI SYSTEM</title>
-  <meta name="description" content="Catálogo de productos de software a la medida desarrollados por DODI SYSTEM.">
+  <title>Productos & Soluciones | DODI SYSTEM</title>
+  <meta name="description" content="Soluciones de software y conectividad DODI SYSTEM para consultorios, comercios y eventos.">
   <link rel="icon" href="assets/logo.png">
+  <!-- Tailwind CSS por CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,98 +27,158 @@
   </script>
 </head>
 <body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
-<!-- Botón Flotante de WhatsApp -->
-<a href="https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20quisiera%20solicitar%20información%20y%20una%20cotización." 
-   target="_blank" 
-   rel="noopener noreferrer"
-   class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl shadow-emerald-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center group"
-   aria-label="Contactar por WhatsApp">
-  <!-- Icono de WhatsApp -->
-  <svg class="w-7 h-7 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18.1-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18.1-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-  </svg>
-</a>
-  <!-- Header / Navegación Unificada -->
-  <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      
-      <!-- Logo + Marca -->
-      <a class="flex items-center gap-3.5 group" href="index.html">
-        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-cyan/20 to-brand-blue/20 border border-brand-cyan/30 flex items-center justify-center p-1.5 shadow-lg shadow-brand-blue/10 group-hover:scale-105 group-hover:border-brand-cyan transition-all duration-300">
-          <img src="assets/logo.png" alt="Logo DODI SYSTEM" class="w-full h-full object-contain filter drop-shadow" onerror="this.onerror=null; this.src='logo.png'; this.parentElement.innerHTML='<span class=\'font-black text-brand-cyan text-xl\'>DS</span>';">
-        </div>
-        <div class="flex flex-col">
-          <span class="font-black text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-cyan to-blue-500 drop-shadow-sm group-hover:from-brand-cyan group-hover:to-brand-blue transition-all">
-            DODI SYSTEM
-          </span>
-          <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1 group-hover:text-brand-cyan transition-colors">
-            Soluciones Digitales
-          </span>
-        </div>
+
+  <!-- Header / Navegación -->
+  <header class="border-b border-slate-800/80 bg-brand-dark/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a class="flex items-center gap-3 group" href="index.html">
+        <img src="assets/logo.png" alt="Logo DODI SYSTEM" class="w-10 h-10 object-contain transition-transform group-hover:scale-105" onerror="this.src='https://via.placeholder.com/40'">
+        <span class="font-extrabold text-xl tracking-wider text-white">DODI SYSTEM</span>
       </a>
-
-      <!-- Menú de Navegación -->
-      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-        <a href="index.html" class="text-slate-400 hover:text-white transition-colors">Inicio</a>
-        <a href="productos.html" class="text-white hover:text-brand-cyan transition-colors">Productos</a>
-        <a href="redes-camaras.html" class="text-slate-400 hover:text-white transition-colors">Redes & Cámaras</a>
-        <a href="edu.html" class="text-slate-400 hover:text-white transition-colors">Educación</a>
-        <a href="portal.html" class="text-slate-400 hover:text-white transition-colors">Portal Wi-Fi</a>
-        <a href="index.html#cotizar" class="bg-brand-blue hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-bold transition-all shadow-md shadow-blue-600/20 hover:shadow-blue-600/40">
-          Solicitar Cotización
-        </a>
+      <nav class="flex items-center gap-6 text-sm font-medium">
+        <a href="index.html#soluciones" class="text-slate-400 hover:text-white transition-colors">Soluciones</a>
+        <a href="educacion.html" class="text-slate-400 hover:text-white transition-colors">Educación</a>
+        <a href="index.html#cotizar" class="bg-brand-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-all shadow-md shadow-blue-600/20">Solicitar Cotización</a>
       </nav>
-
     </div>
   </header>
 
-  <!-- Contenido Principal -->
-  <main class="max-w-6xl mx-auto px-4 py-16 w-full space-y-12">
-    <div class="text-center max-w-2xl mx-auto space-y-4">
-      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo de <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">Software</span></h1>
-      <p class="text-slate-400">Soluciones en la nube e instalables a la medida creadas para optimizar procesos comerciales y médicos.</p>
-    </div>
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 py-12 w-full space-y-16">
 
-    <div class="grid md:grid-cols-2 gap-8">
-      <!-- Producto 1: MediSync / MediAssist -->
-      <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-8 space-y-6 flex flex-col justify-between">
+    <!-- Hero Section -->
+    <section class="text-center max-w-3xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan rounded-full text-xs font-semibold uppercase tracking-wider">
+        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+        Ecosistema DODI SYSTEM
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+        Software y Conectividad <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">Especializada</span>
+      </h1>
+      <p class="text-slate-400 text-base sm:text-lg">
+        Explora soluciones tecnológicas creadas para resolver tareas concretas en la operación y comunicación de tu negocio en Acapulco.
+      </p>
+    </section>
+
+    <!-- Grilla de Productos -->
+    <section class="grid md:grid-cols-3 gap-8">
+
+      <!-- Tarjeta 1: DODI SYSTEM Wi-Fi Satelital -->
+      <article class="bg-brand-card rounded-2xl p-6 border border-slate-700/60 hover:border-brand-cyan/50 transition-all duration-300 flex flex-col justify-between shadow-xl group">
         <div class="space-y-4">
-          <div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-xl">
-            🩺
+          <div class="flex justify-between items-start">
+            <span class="bg-cyan-500/10 border border-cyan-500/30 text-brand-cyan text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Conectividad Móvil</span>
+            <span class="text-xs text-slate-400">Starlink</span>
           </div>
-          <h2 class="text-2xl font-bold text-white">MediSync / MediAssist</h2>
+          <h2 class="text-2xl font-extrabold text-white group-hover:text-brand-cyan transition-colors">Wi-Fi para Eventos</h2>
           <p class="text-slate-300 text-sm leading-relaxed">
-            Sistema integral para la administración de clínicas y consultorios médicos. Gestión de expedientes clínicos electrónicos, agenda de citas, historial de pacientes y facturación rápida.
+            Internet satelital de alta velocidad alimentado por estaciones portátiles EcoFlow para zonas con baja cobertura y eventos masivos.
           </p>
-          <ul class="text-xs text-slate-400 space-y-2">
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Control de citas y recordatorios</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Expediente clínico digital seguro</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Módulo de recetas y consultas</li>
+          <ul class="text-xs text-slate-400 space-y-2 pt-2">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Portal Cautivo personalizado con cobro o fichas
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Soporte para múltiples usuarios simultáneos
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Operación 100% independiente de la red eléctrica
+            </li>
           </ul>
         </div>
-        <a href="index.html#cotizar" class="block text-center bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all">Solicitar Demo</a>
-      </div>
+        <div class="pt-6">
+          <a href="wifi.html" class="block text-center w-full bg-brand-cyan hover:bg-cyan-400 text-brand-dark font-bold py-2.5 px-4 rounded-xl transition-all shadow-lg shadow-cyan-500/20">
+            Ver Portal Wi-Fi
+          </a>
+        </div>
+      </article>
 
-      <!-- Producto 2: SmartMargen -->
-      <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-8 space-y-6 flex flex-col justify-between">
+      <!-- Tarjeta 2: MediSync / MediAssist -->
+      <article class="bg-brand-card rounded-2xl p-6 border border-slate-700/60 hover:border-brand-blue/50 transition-all duration-300 flex flex-col justify-between shadow-xl group">
         <div class="space-y-4">
-          <div class="w-12 h-12 bg-brand-blue/10 border border-brand-blue/30 rounded-xl flex items-center justify-center text-brand-blue font-bold text-xl">
-            📊
+          <div class="flex justify-between items-start">
+            <span class="bg-blue-500/10 border border-blue-500/30 text-brand-blue text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Demo Disponible</span>
+            <span class="text-xs text-slate-400">Salud</span>
           </div>
-          <h2 class="text-2xl font-bold text-white">SmartMargen</h2>
+          <h2 class="text-2xl font-extrabold text-white group-hover:text-brand-blue transition-colors">MediSync</h2>
           <p class="text-slate-300 text-sm leading-relaxed">
-            Plataforma financiera y calculadora de márgenes para comercios y PyMEs. Calcula costos exactos, utilidad neta, precios de venta óptimos y proyecciones de ganancia.
+            Gestión integral para consultorios: control de pacientes, agenda de citas e historial clínico desde una interfaz limpia y rápida.
           </p>
-          <ul class="text-xs text-slate-400 space-y-2">
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Análisis automático de utilidades</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Estimación de costos fijos y variables</li>
-            <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Reportes exportables para toma de decisiones</li>
+          <ul class="text-xs text-slate-400 space-y-2 pt-2">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Agenda y control de citas
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Expediente clínico e historial digital
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Operación local sin dependencia de internet constante
+            </li>
           </ul>
         </div>
-        <a href="index.html#cotizar" class="block text-center bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all">Solicitar Demo</a>
-      </div>
-    </div>   
+        <div class="pt-6">
+          <a href="index.html#cotizar" data-product="MediSync" class="block text-center w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-2.5 px-4 rounded-xl transition-all shadow-lg shadow-blue-600/20">
+            Solicitar Demostración
+          </a>
+        </div>
+      </article>
+
+      <!-- Tarjeta 3: SmartMargen -->
+      <article class="bg-brand-card rounded-2xl p-6 border border-slate-700/60 hover:border-brand-emerald/50 transition-all duration-300 flex flex-col justify-between shadow-xl group">
+        <div class="space-y-4">
+          <div class="flex justify-between items-start">
+            <span class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Prototipo Funcional</span>
+            <span class="text-xs text-slate-400">Finanzas</span>
+          </div>
+          <h2 class="text-2xl font-extrabold text-white group-hover:text-emerald-400 transition-colors">SmartMargen</h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Herramienta financiera para calcular con precisión costos unitarios, utilidad estimada y márgenes de ganancia en compras por volumen.
+          </p>
+          <ul class="text-xs text-slate-400 space-y-2 pt-2">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Cálculo de costo unitario real con fletes/gastos
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Proyección automática de utilidad neta
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Simulación de escenarios de precios al público
+            </li>
+          </ul>
+        </div>
+        <div class="pt-6">
+          <a href="index.html#cotizar" data-product="SmartMargen" class="block text-center w-full bg-slate-800 hover:bg-emerald-500 hover:text-brand-dark text-white font-bold py-2.5 px-4 rounded-xl transition-all border border-slate-700">
+            Consultar Implementación
+          </a>
+        </div>
+      </article>
+
+    </section>
+<!-- Seccion donde se cargaran las tarjetas de productos -->
+<div class="container py-8 mx-auto px-4">
+  <h2 class="text-3xl font-bold mb-6 text-gray-800">Catálogo de Productos</h2>
+  
+  <!-- Indicador de carga -->
+  <div id="loading" class="text-center py-10 text-gray-500 font-semibold">
+    Cargando inventario...
+  </div>
+
+  <!-- Contenedor del catalogo en cuadricula -->
+  <div id="catalogo-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden">
+  </div>
+</div>
+
 <script>
+  // 1. REEMPLAZA ESTA CONSTANTE CON TU URL DE APPS SCRIPT (la que termina en /exec)
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec";
 
   // Función para obtener y renderizar los productos
@@ -198,21 +259,17 @@
   // Ejecutar al cargar la página
   document.addEventListener("DOMContentLoaded", cargarProductos);
 </script>
+
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950/80 py-8 mt-12">
+  <footer class="border-t border-slate-800 bg-slate-950/80 py-8">
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
       <span>© <span id="year">2026</span> DODI SYSTEM. Todos los derechos reservados.</span>
-      <div class="flex gap-4">
-        <a href="index.html" class="hover:text-slate-300 transition-colors">Inicio</a>
-        <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
-        <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
-        <a href="educacion.html" class="hover:text-slate-300 transition-colors">Educación</a>
-        <a href="wifi.html" class="hover:text-slate-300 transition-colors">Wi-Fi</a>
-      </div>
+      <a href="index.html" class="hover:text-slate-300 transition-colors">Volver al inicio</a>
     </div>
   </footer>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
