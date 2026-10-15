@@ -81,9 +81,12 @@
       <p class="text-slate-400">Soluciones tecnológicas, equipos y software a la medida desarrollados para optimizar tu negocio.</p>
     </div>
 
-    <!-- Contenedor 100% Dinámico desde Google Sheets -->
+    <!-- Contenedor del Catálogo Dinámico -->
     <div id="catalogo-productos" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Los productos se inyectan dinámicamente desde la hoja "Catalogo" -->
+      <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
+        <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
+        <p>Cargando productos desde Google Sheets...</p>
+      </div>
     </div>
   </main>
 
@@ -159,59 +162,69 @@
     </div>
   </footer>
 
-  <!-- SCRIPT DE CONEXIÓN CON GOOGLE SHEETS -->
+  <!-- SCRIPT CONECTOR CON GOOGLE SHEETS -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT
+    // PEGA AQUÍ TU URL FINAL DE GOOGLE APPS SCRIPT
     const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec";
 
     let carrito = [];
 
-    async function cargarProductosDesdeSheets() {
-      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("")) return;
+    async function cargarProductosDinamicos() {
+      const contenedor = document.getElementById('catalogo-productos');
+
+      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("TU_SCRIPT_ID_AQUI")) {
+        contenedor.innerHTML = `<p class="text-yellow-400 text-center col-span-full font-bold">Por favor configura la URL de tu Google Apps Script en productos.html</p>`;
+        return;
+      }
 
       try {
-        const res = await fetch(GOOGLE_SHEETS_API_URL);
+        const res = await fetch(GOOGLE_SHEETS_API_URL, { redirect: "follow" });
         const productos = await res.json();
-        
-        const contenedor = document.getElementById('catalogo-productos');
-        if (!productos || productos.length === 0) {
-          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos disponibles por el momento.</p>`;
+
+        if (!Array.isArray(productos) || productos.length === 0) {
+          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos activos en la hoja de cálculo por el momento.</p>`;
           return;
         }
 
         contenedor.innerHTML = "";
 
         productos.forEach(p => {
-          const tieneOferta = p.precio_regular && Number(p.precio_regular) > Number(p.precio);
+          const precioNum = Number(p.precio) || 0;
+          const precioRegNum = Number(p.precio_regular) || 0;
+          const tieneOferta = precioRegNum > precioNum;
+          
           const insignia = p.etiqueta_oferta ? `<span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${p.etiqueta_oferta}</span>` : '';
-          const imagenHTML = p.imagen_url && p.imagen_url.startsWith('http') 
+          
+          const imagenHTML = (p.imagen_url && String(p.imagen_url).startsWith('http'))
             ? `<img src="${p.imagen_url}" alt="${p.nombre}" class="w-full h-40 object-cover rounded-xl mb-4 border border-slate-700">`
-            : `<div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-xl mb-4">📦</div>`;
+            : `<div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-2xl mb-4">📦</div>`;
 
           contenedor.innerHTML += `
-            <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-6 space-y-4 flex flex-col justify-between relative">
+            <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-6 space-y-4 flex flex-col justify-between relative shadow-xl">
               <div>
                 ${imagenHTML}
-                <div class="flex justify-between items-start mb-2">
+                <div class="flex justify-between items-start mb-2 gap-2">
                   <h2 class="text-xl font-bold text-white">${p.nombre}</h2>
                   ${insignia}
                 </div>
                 <p class="text-slate-300 text-sm leading-relaxed mb-4">${p.descripcion || ''}</p>
                 <div class="flex items-baseline gap-2">
-                  <span class="text-2xl font-black text-brand-cyan">$${Number(p.precio).toLocaleString('es-MX')} MXN</span>
-                  ${tieneOferta ? `<span class="text-sm text-slate-500 line-through">$${Number(p.precio_regular).toLocaleString('es-MX')}</span>` : ''}
+                  <span class="text-2xl font-black text-brand-cyan">$${precioNum.toLocaleString('es-MX')} MXN</span>
+                  ${tieneOferta ? `<span class="text-sm text-slate-500 line-through">$${precioRegNum.toLocaleString('es-MX')}</span>` : ''}
                 </div>
               </div>
-              <button onclick="agregarAlCarrito('${p.nombre}', ${p.precio})" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg mt-4">
+              <button onclick="agregarAlCarrito('${p.nombre}', ${precioNum})" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg mt-4">
                 Agregar al Carrito
               </button>
             </div>
           `;
         });
+
       } catch (error) {
-        console.error("Error al cargar productos desde Google Sheets:", error);
+        console.error("Error al cargar productos:", error);
+        contenedor.innerHTML = `<p class="text-red-400 text-center col-span-full font-bold">Error al conectar con Google Sheets. Verifica que el despliegue esté como 'Cualquiera'.</p>`;
       }
     }
 
@@ -225,8 +238,10 @@
       const lista = document.getElementById('lista-carrito');
       const contador = document.getElementById('carrito-contador');
       const totalEl = document.getElementById('carrito-total');
+
       contador.innerText = carrito.length;
       lista.innerHTML = "";
+
       let total = 0;
       carrito.forEach((item, index) => {
         total += item.precio;
@@ -240,6 +255,7 @@
           </div>
         `;
       });
+
       totalEl.innerText = `$${total.toLocaleString('es-MX')} MXN`;
     }
 
@@ -271,6 +287,7 @@
 
     async function finalizarPedido(e) {
       e.preventDefault();
+
       const pedido = {
         productos: carrito.map(p => p.nombre).join(", "),
         total: carrito.reduce((sum, p) => sum + p.precio, 0),
@@ -282,26 +299,25 @@
         fecha: new Date().toLocaleString('es-MX')
       };
 
-      if (!GOOGLE_SHEETS_API_URL.includes("TU_APPS_SCRIPT")) {
-        try {
-          await fetch(GOOGLE_SHEETS_API_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pedido)
-          });
-        } catch (err) {
-          console.error("Error al registrar pedido:", err);
-        }
+      try {
+        await fetch(GOOGLE_SHEETS_API_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(pedido)
+        });
+      } catch (err) {
+        console.error("Error enviando pedido:", err);
       }
 
-      alert(`¡Muchas gracias ${pedido.nombre}! Tu pedido ha sido registrado. Te contactaremos por WhatsApp.`);
+      alert(`¡Muchas gracias ${pedido.nombre}! Tu pedido ha sido registrado correctamente. Te contactaremos por WhatsApp.`);
       carrito = [];
       actualizarCarritoUI();
       cerrarCheckout();
     }
 
-    cargarProductosDesdeSheets();
+    // Cargar catálogo dinámico
+    cargarProductosDinamicos();
   </script>
 </body>
 </html>
