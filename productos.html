@@ -4,213 +4,59 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Productos & Software | DODI SYSTEM</title>
-  <meta name="description" content="Catálogo de productos y soluciones tecnológicas de DODI SYSTEM.">
-  <link rel="icon" href="assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: {
-              dark: '#0B1120',
-              card: '#1E293B',
-              blue: '#2563EB',
-              cyan: '#06B6D4',
-              emerald: '#10B981'
-            }
+            brand: { dark: '#0B1120', card: '#1E293B', blue: '#2563EB', cyan: '#06B6D4', emerald: '#10B981' }
           }
         }
       }
     }
   </script>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
+<body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between">
 
-<!-- Botón Flotante de WhatsApp -->
-<a href="https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20quisiera%20solicitar%20información%20y%20una%20cotización." 
-   target="_blank" 
-   rel="noopener noreferrer"
-   class="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl shadow-emerald-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center group"
-   aria-label="Contactar por WhatsApp">
-  <svg class="w-7 h-7 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18.1-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18.1-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-  </svg>
-</a>
-
-<!-- Botón Flotante del Carrito -->
-<button id="btn-carrito-flotante" onclick="abrirCarrito()" class="fixed bottom-6 left-6 z-40 bg-brand-blue hover:bg-blue-600 text-white p-4 rounded-full shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center gap-2 group">
-  <svg class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
-  <span id="carrito-contador" class="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">0</span>
-</button>
-
-  <!-- Header / Navegación -->
-  <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a class="flex items-center gap-3.5 group" href="index.html">
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-cyan/20 to-brand-blue/20 border border-brand-cyan/30 flex items-center justify-center p-1.5 shadow-lg shadow-brand-blue/10 group-hover:scale-105 group-hover:border-brand-cyan transition-all duration-300">
-          <img src="assets/logo.png" alt="Logo DODI SYSTEM" class="w-full h-full object-contain filter drop-shadow" onerror="this.onerror=null; this.src='logo.png'; this.parentElement.innerHTML='<span class=\'font-black text-brand-cyan text-xl\'>DS</span>';">
-        </div>
-        <div class="flex flex-col">
-          <span class="font-black text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-cyan to-blue-500 drop-shadow-sm group-hover:from-brand-cyan group-hover:to-brand-blue transition-all">
-            DODI SYSTEM
-          </span>
-          <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1 group-hover:text-brand-cyan transition-colors">
-            Soluciones Digitales
-          </span>
-        </div>
-      </a>
-
-      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-        <a href="index.html" class="text-slate-400 hover:text-white transition-colors">Inicio</a>
-        <a href="productos.html" class="text-white hover:text-brand-cyan transition-colors">Productos</a>
-        <a href="redes-camaras.html" class="text-slate-400 hover:text-white transition-colors">Redes & Cámaras</a>
-        <a href="edu.html" class="text-slate-400 hover:text-white transition-colors">Educación</a>
-        <a href="portal.html" class="text-slate-400 hover:text-white transition-colors">Portal Wi-Fi</a>
-        <a href="index.html#cotizar" class="bg-brand-blue hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-bold transition-all shadow-md shadow-blue-600/20 hover:shadow-blue-600/40">
-          Solicitar Cotización
-        </a>
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-black text-2xl text-white">DODI SYSTEM</a>
+      <nav class="flex gap-6 text-sm font-semibold">
+        <a href="index.html" class="text-slate-400 hover:text-white">Inicio</a>
+        <a href="productos.html" class="text-white">Productos</a>
       </nav>
     </div>
   </header>
 
-  <!-- Contenido Principal -->
+  <!-- Contenido -->
   <main class="max-w-6xl mx-auto px-4 py-16 w-full space-y-12">
     <div class="text-center max-w-2xl mx-auto space-y-4">
-      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo de <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">Productos & Software</span></h1>
-      <p class="text-slate-400">Soluciones tecnológicas, equipos y software a la medida desarrollados para optimizar tu negocio.</p>
+      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo <span class="text-brand-cyan">Dodi System</span></h1>
+      <p class="text-slate-400">Controlado 100% desde Google Sheets.</p>
     </div>
 
     <!-- Contenedor Dinámico -->
     <div id="catalogo-productos" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
-        <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
-        <p>Cargando catálogo en tiempo real...</p>
-      </div>
+      <div class="col-span-full text-center py-12 text-slate-400">Cargando productos...</div>
     </div>
   </main>
 
-  <!-- MODAL DE CHECKOUT EN 2 PASOS -->
-  <div id="modal-checkout" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-lg w-full p-6 shadow-2xl relative text-slate-100">
-      <button onclick="cerrarCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-2xl">&times;</button>
-
-      <!-- PASO 1 -->
-      <div id="paso-1-carrito">
-        <h3 class="text-xl font-black text-white mb-3 flex items-center gap-2">🛒 Tu Carrito de Compras</h3>
-        <div id="lista-carrito" class="space-y-3 max-h-56 overflow-y-auto mb-4 border-b border-slate-700 pb-4 pr-1"></div>
-        <div class="flex justify-between items-center mb-4">
-          <span class="font-bold text-slate-400">Total a Pagar:</span>
-          <span id="carrito-total" class="text-2xl font-black text-brand-cyan">$0 MXN</span>
-        </div>
-        <div class="mb-5">
-          <label class="block text-xs font-bold text-slate-300 uppercase mb-2">Selecciona tu Forma de Pago:</label>
-          <select id="metodo-pago-seleccionado" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-brand-cyan text-white focus:outline-none">
-            <option value="Transferencia SPEI">Transferencia SPEI (Sin comisiones)</option>
-            <option value="Depósito OXXO / Banco">Depósito en OXXO / Ventanilla</option>
-            <option value="Pago Contra Entrega">Pago contra entrega en Acapulco (Efectivo / Terminal)</option>
-          </select>
-        </div>
-        <button onclick="irAlPaso2Datos()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all">Pagar y Registrar Datos de Envío</button>
-      </div>
-
-      <!-- PASO 2 -->
-      <div id="paso-2-envio" class="hidden">
-        <div id="instrucciones-pago" class="bg-slate-900/90 border border-brand-cyan/40 p-4 rounded-xl mb-4 text-xs space-y-1">
-          <p class="font-bold text-brand-cyan text-sm mb-1">💳 Datos de Cuenta para Realizar tu Pago:</p>
-          <p class="text-slate-300"><strong>Banco:</strong> BBVA</p>
-          <p class="text-slate-300"><strong>CLABE SPEI:</strong> <span class="font-mono bg-slate-800 px-1.5 py-0.5 rounded text-brand-cyan">0121 8001 2345 6789 01</span></p>
-          <p class="text-slate-300"><strong>Titular:</strong> DODI SYSTEM</p>
-        </div>
-        <h4 class="text-md font-black text-white mb-2">Datos de Entrega (Sin Registro)</h4>
-        <form id="form-datos-envio" onsubmit="finalizarPedido(event)" class="space-y-3">
-          <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nombre Completo</label>
-            <input type="text" id="envio-nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Dirección de Entrega y Referencias (Acapulco)</label>
-            <textarea id="envio-direccion" required rows="2" placeholder="Calle, Número, Colonia" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none"></textarea>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">WhatsApp</label>
-              <input type="tel" id="envio-telefono" required placeholder="7441234567" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Correo</label>
-              <input type="email" id="envio-correo" required placeholder="correo@email.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-            </div>
-          </div>
-          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 rounded-xl shadow-lg transition-all mt-2">Confirmar Pedido & Enviar Datos</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950/80 py-8 mt-12">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-      <span>© <span id="year">2026</span> DODI SYSTEM. Todos los derechos reservados.</span>
-      <div class="flex gap-4">
-        <a href="index.html" class="hover:text-slate-300 transition-colors">Inicio</a>
-        <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
-        <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
-        <a href="edu.html" class="hover:text-slate-300 transition-colors">Educación</a>
-        <a href="portal.html" class="hover:text-slate-300 transition-colors">Wi-Fi</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- SCRIPT DE LECTURA DIRECTA CSV (CORREGIDO) -->
+  <!-- Script de Conexión -->
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT QUE TERMINA EN /exec
+    const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbyyWp-VI74gfkG5Qf7Qns0EbmksA41R-bmaTIrvn2NmuaE6bSSssdOZU-Et2oi0dz6r1Q/exec";
 
-    // PEGA AQUÍ TU ENLACE PÚBLICO CSV DE GOOGLE SHEETS
-    const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pubhtml";
-
-    let carrito = [];
-
-    async function cargarCatalogoCSV() {
+    async function cargarCatalogo() {
       const contenedor = document.getElementById('catalogo-productos');
 
-      if (!GOOGLE_SHEETS_CSV_URL || GOOGLE_SHEETS_CSV_URL.includes("AQUÍ_PEGA")) {
-        contenedor.innerHTML = `<p class="text-yellow-400 text-center col-span-full font-bold">Por favor configura tu enlace CSV publicado en productos.html</p>`;
-        return;
-      }
-
       try {
-        const response = await fetch(GOOGLE_SHEETS_CSV_URL);
-        const csvText = await response.text();
-        
-        const lineas = csvText.split('\n').filter(l => l.trim() !== '');
-        if (lineas.length < 2) {
-          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos en la hoja de cálculo.</p>`;
-          return;
-        }
+        const respuesta = await fetch(GOOGLE_SHEETS_API_URL, { redirect: "follow" });
+        const productos = await respuesta.json();
 
-        // Limpiar cabeceras
-        const headers = lineas[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
-        const productos = [];
-
-        for (let i = 1; i < lineas.length; i++) {
-          const valores = lineas[i].split(',');
-          const obj = {};
-          
-          headers.forEach((h, index) => {
-            let val = valores[index] ? valores[index].trim().replace(/^"|"$/g, '') : '';
-            obj[h] = val;
-          });
-
-          // Verificación flexible del estado (acepta 'activo', 'Activo', etc.)
-          const estadoCelda = obj.estado ? obj.estado.toLowerCase().trim() : '';
-          if (estadoCelda === 'activo') {
-            productos.push(obj);
-          }
-        }
-
-        if (productos.length === 0) {
-          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos con estado 'activo'.</p>`;
+        if (!Array.isArray(productos) || productos.length === 0) {
+          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos activos disponibles.</p>`;
           return;
         }
 
@@ -220,106 +66,33 @@
           const precioNum = Number(p.precio) || 0;
           const precioRegNum = Number(p.precio_regular) || 0;
           const tieneOferta = precioRegNum > precioNum;
-          
-          const insignia = p.etiqueta_oferta ? `<span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${p.etiqueta_oferta}</span>` : '';
-          
-          const imagenHTML = (p.imagen_url && p.imagen_url.startsWith('http'))
-            ? `<img src="${p.imagen_url}" alt="${p.nombre}" class="w-full h-40 object-cover rounded-xl mb-4 border border-slate-700">`
-            : `<div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-2xl mb-4">📦</div>`;
+          const insignia = p.etiqueta_oferta ? `<span class="bg-red-500/20 text-red-400 text-[10px] font-bold px-2 py-1 rounded uppercase">${p.etiqueta_oferta}</span>` : '';
 
           contenedor.innerHTML += `
-            <div class="bg-brand-card rounded-2xl border border-slate-700/80 p-6 space-y-4 flex flex-col justify-between relative shadow-xl">
+            <div class="bg-brand-card rounded-2xl border border-slate-700 p-6 space-y-4 flex flex-col justify-between">
               <div>
-                ${imagenHTML}
-                <div class="flex justify-between items-start mb-2 gap-2">
+                <div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-2xl mb-4">📦</div>
+                <div class="flex justify-between items-start mb-2">
                   <h2 class="text-xl font-bold text-white">${p.nombre}</h2>
                   ${insignia}
                 </div>
-                <p class="text-slate-300 text-sm leading-relaxed mb-4">${p.descripcion || ''}</p>
+                <p class="text-slate-300 text-sm mb-4">${p.descripcion || ''}</p>
                 <div class="flex items-baseline gap-2">
                   <span class="text-2xl font-black text-brand-cyan">$${precioNum.toLocaleString('es-MX')} MXN</span>
                   ${tieneOferta ? `<span class="text-sm text-slate-500 line-through">$${precioRegNum.toLocaleString('es-MX')}</span>` : ''}
                 </div>
               </div>
-              <button onclick="agregarAlCarrito('${p.nombre}', ${precioNum})" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg mt-4">
-                Agregar al Carrito
-              </button>
             </div>
           `;
         });
 
-      } catch (error) {
-        console.error("Error al cargar CSV:", error);
-        contenedor.innerHTML = `<p class="text-red-400 text-center col-span-full font-bold">Error al cargar el catálogo web.</p>`;
+      } catch (err) {
+        console.error(err);
+        contenedor.innerHTML = `<p class="text-red-400 text-center col-span-full">Error al conectar con la hoja de cálculo.</p>`;
       }
     }
 
-    function agregarAlCarrito(nombre, precio) {
-      carrito.push({ nombre, precio: Number(precio) });
-      actualizarCarritoUI();
-      abrirCarrito();
-    }
-
-    function actualizarCarritoUI() {
-      const lista = document.getElementById('lista-carrito');
-      const contador = document.getElementById('carrito-contador');
-      const totalEl = document.getElementById('carrito-total');
-
-      contador.innerText = carrito.length;
-      lista.innerHTML = "";
-
-      let total = 0;
-      carrito.forEach((item, index) => {
-        total += item.precio;
-        lista.innerHTML += `
-          <div class="flex justify-between items-center text-sm py-1 border-b border-slate-800">
-            <span class="font-semibold text-slate-200">${item.nombre}</span>
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-brand-cyan">$${item.precio.toLocaleString('es-MX')}</span>
-              <button onclick="eliminarDelCarrito(${index})" class="text-red-400 font-bold text-lg">&times;</button>
-            </div>
-          </div>
-        `;
-      });
-
-      totalEl.innerText = `$${total.toLocaleString('es-MX')} MXN`;
-    }
-
-    function eliminarDelCarrito(index) {
-      carrito.splice(index, 1);
-      actualizarCarritoUI();
-    }
-
-    function abrirCarrito() {
-      if (carrito.length === 0) {
-        alert("Tu carrito está vacío. Elige un producto para continuar.");
-        return;
-      }
-      document.getElementById('modal-checkout').classList.remove('hidden');
-      document.getElementById('modal-checkout').classList.add('flex');
-      document.getElementById('paso-1-carrito').classList.remove('hidden');
-      document.getElementById('paso-2-envio').classList.add('hidden');
-    }
-
-    function cerrarCheckout() {
-      document.getElementById('modal-checkout').classList.add('hidden');
-      document.getElementById('modal-checkout').classList.remove('flex');
-    }
-
-    function irAlPaso2Datos() {
-      document.getElementById('paso-1-carrito').classList.add('hidden');
-      document.getElementById('paso-2-envio').classList.remove('hidden');
-    }
-
-    function finalizarPedido(e) {
-      e.preventDefault();
-      alert("¡Pedido registrado correctamente! Te contactaremos por WhatsApp.");
-      carrito = [];
-      actualizarCarritoUI();
-      cerrarCheckout();
-    }
-
-    cargarCatalogoCSV();
+    cargarCatalogo();
   </script>
 </body>
 </html>
