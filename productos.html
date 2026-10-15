@@ -162,11 +162,11 @@
     </div>
   </footer>
 
-  <!-- SCRIPT DE LECTURA DIRECTA CSV (SIN APPS SCRIPT) -->
+  <!-- SCRIPT DE LECTURA DIRECTA CSV (CORREGIDO) -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // PEGA AQUÍ EL ENLACE PÚBLICO CSV DE GOOGLE SHEETS
+    // PEGA AQUÍ TU ENLACE PÚBLICO CSV DE GOOGLE SHEETS
     const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pubhtml";
 
     let carrito = [];
@@ -189,13 +189,12 @@
           return;
         }
 
-        // Procesar cabeceras y filas del CSV
+        // Limpiar cabeceras
         const headers = lineas[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
         const productos = [];
 
         for (let i = 1; i < lineas.length; i++) {
-          // Manejo básico de separación por comas en CSV
-          const valores = lineas[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || lineas[i].split(',');
+          const valores = lineas[i].split(',');
           const obj = {};
           
           headers.forEach((h, index) => {
@@ -203,7 +202,9 @@
             obj[h] = val;
           });
 
-          if (obj.estado && obj.estado.toLowerCase() === 'activo') {
+          // Verificación flexible del estado (acepta 'activo', 'Activo', etc.)
+          const estadoCelda = obj.estado ? obj.estado.toLowerCase().trim() : '';
+          if (estadoCelda === 'activo') {
             productos.push(obj);
           }
         }
