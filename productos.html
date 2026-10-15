@@ -169,7 +169,7 @@
     let carrito = [];
 
     async function cargarProductosDesdeSheets() {
-      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec")) return;
+      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("")) return;
 
       try {
         const res = await fetch(GOOGLE_SHEETS_API_URL);
