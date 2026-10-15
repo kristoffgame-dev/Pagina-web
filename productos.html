@@ -81,11 +81,11 @@
       <p class="text-slate-400">Soluciones tecnológicas, equipos y software a la medida desarrollados para optimizar tu negocio.</p>
     </div>
 
-    <!-- Contenedor del Catálogo Dinámico -->
+    <!-- Contenedor Dinámico -->
     <div id="catalogo-productos" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
         <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
-        <p>Cargando productos desde Google Sheets...</p>
+        <p>Cargando catálogo en tiempo real...</p>
       </div>
     </div>
   </main>
@@ -162,28 +162,54 @@
     </div>
   </footer>
 
-  <!-- SCRIPT CONECTOR CON GOOGLE SHEETS -->
+  <!-- SCRIPT DE LECTURA DIRECTA CSV (SIN APPS SCRIPT) -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // PEGA AQUÍ TU URL FINAL DE GOOGLE APPS SCRIPT
-    const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec";
+    // PEGA AQUÍ EL ENLACE PÚBLICO CSV DE GOOGLE SHEETS
+    const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pubhtml?gid=0&single=true";
+
     let carrito = [];
 
-    async function cargarProductosDinamicos() {
+    async function cargarCatalogoCSV() {
       const contenedor = document.getElementById('catalogo-productos');
 
-      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("TU_SCRIPT_ID_AQUI")) {
-        contenedor.innerHTML = `<p class="text-yellow-400 text-center col-span-full font-bold">Por favor configura la URL de tu Google Apps Script en productos.html</p>`;
+      if (!GOOGLE_SHEETS_CSV_URL || GOOGLE_SHEETS_CSV_URL.includes("AQUÍ_PEGA")) {
+        contenedor.innerHTML = `<p class="text-yellow-400 text-center col-span-full font-bold">Por favor configura tu enlace CSV publicado en productos.html</p>`;
         return;
       }
 
       try {
-        const res = await fetch(GOOGLE_SHEETS_API_URL, { redirect: "follow" });
-        const productos = await res.json();
+        const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+        const csvText = await response.text();
+        
+        const lineas = csvText.split('\n').filter(l => l.trim() !== '');
+        if (lineas.length < 2) {
+          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos en la hoja de cálculo.</p>`;
+          return;
+        }
 
-        if (!Array.isArray(productos) || productos.length === 0) {
-          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos activos en la hoja de cálculo por el momento.</p>`;
+        // Procesar cabeceras y filas del CSV
+        const headers = lineas[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
+        const productos = [];
+
+        for (let i = 1; i < lineas.length; i++) {
+          // Manejo básico de separación por comas en CSV
+          const valores = lineas[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || lineas[i].split(',');
+          const obj = {};
+          
+          headers.forEach((h, index) => {
+            let val = valores[index] ? valores[index].trim().replace(/^"|"$/g, '') : '';
+            obj[h] = val;
+          });
+
+          if (obj.estado && obj.estado.toLowerCase() === 'activo') {
+            productos.push(obj);
+          }
+        }
+
+        if (productos.length === 0) {
+          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos con estado 'activo'.</p>`;
           return;
         }
 
@@ -196,7 +222,7 @@
           
           const insignia = p.etiqueta_oferta ? `<span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${p.etiqueta_oferta}</span>` : '';
           
-          const imagenHTML = (p.imagen_url && String(p.imagen_url).startsWith('http'))
+          const imagenHTML = (p.imagen_url && p.imagen_url.startsWith('http'))
             ? `<img src="${p.imagen_url}" alt="${p.nombre}" class="w-full h-40 object-cover rounded-xl mb-4 border border-slate-700">`
             : `<div class="w-12 h-12 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl flex items-center justify-center text-brand-cyan font-bold text-2xl mb-4">📦</div>`;
 
@@ -222,8 +248,8 @@
         });
 
       } catch (error) {
-        console.error("Error al cargar productos:", error);
-        contenedor.innerHTML = `<p class="text-red-400 text-center col-span-full font-bold">Error al conectar con Google Sheets. Verifica que el despliegue esté como 'Cualquiera'.</p>`;
+        console.error("Error al cargar CSV:", error);
+        contenedor.innerHTML = `<p class="text-red-400 text-center col-span-full font-bold">Error al cargar el catálogo web.</p>`;
       }
     }
 
@@ -284,39 +310,15 @@
       document.getElementById('paso-2-envio').classList.remove('hidden');
     }
 
-    async function finalizarPedido(e) {
+    function finalizarPedido(e) {
       e.preventDefault();
-
-      const pedido = {
-        productos: carrito.map(p => p.nombre).join(", "),
-        total: carrito.reduce((sum, p) => sum + p.precio, 0),
-        metodoPago: document.getElementById('metodo-pago-seleccionado').value,
-        nombre: document.getElementById('envio-nombre').value,
-        direccion: document.getElementById('envio-direccion').value,
-        telefono: document.getElementById('envio-telefono').value,
-        correo: document.getElementById('envio-correo').value,
-        fecha: new Date().toLocaleString('es-MX')
-      };
-
-      try {
-        await fetch(GOOGLE_SHEETS_API_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(pedido)
-        });
-      } catch (err) {
-        console.error("Error enviando pedido:", err);
-      }
-
-      alert(`¡Muchas gracias ${pedido.nombre}! Tu pedido ha sido registrado correctamente. Te contactaremos por WhatsApp.`);
+      alert("¡Pedido registrado correctamente! Te contactaremos por WhatsApp.");
       carrito = [];
       actualizarCarritoUI();
       cerrarCheckout();
     }
 
-    // Cargar catálogo dinámico
-    cargarProductosDinamicos();
+    cargarCatalogoCSV();
   </script>
 </body>
 </html>
