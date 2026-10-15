@@ -164,12 +164,12 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT
-    const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbx_TU_APPS_SCRIPT_URL_AQUI/exec";
+    const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec";
 
     let carrito = [];
 
     async function cargarProductosDesdeSheets() {
-      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("TU_APPS_SCRIPT")) return;
+      if (!GOOGLE_SHEETS_API_URL || GOOGLE_SHEETS_API_URL.includes("https://script.google.com/macros/s/AKfycbxLQbb1p4fr63ANRjetJfyqo2vkF-5aPTlQsIrqjemPEv3rEU_-WDeLjI1TYcLhTLq7-Q/exec")) return;
 
       try {
         const res = await fetch(GOOGLE_SHEETS_API_URL);
