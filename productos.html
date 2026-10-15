@@ -4,8 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Productos & Software | DODI SYSTEM</title>
-  <meta name="description" content="Catálogo de productos de software a la medida desarrollados por DODI SYSTEM.">
+  <meta name="description" content="Catálogo de productos de software e infraestructura por DODI SYSTEM.">
   <link rel="icon" href="assets/logo.png">
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -24,6 +26,9 @@
       }
     }
   </script>
+
+  <!-- Stripe JS SDK Oficial -->
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
 
@@ -44,7 +49,7 @@
   <span id="carrito-contador" class="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">0</span>
 </button>
 
-  <!-- Header / Navegación Unificada -->
+  <!-- Header / Navegación -->
   <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a class="flex items-center gap-3.5 group" href="index.html">
@@ -77,8 +82,8 @@
   <!-- Contenido Principal -->
   <main class="max-w-6xl mx-auto px-4 py-16 w-full space-y-12">
     <div class="text-center max-w-2xl mx-auto space-y-4">
-      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo de <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">Software</span></h1>
-      <p class="text-slate-400">Soluciones en la nube e instalables a la medida creadas para optimizar procesos comerciales y médicos.</p>
+      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo & <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">E-Commerce Global</span></h1>
+      <p class="text-slate-400">Desarrollo de software a la medida, licencias y productos tecnológicos con envío directo.</p>
     </div>
 
     <!-- Contenedor Dinámico de Productos -->
@@ -90,7 +95,7 @@
     </div>
   </main>
 
-  <!-- MODAL DE CHECKOUT EN 2 PASOS (CARRITO Y PAGOS) -->
+  <!-- MODAL DE CHECKOUT STRIPE -->
   <div id="modal-checkout" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
     <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-lg w-full p-6 shadow-2xl relative text-slate-100">
       <button onclick="cerrarCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-2xl">&times;</button>
@@ -101,59 +106,22 @@
         <div id="lista-carrito" class="space-y-3 max-h-56 overflow-y-auto mb-4 border-b border-slate-700 pb-4 pr-1"></div>
         
         <div class="flex justify-between items-center mb-4">
-          <span class="font-bold text-slate-400">Total a Pagar:</span>
+          <span class="font-bold text-slate-400">Total:</span>
           <span id="carrito-total" class="text-2xl font-black text-brand-cyan">$0 MXN</span>
         </div>
 
         <div class="mb-5">
           <label class="block text-xs font-bold text-slate-300 uppercase mb-2">Selecciona tu Método de Pago:</label>
-          <select id="metodo-pago" onchange="cambiarMetodoPago()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-brand-cyan text-white focus:outline-none">
-            <option value="Tarjeta">Tarjeta de Crédito / Débito (En línea)</option>
-            <option value="SPEI">Transferencia Bancaria SPEI (Sin comisiones)</option>
-            <option value="OXXO">Pago en efectivo / OXXO Pay</option>
+          <select id="metodo-pago" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-brand-cyan text-white focus:outline-none">
+            <option value="Stripe">Pay / GPay / Tarjeta Internacional / SPEI (Stripe)</option>
+            <option value="SPEI_Directo">Transferencia Directa a BBVA (0% Comisión)</option>
           </select>
         </div>
 
-        <!-- Campos de Tarjeta (Se muestran solo si se elige Tarjeta) -->
-        <div id="campos-tarjeta" class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl mb-4 space-y-3">
-          <p class="text-xs font-bold text-brand-cyan uppercase">Información de Tarjeta Segura</p>
-          <div>
-            <input type="text" placeholder="Número de Tarjeta (4152 ...)" maxlength="19" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none">
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <input type="text" placeholder="MM/AA" maxlength="5" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none">
-            <input type="password" placeholder="CVV" maxlength="4" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none">
-          </div>
-        </div>
-
-        <button onclick="irAlPaso2Envio()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all">Continuar con Datos de Entrega</button>
-      </div>
-
-      <!-- PASO 2: Datos de Contacto y Confirmación -->
-      <div id="paso-2-envio" class="hidden">
-        <div id="info-pago-instrucciones" class="bg-slate-900 border border-brand-cyan/40 p-3 rounded-xl mb-3 text-xs text-slate-300"></div>
-        <h4 class="text-md font-black text-white mb-2">Datos para Entrega de Licencia / Software</h4>
-        <form id="form-datos-envio" onsubmit="finalizarPedido(event)" class="space-y-3">
-          <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nombre Completo</label>
-            <input type="text" id="envio-nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Empresa / Negocio o Referencias</label>
-            <textarea id="envio-direccion" required rows="2" placeholder="Nombre de tu negocio o domicilio" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none"></textarea>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">WhatsApp</label>
-              <input type="tel" id="envio-telefono" required placeholder="7441234567" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Correo Electrónico</label>
-              <input type="email" id="envio-correo" required placeholder="correo@empresa.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-            </div>
-          </div>
-          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3 rounded-xl shadow-lg transition-all mt-2">Completar Compra & Generar Pedido</button>
-        </form>
+        <button onclick="procesarPagoStripe()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+          <span>Procesar Pago Seguro</span>
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -166,26 +134,29 @@
         <a href="index.html" class="hover:text-slate-300 transition-colors">Inicio</a>
         <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
         <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
-        <a href="educacion.html" class="hover:text-slate-300 transition-colors">Educación</a>
-        <a href="wifi.html" class="hover:text-slate-300 transition-colors">Wi-Fi</a>
       </div>
     </div>
   </footer>
 
-  <!-- SCRIPT DE GOOGLE SHEETS + CARRITO & PAGOS -->
+  <!-- SCRIPT DE CONFIGURACIÓN & CHECKOUT -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT O CSV
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyyWp-VI74gfkG5Qf7Qns0EbmksA41R-bmaTIrvn2NmuaE6bSSssdOZU-Et2oi0dz6r1Q/exec";
+    // 1. CONFIGURACIONES INICIALES
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyyWp-VI74gfkG5Qf7Qns0EbmksA41R-bmaTIrvn2NmuaE6bSSssdOZU-Et2oi0dz6r1Q/exec"; 
+    const STRIPE_PUBLIC_KEY = "pk_test_51UQeFLJORKcJ6dGN67I7HNL3djuYbziTcfiNi0LSJr3s4W5JMAiLo1YhozguhtmFr4YnWxasoiakKA0Ri5iK3JvM00enYVMFFU";
+    
+    // Inicializar Stripe JS
+    const stripe = Stripe(STRIPE_PUBLIC_KEY);
 
     let carrito = [];
 
+    // 2. CARGA DINÁMICA DE PRODUCTOS
     async function cargarCatalogoDinamico() {
       const contenedor = document.getElementById('catalogo-grid');
 
       if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL.includes("PEGAR_AQUI")) {
-        contenedor.innerHTML = `<p class="text-yellow-400 text-center col-span-full font-bold">Por favor configura tu enlace de Google Sheets en el script.</p>`;
+        contenedor.innerHTML = `<p class="text-yellow-400 text-center col-span-full font-bold">Por favor ingresa la URL de tu Google Sheets en el script.</p>`;
         return;
       }
 
@@ -194,7 +165,7 @@
         const productos = await respuesta.json();
 
         if (!Array.isArray(productos) || productos.length === 0) {
-          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos activos disponibles en este momento.</p>`;
+          contenedor.innerHTML = `<p class="text-slate-400 text-center col-span-full">No hay productos disponibles en este momento.</p>`;
           return;
         }
 
@@ -235,11 +206,11 @@
 
       } catch (error) {
         console.error("Error al cargar productos:", error);
-        contenedor.innerHTML = `<p class="text-red-400 text-center col-span-full font-bold">Error al sincronizar con Google Sheets. Verifica los permisos de acceso.</p>`;
+        contenedor.innerHTML = `<p class="text-red-400 text-center col-span-full font-bold">Error al sincronizar con Google Sheets.</p>`;
       }
     }
 
-    // Funciones del Carrito y Modal
+    // 3. FUNCIONES DEL CARRITO DE COMPRAS
     function agregarAlCarrito(nombre, precio) {
       carrito.push({ nombre, precio: Number(precio) });
       actualizarCarritoUI();
@@ -283,8 +254,6 @@
       }
       document.getElementById('modal-checkout').classList.remove('hidden');
       document.getElementById('modal-checkout').classList.add('flex');
-      document.getElementById('paso-1-carrito').classList.remove('hidden');
-      document.getElementById('paso-2-envio').classList.add('hidden');
     }
 
     function cerrarCheckout() {
@@ -292,47 +261,27 @@
       document.getElementById('modal-checkout').classList.remove('flex');
     }
 
-    function cambiarMetodoPago() {
+    // 4. INTEGRACIÓN Y PAGO CON STRIPE
+    function procesarPagoStripe() {
       const metodo = document.getElementById('metodo-pago').value;
-      const camposTarjeta = document.getElementById('campos-tarjeta');
-      if (metodo === 'Tarjeta') {
-        camposTarjeta.classList.remove('hidden');
-      } else {
-        camposTarjeta.classList.add('hidden');
-      }
-    }
 
-    function irAlPaso2Envio() {
-      const metodo = document.getElementById('metodo-pago').value;
-      const infoPago = document.getElementById('info-pago-instrucciones');
-
-      if (metodo === 'SPEI') {
-        infoPago.innerHTML = `<strong>SPEI sin comisiones:</strong> CLABE BBVA: <span class="text-brand-cyan font-mono">0121 8001 2345 6789 01</span> (DODI SYSTEM)`;
-      } else if (metodo === 'OXXO') {
-        infoPago.innerHTML = `<strong>OXXO Pay:</strong> Se generará una referencia de pago en ventanilla al confirmar tus datos.`;
-      } else {
-        infoPago.innerHTML = `<strong>Pago con Tarjeta:</strong> Procesamiento seguro en línea acreditado al instante.`;
+      if (metodo === 'SPEI_Directo') {
+        const resumen = carrito.map(i => `- ${i.nombre}: $${i.precio} MXN`).join('\n');
+        const total = carrito.reduce((sum, item) => sum + item.precio, 0);
+        
+        alert(`Para pago por Transferencia Directa a BBVA:\n\nCLABE: 0121 8001 2345 6789 01\nTitular: DODI SYSTEM\nMonto Total: $${total.toLocaleString('es-MX')} MXN\n\nPresiona OK para confirmar tu orden por WhatsApp.`);
+        
+        const mensajeWA = encodeURIComponent(`Hola DODI SYSTEM, quiero pagar mediante transferencia bancaria BBVA los siguientes artículos:\n\n${resumen}\n\nTotal: $${total} MXN`);
+        window.open(`https://wa.me/527442320022?text=${mensajeWA}`, '_blank');
+        return;
       }
 
-      document.getElementById('paso-1-carrito').classList.add('hidden');
-      document.getElementById('paso-2-envio').classList.remove('hidden');
+      // Proceso de Checkout con Stripe
+      alert("Iniciando pasarela de pago segura con Stripe (Pay, GPay y Tarjetas)...");
+      // Nota: Cuando estés listo para la clave `pk_live_...`, aquí redirigimos al Checkout Session oficial de Stripe.
     }
 
-    function finalizarPedido(e) {
-      e.preventDefault();
-      const nombre = document.getElementById('envio-nombre').value;
-      const tel = document.getElementById('envio-telefono').value;
-      const metodo = document.getElementById('metodo-pago').value;
-
-      alert(`¡Gracias por tu compra, ${nombre}! Tu pedido con método (${metodo}) ha sido procesado con éxito. Te hemos enviado los detalles a tu WhatsApp (${tel}).`);
-      
-      carrito = [];
-      actualizarCarritoUI();
-      cerrarCheckout();
-      document.getElementById('form-datos-envio').reset();
-    }
-
-    // Inicializar carga de productos
+    // Inicializar catálogo
     cargarCatalogoDinamico();
   </script>
 </body>
