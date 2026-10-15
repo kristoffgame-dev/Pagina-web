@@ -108,7 +108,7 @@
     // PEGA AQUÍ TU ENLACE DE GOOGLE SHEETS (La URL de tu Apps Script o tu enlace CSV publicado)
     const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyyWp-VI74gfkG5Qf7Qns0EbmksA41R-bmaTIrvn2NmuaE6bSSssdOZU-Et2oi0dz6r1Q/exec";
 
-    async function cargarCatalogoDinamico() {
+   async function cargarCatalogoDinamico() {
       const contenedor = document.getElementById('catalogo-grid');
 
       if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL.includes("PEGAR_AQUI")) {
@@ -132,7 +132,7 @@
           const tienePrecio = precioNum > 0;
           const precioTexto = tienePrecio ? `$${precioNum.toLocaleString('es-MX')} MXN` : '';
 
-          // Validación de la etiqueta (si existe en Google Sheets, la dibuja)
+          // Validación de la etiqueta
           const etiquetaHTML = p.etiqueta_oferta 
             ? `<span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">${p.etiqueta_oferta}</span>` 
             : '';
@@ -153,9 +153,6 @@
                 <p class="text-slate-300 text-sm leading-relaxed">
                   ${p.descripcion || ''}
                 </p>
-                <ul class="text-xs text-slate-400 space-y-2">
-                  <li class="flex items-center gap-2"><span class="text-brand-emerald">✓</span> Actualizado desde Google Sheets</li>
-                </ul>
               </div>
               <a href="index.html#cotizar" class="block text-center bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Comprar</a>
             </div>
