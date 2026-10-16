@@ -135,6 +135,18 @@
     </div>
   </footer>
 
+<!-- Modal para Reproducir Video en Grande -->
+<div id="modal-video" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+  <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
+    <!-- Botón de cerrar -->
+    <button onclick="cerrarVideoGrande()" class="absolute top-3 right-3 z-10 bg-slate-800/80 hover:bg-red-600 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center transition-colors text-xl">
+      &times;
+    </button>
+    <!-- Contenedor donde se incrustará el video con sonido y controles -->
+    <div id="contenido-video-modal" class="w-full aspect-video bg-black"></div>
+  </div>
+</div>
+
   <script>
  let carrito = [];
 
@@ -145,7 +157,6 @@ function verificarEstadoPago() {
 
   if (status === 'failure') {
     alert("⚠️ Tu pago no pudo ser completado o fue rechazado por el banco.\n\nPuedes intentarlo nuevamente con otro método de pago o seleccionar Transferencia Directa BBVA.");
-    // Limpiar parámetros de la URL de forma limpia
     window.history.replaceState({}, document.title, window.location.pathname);
   } else if (status === 'pending') {
     alert("⏳ Tu pago se encuentra PENDIENTE.\n\nSi elegiste pagar en efectivo (OXXO/7-Eleven) o por transferencia, recuerda completar tu depósito con la ficha generada por Mercado Pago. ¡Muchas gracias!");
@@ -186,7 +197,6 @@ async function cargarCatalogoDinamico() {
 }
 
 function renderizarProductos(productos) {
-  // Guardamos los productos globalmente para poder verlos en la consola si los necesitas
   window.productosGlobal = productos;
 
   const contenedor = document.getElementById('catalogo-grid');
@@ -195,11 +205,6 @@ function renderizarProductos(productos) {
   contenedor.innerHTML = '';
 
   productos.forEach((prod, index) => {
-    if (index === 0) {
-      console.log("Llaves exactas del primer producto:", Object.keys(prod));
-      console.log("Objeto completo del primer producto:", prod);
-    }
-
     const imagenSrc = prod.imagen_url || prod.imagen || '';
     const videoSrc = prod.video_url || prod.video || '';
     
@@ -211,28 +216,31 @@ function renderizarProductos(productos) {
     const stockReal = parseInt(String(valorStockCrudo).replace(/[^0-9]/g, ''), 10);
     const stock = !isNaN(stockReal) ? stockReal : 0;
 
-   let contenidoVisual = '';
+    let contenidoVisual = '';
+    
     if (videoSrc && videoSrc.trim() !== '') {
-      // Verificamos si es un enlace de YouTube para usar el formato embed correcto
-      let urlEmbed = videoSrc;
+      let videoId = '';
       if (videoSrc.includes('youtu.be/')) {
-        const videoId = videoSrc.split('youtu.be/')[1].split('?')[0];
-        urlEmbed = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1`;
+        videoId = videoSrc.split('youtu.be/')[1].split('?')[0];
       } else if (videoSrc.includes('youtube.com/watch')) {
         const urlParams = new URLSearchParams(new URL(videoSrc).search);
-        const videoId = urlParams.get('v');
-        urlEmbed = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1`;
+        videoId = urlParams.get('v');
       }
 
-      if (urlEmbed.includes('youtube.com/embed')) {
-        // Reproductor de YouTube embebido y limpio
+      if (videoId) {
+        // Miniatura interactiva para YouTube con efecto hover para ampliar
         contenidoVisual = `
-          <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative">
-            <iframe src="${urlEmbed}" class="w-full h-full pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative cursor-pointer group" onclick="abrirVideoGrande('${videoSrc}')" title="Haz clic para ver el video en grande">
+            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1" class="w-full h-full pointer-events-none" frameborder="0"></iframe>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors flex items-center justify-center">
+              <span class="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg border border-slate-700 opacity-90 group-hover:opacity-100 transition-opacity">
+                ▶ Ampliar video
+              </span>
+            </div>
           </div>
         `;
       } else {
-        // Reproductor normal de archivos .mp4 directos
+        // Reproductor de archivos MP4 directos
         contenidoVisual = `
           <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative cursor-pointer group" title="Haz clic para activar/desactivar audio">
             <video src="${videoSrc}" autoplay muted loop playsinline class="w-full h-full object-cover" onclick="toggleAudioVideo(this)"></video>
@@ -243,6 +251,7 @@ function renderizarProductos(productos) {
         `;
       }
     } else if (imagenSrc && imagenSrc.trim() !== '') {
+      // Imagen completa sin recortes (object-contain)
       contenidoVisual = `
         <img src="${imagenSrc}" alt="${prod.nombre}" class="w-full h-48 object-contain bg-slate-950 p-2 rounded-xl mb-4 border border-slate-700">
       `;
@@ -282,7 +291,43 @@ function renderizarProductos(productos) {
   });
 }
 
-// Función para alternar el audio del video al hacerle clic
+// Funciones para el Modal de Video en Grande
+function abrirVideoGrande(urlVideoOriginal) {
+  const modal = document.getElementById('modal-video');
+  const contenedorVideo = document.getElementById('contenido-video-modal');
+  
+  if (!modal || !contenedorVideo) return;
+
+  let videoId = '';
+  if (urlVideoOriginal.includes('youtu.be/')) {
+    videoId = urlVideoOriginal.split('youtu.be/')[1].split('?')[0];
+  } else if (urlVideoOriginal.includes('youtube.com/watch')) {
+    const urlParams = new URLSearchParams(new URL(urlVideoOriginal).search);
+    videoId = urlParams.get('v');
+  }
+
+  if (videoId) {
+    contenedorVideo.innerHTML = `
+      <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    `;
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function cerrarVideoGrande() {
+  const modal = document.getElementById('modal-video');
+  const contenedorVideo = document.getElementById('contenido-video-modal');
+  
+  if (modal && contenedorVideo) {
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+    contenedorVideo.innerHTML = ''; // Detiene el video al cerrar
+  }
+}
+
+// Función para alternar audio en videos MP4 directos
 function toggleAudioVideo(videoElement) {
   const contenedor = videoElement.parentElement;
   const textoIndicador = contenedor.querySelector('.icono-audio');
@@ -296,11 +341,9 @@ function toggleAudioVideo(videoElement) {
   }
 }
 
-// 1. Agregar al carrito (agrupa items repetidos y valida stock)
+// Funciones de Carrito y Checkout
 function agregarAlCarrito(producto, cantidadAñadir = 1) {
   const stockDisponible = Number(producto.stock || 0);
-
-  // Buscar si el producto ya está en el carrito
   const itemExistente = carrito.find(item => item.nombre === producto.nombre);
 
   if (itemExistente) {
@@ -316,16 +359,12 @@ function agregarAlCarrito(producto, cantidadAñadir = 1) {
       alert(`Solo puedes agregar un máximo de ${stockDisponible} unidades de ${producto.nombre}.`);
       cantidadAñadir = stockDisponible;
     }
-    carrito.push({
-      ...producto,
-      cantidad: cantidadAñadir
-    });
+    carrito.push({ ...producto, cantidad: cantidadAñadir });
   }
 
   actualizarContadorCarrito();
 }
 
-// 2. Actualizar el número del icono en el Header (suma total de piezas)
 function actualizarContadorCarrito() {
   const contador = document.getElementById('carrito-contador');
   if (contador) {
@@ -334,7 +373,6 @@ function actualizarContadorCarrito() {
   }
 }
 
-// 3. Abrir el modal del Carrito dibujando filas con controles + / -
 function abrirCarrito() {
   const modal = document.getElementById('modal-checkout');
   const lista = document.getElementById('lista-carrito');
@@ -358,15 +396,11 @@ function abrirCarrito() {
             <span class="font-bold text-white block truncate">${item.nombre}</span>
             <span class="text-slate-400 text-xs">$${Number(item.precio).toLocaleString('es-MX')} MXN c/u</span>
           </div>
-          
-          <!-- Controles + y - de cantidad -->
           <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700">
             <button onclick="cambiarCantidadEnCarrito(${index}, -1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">-</button>
             <span class="px-2 font-bold text-brand-cyan text-xs">${item.cantidad}</span>
             <button onclick="cambiarCantidadEnCarrito(${index}, 1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">+</button>
           </div>
-
-          <!-- Subtotal y Eliminar -->
           <div class="text-right flex items-center gap-2">
             <span class="font-bold text-white text-xs">$${subtotal.toLocaleString('es-MX')}</span>
             <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-1.5 py-0.5 rounded text-base">&times;</button>
@@ -381,7 +415,6 @@ function abrirCarrito() {
   modal.classList.add('flex');
 }
 
-// 4. Cambiar cantidad desde los botones + y - dentro del Modal
 function cambiarCantidadEnCarrito(index, cambio) {
   const item = carrito[index];
   if (!item) return;
@@ -400,7 +433,6 @@ function cambiarCantidadEnCarrito(index, cambio) {
   }
 }
 
-// 5. Eliminar un producto completo del carrito
 function eliminarDelCarrito(index) {
   carrito.splice(index, 1);
   actualizarContadorCarrito();
