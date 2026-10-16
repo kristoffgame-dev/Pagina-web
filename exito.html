@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>¡Compra Exitosamente Realizada! | DODI SYSTEM</title>
+  <link rel="icon" href="assets/logo.png">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0B1120',
+              card: '#1E293B',
+              blue: '#2563EB',
+              cyan: '#06B6D4',
+              emerald: '#10B981'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
+
+  <!-- Header sencillo -->
+  <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a class="flex items-center gap-3" href="index.html">
+        <span class="font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-cyan to-blue-500">
+          DODI SYSTEM
+        </span>
+      </a>
+      <span class="text-xs text-slate-400 font-semibold uppercase tracking-widest">Pago Aprobado</span>
+    </div>
+  </header>
+
+  <!-- Contenido Principal de Éxito -->
+  <main class="max-w-xl mx-auto px-4 py-16 w-full text-center space-y-8">
+    <div class="bg-brand-card border border-emerald-500/30 rounded-3xl p-8 shadow-2xl relative overflow-hidden space-y-6">
+      
+      <!-- Icono de Éxito Animado / Resplandeciente -->
+      <div class="w-20 h-20 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+
+      <div class="space-y-2">
+        <h1 class="text-3xl font-black text-white">¡Muchas gracias por tu compra!</h1>
+        <p class="text-slate-400 text-sm">Tu pago ha sido procesado y acreditado de forma segura a través de Mercado Pago.</p>
+      </div>
+
+      <!-- Tarjeta de Detalles del Folio -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 text-left space-y-3">
+        <div class="flex justify-between items-center text-sm border-b border-slate-800 pb-2">
+          <span class="text-slate-400 font-medium">Número de Folio / Orden:</span>
+          <span id="txt-folio" class="font-mono font-bold text-brand-cyan tracking-wider">DS-884920</span>
+        </div>
+        <div class="flex justify-between items-center text-sm border-b border-slate-800 pb-2">
+          <span class="text-slate-400 font-medium">Fecha y Hora:</span>
+          <span id="txt-fecha" class="text-white font-medium">--/--/----</span>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-slate-400 font-medium">Método de Pago:</span>
+          <span class="text-emerald-400 font-bold">Mercado Pago (Aprobado)</span>
+        </div>
+      </div>
+
+      <div class="text-xs text-slate-400 space-y-2">
+        <p>Hemos registrado tu orden en nuestro sistema. En breve nos pondremos en contacto contigo o puedes enviarnos tu comprobante directo para agilizar la entrega de tu software o servicio.</p>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+        <a id="btn-whatsapp-soporte" href="https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20acabo%20de%20realizar%20mi%20pago%20con%20el%20folio%20DS-884920" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 text-sm">
+          <span>Notificar por WhatsApp</span>
+        </a>
+        <a href="productos.html" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
+          Regresar al Catálogo
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+  // Verificar si la URL trae los parámetros oficiales de respuesta de Mercado Pago
+  const urlParams = new URLSearchParams(window.location.search);
+  const paymentStatus = urlParams.get('status') || urlParams.get('collection_status');
+  const paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
+
+  // Si alguien entra directamente sin un pago validado por Mercado Pago, enviarlo de regreso al catálogo
+  if (!paymentStatus && !paymentId) {
+    window.location.href = 'productos.html';
+  }
+</script>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-950/80 py-6 text-center text-xs text-slate-500">
+    <span>© <span id="year">2026</span> DODI SYSTEM. Todos los derechos reservados.</span>
+  </footer>
+
+  <script>
+    // Generar o recuperar folio aleatorio único basado en timestamp / orden
+    const randomNum = Math.floor(100000 + Math.random() * 900000);
+    const folio = `DS-${randomNum}`;
+    
+    document.getElementById('txt-folio').textContent = folio;
+
+    // Fecha actual formateada
+    const now = new Date();
+    document.getElementById('txt-fecha').textContent = now.toLocaleDateString('es-MX', { 
+      year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+    });
+
+    // Actualizar enlace de WhatsApp con el folio generado
+    const urlWsp = `https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20acabo%20de%20realizar%20mi%20pago.%20Mi%20folio%20de%20orden%20es:%20${folio}`;
+    document.getElementById('btn-whatsapp-soporte').href = urlWsp;
+
+    document.getElementById('year').textContent = now.getFullYear();
+  </script>
+</body>
+</html>

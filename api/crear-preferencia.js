@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     const preferenceData = {
       items: itemsMercadoPago,
       back_urls: {
-        success: `${origin}/productos.html?status=success`,
+        success: `${origin}/exito.html`,
         failure: `${origin}/productos.html?status=failure`,
         pending: `${origin}/productos.html?status=pending`
       },
