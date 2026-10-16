@@ -138,6 +138,21 @@
   <script>
   let carrito = [];
 
+  // Función para detectar respuestas de pago de Mercado Pago
+  function verificarEstadoPago() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    if (status === 'failure') {
+      alert("⚠️ Tu pago no pudo ser completado o fue rechazado por el banco.\n\nPuedes intentarlo nuevamente con otro método de pago o seleccionar Transferencia Directa BBVA.");
+      // Limpiar parámetros de la URL de forma limpia
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (status === 'pending') {
+      alert("⏳ Tu pago se encuentra PENDIENTE.\n\nSi elegiste pagar en efectivo (OXXO/7-Eleven) o por transferencia, recuerda completar tu depósito con la ficha generada por Mercado Pago. ¡Muchas gracias!");
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
+
   async function cargarCatalogoDinamico() {
     const contenedor = document.getElementById('catalogo-grid');
     if (contenedor) {
@@ -300,7 +315,11 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', cargarCatalogoDinamico);
+  document.addEventListener('DOMContentLoaded', () => {
+    cargarCatalogoDinamico();
+    verificarEstadoPago();
+  });
+  
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
