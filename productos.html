@@ -138,7 +138,8 @@
     </div>
   </footer>
 
-  async function cargarCatalogoDinamico() {
+  <script>
+ async function cargarCatalogoDinamico() {
   const CACHE_KEY = 'dodi_catalogo_cache';
   const CACHE_TIME_KEY = 'dodi_catalogo_time';
   const TIEMPO_EXPIRACION = 60 * 1000; // 1 minuto de caché local
@@ -178,7 +179,7 @@
     console.error("Error al actualizar catálogo:", error);
     // Si falla la red, mantenemos el caché previo cargado en pantalla
   }
-}  
-
+}
+</script>
 </body>
 </html>
