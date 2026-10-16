@@ -1,0 +1,10 @@
+{
+  "name": "dodi-system",
+  "version": "1.0.0",
+  "type": "module", 
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {}
+}
