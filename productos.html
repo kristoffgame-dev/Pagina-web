@@ -186,32 +186,32 @@
   }
 
 function renderizarProductos(productos) {
+  // Guardamos los productos globalmente para poder verlos en la consola si los necesitas
+  window.productosGlobal = productos;
+
   const contenedor = document.getElementById('catalogo-grid');
   if (!contenedor) return;
 
   contenedor.innerHTML = '';
 
   productos.forEach((prod, index) => {
-    // 🔍 Diagnóstico exacto en consola de cada producto recibido
-    console.log(`--- Producto [${index}] ---`, prod);
+    // Esto imprimirá en la consola las llaves exactas que manda tu Google Sheet (ej. "stock", "Stock", etc.)
+    if (index === 0) {
+      console.log("Llaves exactas del primer producto:", Object.keys(prod));
+      console.log("Objeto completo del primer producto:", prod);
+    }
 
     const imagenSrc = prod.imagen_url || prod.imagen || '';
     const videoSrc = prod.video_url || prod.video || '';
     
-    // Buscar la propiedad de stock de forma masiva revisando CUALQUIER llave del objeto
-    let stockCrudo = 0;
-    for (let key in prod) {
-      if (key.toLowerCase().includes('stock') || key.toLowerCase().includes('existencia') || key.toLowerCase().includes('cantidad')) {
-        stockCrudo = prod[key];
-        break;
-      }
-    }
+    // Aquí es donde lee el stock (usaremos la llave exacta que nos arroje la consola)
+    const valorStockCrudo = prod.stock !== undefined ? prod.stock : 
+                            (prod.Stock !== undefined ? prod.Stock : 
+                            (prod.EXISTENCIAS !== undefined ? prod.EXISTENCIAS : 0));
 
-    // Convertir de forma limpia a número (si de plano no encuentra nada, le asignamos 10 para que veas el botón activo)
-    const stockReal = parseInt(String(stockCrudo).replace(/[^0-9]/g, ''), 10);
-    const stock = !isNaN(stockReal) && stockReal > 0 ? stockReal : 10; // Forzamos 10 temporalmente si venía en 0 para probar
+    const stockReal = parseInt(String(valorStockCrudo).replace(/[^0-9]/g, ''), 10);
+    const stock = !isNaN(stockReal) ? stockReal : 0;
 
-    // Determinar si mostramos Video interactivo o Imagen fija
     let contenidoVisual = '';
     if (videoSrc && videoSrc.trim() !== '') {
       contenidoVisual = `
@@ -228,7 +228,6 @@ function renderizarProductos(productos) {
       `;
     }
 
-    // Evaluar el estado del Stock y los botones
     let badgeStock = '';
     let botonHtml = '';
 
@@ -240,7 +239,6 @@ function renderizarProductos(productos) {
       botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
     }
 
-    // Crear la tarjeta HTML del producto
     const card = document.createElement('div');
     card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
 
