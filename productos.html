@@ -26,9 +26,6 @@
       }
     }
   </script>
-
-  <!-- Stripe JS SDK Oficial -->
-  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
 
@@ -95,12 +92,12 @@
     </div>
   </main>
 
-  <!-- MODAL DE CHECKOUT STRIPE -->
+  <!-- MODAL DE CHECKOUT MERCADO PAGO -->
   <div id="modal-checkout" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
     <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-lg w-full p-6 shadow-2xl relative text-slate-100">
       <button onclick="cerrarCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-2xl">&times;</button>
 
-      <!-- PASO 1: Resumen y Forma de Pago -->
+      <!-- Resumen y Forma de Pago -->
       <div id="paso-1-carrito">
         <h3 class="text-xl font-black text-white mb-3 flex items-center gap-2">🛒 Tu Carrito de Compras</h3>
         <div id="lista-carrito" class="space-y-3 max-h-56 overflow-y-auto mb-4 border-b border-slate-700 pb-4 pr-1"></div>
@@ -113,12 +110,12 @@
         <div class="mb-5">
           <label class="block text-xs font-bold text-slate-300 uppercase mb-2">Selecciona tu Método de Pago:</label>
           <select id="metodo-pago" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-brand-cyan text-white focus:outline-none">
-            <option value="Stripe">Pay / GPay / Tarjeta Internacional / SPEI (Stripe)</option>
+            <option value="MercadoPago">Tarjetas / Tarjeta de Débito, Crédito o Efectivo (Mercado Pago)</option>
             <option value="SPEI_Directo">Transferencia Directa a BBVA (0% Comisión)</option>
           </select>
         </div>
 
-        <button onclick="procesarPagoStripe()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+        <button id="btn-procesar-pago" onclick="procesarPagoMercadoPago()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
           <span>Procesar Pago Seguro</span>
           <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
         </button>
@@ -138,8 +135,7 @@
     </div>
   </footer>
 
- <script>
-  // Variable global para el carrito de compras
+  <script>
   let carrito = [];
 
   async function cargarCatalogoDinamico() {
@@ -205,7 +201,6 @@
   function agregarAlCarrito(producto) {
     carrito.push(producto);
     actualizarContadorCarrito();
-    // Animación visual o alerta ligera
   }
 
   function actualizarContadorCarrito() {
@@ -259,16 +254,52 @@
     abrirCarrito();
   }
 
-  function procesarPagoStripe() {
+  async function procesarPagoMercadoPago() {
     if (carrito.length === 0) {
       alert("Agrega productos a tu carrito antes de pagar.");
       return;
     }
-    alert("Redirigiendo a pasarela de pagos segura...");
-    // Aquí conectas tu pasarela de pagos
+
+    const metodo = document.getElementById('metodo-pago').value;
+
+    if (metodo === 'SPEI_Directo') {
+      let mensajeWsp = "Hola DODI SYSTEM, quiero confirmar mi compra por transferencia directa de los siguientes productos:%0A";
+      carrito.forEach(item => {
+        mensajeWsp += `- ${item.nombre} ($${item.precio} MXN)%0A`;
+      });
+      window.open(`https://wa.me/527442320022?text=${mensajeWsp}`, '_blank');
+      return;
+    }
+
+    const btn = document.getElementById('btn-procesar-pago');
+    const textoOriginal = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = "<span>Generando pago con Mercado Pago...</span>";
+
+    try {
+      const respuesta = await fetch('/api/crear-preferencia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: carrito })
+      });
+
+      const data = await respuesta.json();
+
+      if (respuesta.ok && data.init_point) {
+        window.location.href = data.init_point;
+      } else {
+        alert("Error al conectar con Mercado Pago: " + (data.detalles || data.error || "No se pudo generar la preferencia."));
+        btn.disabled = false;
+        btn.innerHTML = textoOriginal;
+      }
+    } catch (error) {
+      console.error("Error al procesar pago:", error);
+      alert("Ocurrió un error al procesar el pago. Inténtalo de nuevo.");
+      btn.disabled = false;
+      btn.innerHTML = textoOriginal;
+    }
   }
 
-  // Ejecutar al cargar la página
   document.addEventListener('DOMContentLoaded', cargarCatalogoDinamico);
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
