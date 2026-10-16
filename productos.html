@@ -144,7 +144,7 @@ async function cargarCatalogoDinamico() {
   
   try {
     // Pega aquí tu enlace CSV publicado desde Google Sheets
-    const URL_CSV_GOOGLE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pub?gid=0&single=true&output=csv"; 
+    const URL_CSV_GOOGLE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pub?output=csv](https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pub?output=csv)"; 
 
     const respuesta = await fetch(URL_CSV_GOOGLE);
     if (!respuesta.ok) throw new Error("No se pudo descargar el archivo CSV");
