@@ -138,30 +138,139 @@
     </div>
   </footer>
 
-  <script>
-async function cargarCatalogoDinamico() {
-  const contenedor = document.getElementById('contenedor-productos');
-  if (contenedor) contenedor.innerHTML = "<p>Cargando productos...</p>";
+ <script>
+  // Variable global para el carrito de compras
+  let carrito = [];
 
-  try {
-    const respuesta = await fetch('/api/catalogo');
-    if (!respuesta.ok) throw new Error('Error al obtener el catálogo del servidor');
-
-    const productos = await respuesta.json();
-
-    if (Array.isArray(productos) && productos.length > 0) {
-      renderizarProductos(productos);
-    } else {
-      if (contenedor) contenedor.innerHTML = "<p>No hay productos disponibles en este momento.</p>";
+  async function cargarCatalogoDinamico() {
+    const contenedor = document.getElementById('catalogo-grid');
+    if (contenedor) {
+      contenedor.innerHTML = `
+        <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
+          <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
+          <p>Cargando productos actualizados...</p>
+        </div>
+      `;
     }
-  } catch (error) {
-    console.error("Error:", error);
-    if (contenedor) contenedor.innerHTML = "<p>Error al conectar con el inventario. Inténtalo más tarde.</p>";
-  }
-}
 
-// Ejecutar al cargar la página
-document.addEventListener('DOMContentLoaded', cargarCatalogoDinamico);
+    try {
+      const respuesta = await fetch('/api/catalogo');
+      if (!respuesta.ok) throw new Error('Error al obtener el catálogo del servidor');
+
+      const productos = await respuesta.json();
+
+      if (Array.isArray(productos) && productos.length > 0) {
+        renderizarProductos(productos);
+      } else {
+        if (contenedor) {
+          contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400"><p>No hay productos disponibles en este momento.</p></div>`;
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      if (contenedor) {
+        contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-red-400"><p>Error al conectar con el inventario. Inténtalo más tarde.</p></div>`;
+      }
+    }
+  }
+
+  function renderizarProductos(productos) {
+    const contenedor = document.getElementById('catalogo-grid');
+    if (!contenedor) return;
+
+    contenedor.innerHTML = '';
+
+    productos.forEach(prod => {
+      const card = document.createElement('div');
+      card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
+      
+      card.innerHTML = `
+        <div>
+          ${prod.imagen ? `<img src="${prod.imagen}" alt="${prod.nombre}" class="w-full h-48 object-cover rounded-xl mb-4 border border-slate-700">` : ''}
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'}</span>
+          <h3 class="text-xl font-black text-white mt-3 mb-2">${prod.nombre}</h3>
+          <p class="text-slate-400 text-sm mb-4">${prod.descripcion || 'Sin descripción disponible.'}</p>
+        </div>
+        <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+          <span class="text-2xl font-black text-white">$${Number(prod.precio).toLocaleString('es-MX')} <span class="text-xs text-slate-400 font-normal">MXN</span></span>
+          <button onclick='agregarAlCarrito(${JSON.stringify(prod)})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">
+            Agregar
+          </button>
+        </div>
+      `;
+      contenedor.appendChild(card);
+    });
+  }
+
+  function agregarAlCarrito(producto) {
+    carrito.push(producto);
+    actualizarContadorCarrito();
+    // Animación visual o alerta ligera
+  }
+
+  function actualizarContadorCarrito() {
+    const contador = document.getElementById('carrito-contador');
+    if (contador) contador.textContent = carrito.length;
+  }
+
+  function abrirCarrito() {
+    const modal = document.getElementById('modal-checkout');
+    const lista = document.getElementById('lista-carrito');
+    const totalEl = document.getElementById('carrito-total');
+    
+    if (!modal || !lista || !totalEl) return;
+
+    lista.innerHTML = '';
+    let total = 0;
+
+    if (carrito.length === 0) {
+      lista.innerHTML = '<p class="text-slate-400 text-center py-4">Tu carrito está vacío</p>';
+    } else {
+      carrito.forEach((item, index) => {
+        total += Number(item.precio || 0);
+        lista.innerHTML += `
+          <div class="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-sm">
+            <div>
+              <span class="font-bold text-white block">${item.nombre}</span>
+              <span class="text-slate-400">$${Number(item.precio).toLocaleString('es-MX')} MXN</span>
+            </div>
+            <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-2">&times;</button>
+          </div>
+        `;
+      });
+    }
+
+    totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function cerrarCheckout() {
+    const modal = document.getElementById('modal-checkout');
+    if (modal) {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+  }
+
+  function eliminarDelCarrito(index) {
+    carrito.splice(index, 1);
+    actualizarContadorCarrito();
+    abrirCarrito();
+  }
+
+  function procesarPagoStripe() {
+    if (carrito.length === 0) {
+      alert("Agrega productos a tu carrito antes de pagar.");
+      return;
+    }
+    alert("Redirigiendo a pasarela de pagos segura...");
+    // Aquí conectas tu pasarela de pagos
+  }
+
+  // Ejecutar al cargar la página
+  document.addEventListener('DOMContentLoaded', cargarCatalogoDinamico);
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
