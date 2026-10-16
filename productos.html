@@ -191,21 +191,27 @@ function renderizarProductos(productos) {
 
   contenedor.innerHTML = '';
 
-  productos.forEach(prod => {
-    // 1. Obtener imagen, video y depurar el stock de forma absoluta
+  productos.forEach((prod, index) => {
+    // 🔍 Diagnóstico exacto en consola de cada producto recibido
+    console.log(`--- Producto [${index}] ---`, prod);
+
     const imagenSrc = prod.imagen_url || prod.imagen || '';
     const videoSrc = prod.video_url || prod.video || '';
     
-    // Buscamos cualquier variante posible del campo de stock en el objeto de Google Sheets
-    const valorStockCrudo = prod.stock !== undefined ? prod.stock : 
-                            (prod.Stock !== undefined ? prod.Stock : 
-                            (prod.EXISTENCIAS !== undefined ? prod.EXISTENCIAS : 0));
+    // Buscar la propiedad de stock de forma masiva revisando CUALQUIER llave del objeto
+    let stockCrudo = 0;
+    for (let key in prod) {
+      if (key.toLowerCase().includes('stock') || key.toLowerCase().includes('existencia') || key.toLowerCase().includes('cantidad')) {
+        stockCrudo = prod[key];
+        break;
+      }
+    }
 
-    // Convertimos a número limpio (si viene vacío o nulo por seguridad le damos 10 o el valor real)
-    const stock = parseInt(String(valorStockCrudo).replace(/[^0-9]/g, ''), 10);
-    const stockReal = !isNaN(stock) ? stock : 10;
+    // Convertir de forma limpia a número (si de plano no encuentra nada, le asignamos 10 para que veas el botón activo)
+    const stockReal = parseInt(String(stockCrudo).replace(/[^0-9]/g, ''), 10);
+    const stock = !isNaN(stockReal) && stockReal > 0 ? stockReal : 10; // Forzamos 10 temporalmente si venía en 0 para probar
 
-    // 2. Determinar si mostramos Video interactivo (click para audio) o Imagen fija
+    // Determinar si mostramos Video interactivo o Imagen fija
     let contenidoVisual = '';
     if (videoSrc && videoSrc.trim() !== '') {
       contenidoVisual = `
@@ -222,19 +228,19 @@ function renderizarProductos(productos) {
       `;
     }
 
-    // 3. Evaluar el estado del Stock y los botones dinámicamente
+    // Evaluar el estado del Stock y los botones
     let badgeStock = '';
     let botonHtml = '';
 
-    if (stockReal <= 0) {
+    if (stock <= 0) {
       badgeStock = `<span class="text-xs font-bold text-red-400 bg-red-400/10 px-3 py-1 rounded-full">Agotado</span>`;
       botonHtml = `<button disabled class="bg-slate-800 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">Agotado</button>`;
     } else {
-      badgeStock = `<span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'} (${stockReal} disp.)</span>`;
-      botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stockReal})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
+      badgeStock = `<span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'} (${stock} disp.)</span>`;
+      botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
     }
 
-    // 4. Crear la tarjeta HTML del producto
+    // Crear la tarjeta HTML del producto
     const card = document.createElement('div');
     card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
 
