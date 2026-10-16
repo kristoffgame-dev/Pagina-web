@@ -138,55 +138,47 @@
     </div>
   </footer>
 
-  <script>
-  // 1. TU GOOGLE SHEET (SE QUEDA EXACTAMENTE IGUAL)
-  // Reemplaza esto con tu URL de Google Sheets/AppScript o CSV actual
-  const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyyWp-VI74gfkG5Qf7Qns0EbmksA41R-bmaTIrvn2NmuaE6bSSssdOZU-Et2oi0dz6r1Q/exec";
-
-  // 2. LÓGICA DE CARGA DEL CATÁLOGO (Inalterada, lee tu Sheet actual)
   async function cargarCatalogoDinamico() {
+  const CACHE_KEY = 'dodi_catalogo_cache';
+  const CACHE_TIME_KEY = 'dodi_catalogo_time';
+  const TIEMPO_EXPIRACION = 60 * 1000; // 1 minuto de caché local
+
+  const cacheGuardado = localStorage.getItem(CACHE_KEY);
+  const tiempoGuardado = localStorage.getItem(CACHE_TIME_KEY);
+  const ahora = Date.now();
+
+  // 1. Si hay caché en el navegador reciente, muestra los productos AL INSTANTE (0 milisegundos)
+  if (cacheGuardado && tiempoGuardado && (ahora - Number(tiempoGuardado) < TIEMPO_EXPIRACION)) {
     try {
-      const respuesta = await fetch(GOOGLE_SHEETS_URL);
-      const productos = await respuesta.json();
-      
-      // Renderiza los productos desde tu Google Sheet...
-      // (Esta función lee tus columnas de siempre: nombre, precio, descripción)
-    } catch (error) {
-      console.error("Error al cargar Google Sheets:", error);
-    }
-  }
-
-  // 3. NUEVA LÓGICA DE PAGO AUTOMÁTICO 24/7 (Mercado Pago vía Vercel)
-  async function procesarPagoAutomatico() {
-    if (carrito.length === 0) return alert("Tu carrito está vacío.");
-
-    const itemsParaPago = carrito.map(item => ({
-      title: item.nombre,
-      unit_price: item.precio,
-      quantity: 1
-    }));
-
-    try {
-      // Llama a tu función Serverless recién creada en api/crear-preferencia.js
-      const response = await fetch('/api/crear-preferencia', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: itemsParaPago })
-      });
-
-      const data = await response.json();
-
-      if (data.init_point) {
-        // Redirige al checkout oficial de Mercado Pago
-        window.location.href = data.init_point;
-      } else {
-        alert("Ocurrió un error al generar la preferencia de cobro.");
+      const productosCache = JSON.parse(cacheGuardado);
+      if (Array.isArray(productosCache) && productosCache.length > 0) {
+        renderizarProductos(productosCache);
       }
-    } catch (err) {
-      console.error("Error de conexión:", err);
-      alert("Error al conectar con el servicio de pagos.");
+    } catch (e) {
+      console.warn("Caché local no válido, consultando API...");
     }
   }
-</script>
+
+  // 2. Consulta ultra rápida al nuevo servidor puente en Vercel
+  try {
+    const respuesta = await fetch('/api/catalogo');
+    if (!respuesta.ok) throw new Error('Error al consultar /api/catalogo');
+
+    const productos = await respuesta.json();
+
+    if (Array.isArray(productos)) {
+      // Guarda en el navegador para la siguiente carga instantánea
+      localStorage.setItem(CACHE_KEY, JSON.stringify(productos));
+      localStorage.setItem(CACHE_TIME_KEY, ahora.toString());
+
+      // Renderiza los datos frescos
+      renderizarProductos(productos);
+    }
+  } catch (error) {
+    console.error("Error al actualizar catálogo:", error);
+    // Si falla la red, mantenemos el caché previo cargado en pantalla
+  }
+}  
+
 </body>
 </html>
