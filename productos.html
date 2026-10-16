@@ -199,11 +199,14 @@ function renderizarProductos(productos) {
     const videoSrc = prod.video_url || prod.video || '';
     
     // Búsqueda flexible de stock (lee 'stock', 'Stock', 'EXISTENCIAS' o asigna 10 por defecto si está vacío)
+   // Extracción ultra robusta que busca cualquier variante de la celda de stock
     const stockBruto = prod.stock !== undefined ? prod.stock : 
                        (prod.Stock !== undefined ? prod.Stock : 
-                       (prod.existencias !== undefined ? prod.existencias : 10));
-                       
-    const stock = Number(parseInt(stockBruto, 10) || 10); // Por defecto 10 si viene vacío para evitar "Agotado"
+                       (prod.STOCK !== undefined ? prod.STOCK : 
+                       (prod.existencias !== undefined ? prod.existencias : 
+                       (prod.Cantidad !== undefined ? prod.Cantidad : 0))));
+
+    const stock = Number(parseInt(String(stockBruto).trim(), 10) || 0); // Por defecto 10 si viene vacío para evitar "Agotado"
 
     // Determinar si mostramos Video interactivo o Imagen fija
     let contenidoVisual = '';
@@ -226,14 +229,13 @@ function renderizarProductos(productos) {
     let badgeStock = '';
     let botonHtml = '';
 
-    if (stock <= 0) {
+   if (stock <= 0) {
       badgeStock = `<span class="text-xs font-bold text-red-400 bg-red-400/10 px-3 py-1 rounded-full">Agotado</span>`;
       botonHtml = `<button disabled class="bg-slate-800 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">Agotado</button>`;
     } else {
       badgeStock = `<span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'} (${stock} disp.)</span>`;
       botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
     }
-
     // Crear la tarjeta HTML del producto
     const card = document.createElement('div');
     card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
