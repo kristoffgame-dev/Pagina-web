@@ -211,18 +211,38 @@ function renderizarProductos(productos) {
     const stockReal = parseInt(String(valorStockCrudo).replace(/[^0-9]/g, ''), 10);
     const stock = !isNaN(stockReal) ? stockReal : 0;
 
-    let contenidoVisual = '';
+   let contenidoVisual = '';
     if (videoSrc && videoSrc.trim() !== '') {
-      contenidoVisual = `
-        <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative cursor-pointer group" title="Haz clic para activar/desactivar audio">
-          <video src="${videoSrc}" autoplay muted loop playsinline class="w-full h-full object-cover" onclick="toggleAudioVideo(this)"></video>
-          <div class="absolute bottom-2 right-2 bg-slate-900/80 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none">
-            <span class="icono-audio">🔇 Click para sonido</span>
+      // Verificamos si es un enlace de YouTube para usar el formato embed correcto
+      let urlEmbed = videoSrc;
+      if (videoSrc.includes('youtu.be/')) {
+        const videoId = videoSrc.split('youtu.be/')[1].split('?')[0];
+        urlEmbed = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1`;
+      } else if (videoSrc.includes('youtube.com/watch')) {
+        const urlParams = new URLSearchParams(new URL(videoSrc).search);
+        const videoId = urlParams.get('v');
+        urlEmbed = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1`;
+      }
+
+      if (urlEmbed.includes('youtube.com/embed')) {
+        // Reproductor de YouTube embebido y limpio
+        contenidoVisual = `
+          <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative">
+            <iframe src="${urlEmbed}" class="w-full h-full pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
           </div>
-        </div>
-      `;
+        `;
+      } else {
+        // Reproductor normal de archivos .mp4 directos
+        contenidoVisual = `
+          <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative cursor-pointer group" title="Haz clic para activar/desactivar audio">
+            <video src="${videoSrc}" autoplay muted loop playsinline class="w-full h-full object-cover" onclick="toggleAudioVideo(this)"></video>
+            <div class="absolute bottom-2 right-2 bg-slate-900/80 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none">
+              <span class="icono-audio">🔇 Click para sonido</span>
+            </div>
+          </div>
+        `;
+      }
     } else if (imagenSrc && imagenSrc.trim() !== '') {
-      /* CAMBIO AQUÍ: 'object-contain' muestra la imagen completa sin recortar nada, con fondo oscuro 'bg-slate-950' */
       contenidoVisual = `
         <img src="${imagenSrc}" alt="${prod.nombre}" class="w-full h-48 object-contain bg-slate-950 p-2 rounded-xl mb-4 border border-slate-700">
       `;
