@@ -141,44 +141,24 @@
   <script>
 async function cargarCatalogoDinamico() {
   const contenedor = document.getElementById('contenedor-productos');
-  
+
   try {
-    // Pega aquí tu enlace CSV publicado desde Google Sheets
-    const URL_CSV_GOOGLE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pub?output=csv](https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pub?output=csv)"; 
+    const respuesta = await fetch('/api/catalogo');
+    if (!respuesta.ok) throw new Error('Error en el servidor /api/catalogo');
 
-    const respuesta = await fetch(URL_CSV_GOOGLE);
-    if (!respuesta.ok) throw new Error("No se pudo descargar el archivo CSV");
+    const productos = await respuesta.json();
 
-    const textoCsv = await respuesta.text();
-    
-    // Función simple para convertir el CSV de Google en un arreglo de objetos JSON legibles
-    const lineas = textoCsv.split('\n');
-    const encabezados = lineas[0].split(',');
-    const productos = [];
-
-    for (let i = 1; i < lineas.length; i++) {
-      if (!lineas[i].trim()) continue;
-      const valores = lineas[i].split(',');
-      const producto = {};
-      
-      encabezados.forEach((encabezado, index) => {
-        // Limpiamos comillas y espacios sobrantes
-        let valorLimpio = valores[index] ? valores[index].replace(/^["']|["']$/g, '').trim() : '';
-        producto[encabezado.trim()] = valorLimpio;
-      });
-      productos.push(producto);
-    }
-
-    if (productos.length > 0) {
+    if (Array.isArray(productos) && productos.length > 0) {
       renderizarProductos(productos);
     } else {
-      if (contenedor) contenedor.innerHTML = "<p>No hay productos registrados en la hoja.</p>";
+      if (contenedor) {
+        contenedor.innerHTML = "<p>No hay productos disponibles en el catálogo en este momento.</p>";
+      }
     }
-
   } catch (error) {
-    console.error("Error crítico cargando productos:", error);
+    console.error("Error al cargar productos:", error);
     if (contenedor) {
-      contenedor.innerHTML = "<p>Error al cargar el inventario. Por favor, verifica la conexión.</p>";
+      contenedor.innerHTML = "<p>Error al conectar con el catálogo. Intenta de nuevo más tarde.</p>";
     }
   }
 }
