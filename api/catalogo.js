@@ -1,69 +1,40 @@
 // api/catalogo.js
 export default async function handler(req, res) {
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlIDGOtZ3dKfIGJZLst6z6bMEL4j9TjAEvmFB36P0wAMoTRBrHd4sgvxunMDa-GmO4SPWNajJK2U5R/pub?output=csv";
+  // 1. Pega aquí tu URL nueva de la Web App de Apps Script (la que termina en /exec o /dev)
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLjdzLCwKcjaNdCW1AB91QgaKOC1N-0mrWGi1VvgksOtqqaqHe9OP95cayFAHzgWrJmw/exec";
 
   try {
-    const response = await fetch(CSV_URL);
+    const response = await fetch(APPS_SCRIPT_URL);
     if (!response.ok) {
-      throw new Error(`Error al conectar con Google Sheets: ${response.status}`);
+      throw new Error(`Error al conectar con Google Apps Script: ${response.status}`);
     }
 
-    const csvText = await response.text();
-    const lines = csvText.split(/\r?\n/).filter(line => line.trim() !== '');
+    const productos = await response.json();
 
-    if (lines.length < 2) {
+    if (!Array.isArray(productos)) {
       return res.status(200).json([]);
     }
 
-    const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
-    const productos = [];
-
-    for (let i = 1; i < lines.length; i++) {
-      const values = parseCSVLine(lines[i]);
-      if (values.length === 0) continue;
-
-      let item = {};
-      headers.forEach((header, index) => {
-        item[header] = values[index] ? values[index].trim() : '';
-      });
-
-      const productoFinal = {
+    // 2. Mapeamos y aseguramos que 'stock', 'imagen_url', 'video_url' y todas tus columnas pasen intactas
+    const productosFinales = productos.map((item, i) => {
+      return {
+        ...item, // Esto conserva AUTOMÁTICAMENTE stock, imagen_url, video_url y cualquier columna nueva
         id: item.id || `prod-${i}`,
-        nombre: item.nombre || item.titulo || item.product || item.producto || 'Producto sin nombre',
-        precio: parseFloat(item.precio || item.price || 0),
-        descripcion: item.descripcion || item.description || '',
-        imagen: item.imagen || item.image || item.img || item.foto || '',
-        categoria: item.categoria || item.category || 'General'
+        nombre: item.nombre || item.titulo || 'Producto sin nombre',
+        precio: parseFloat(item.precio || 0),
+        descripcion: item.descripcion || '',
+        imagen: item.imagen_url || item.imagen || '',
+        video: item.video_url || item.video || '',
+        stock: item.stock !== undefined ? parseInt(item.stock, 10) : 0,
+        categoria: item.categoria || 'General'
       };
+    });
 
-      productos.push(productoFinal);
-    }
-
-    res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate=30');
-    return res.status(200).json(productos);
+    res.setHeader('Cache-Control', 's-maxage=5, stale-while-revalidate=15');
+    return res.status(200).json(productosFinales);
 
   } catch (error) {
     console.error("Error crítico en API catálogo:", error.message);
     return res.status(500).json({ error: "No se pudo cargar el catálogo", detalles: error.message });
   }
-}
-
-function parseCSVLine(text) {
-  const result = [];
-  let cur = '';
-  let inQuotes = false;
-
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (c === '"') {
-      inQuotes = !inQuotes;
-    } else if (c === ',' && !inQuotes) {
-      result.push(cur);
-      cur = '';
-    } else {
-      cur += c;
-    }
-  }
-  result.push(cur);
-  return result;
 }
