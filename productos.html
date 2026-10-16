@@ -141,27 +141,27 @@
   <script>
 async function cargarCatalogoDinamico() {
   const contenedor = document.getElementById('contenedor-productos');
+  if (contenedor) contenedor.innerHTML = "<p>Cargando productos...</p>";
 
   try {
     const respuesta = await fetch('/api/catalogo');
-    if (!respuesta.ok) throw new Error('Error en el servidor /api/catalogo');
+    if (!respuesta.ok) throw new Error('Error al obtener el catálogo del servidor');
 
     const productos = await respuesta.json();
 
     if (Array.isArray(productos) && productos.length > 0) {
       renderizarProductos(productos);
     } else {
-      if (contenedor) {
-        contenedor.innerHTML = "<p>No hay productos disponibles en el catálogo en este momento.</p>";
-      }
+      if (contenedor) contenedor.innerHTML = "<p>No hay productos disponibles en este momento.</p>";
     }
   } catch (error) {
-    console.error("Error al cargar productos:", error);
-    if (contenedor) {
-      contenedor.innerHTML = "<p>Error al conectar con el catálogo. Intenta de nuevo más tarde.</p>";
-    }
+    console.error("Error:", error);
+    if (contenedor) contenedor.innerHTML = "<p>Error al conectar con el inventario. Inténtalo más tarde.</p>";
   }
 }
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', cargarCatalogoDinamico);
 </script>
 </body>
 </html>
