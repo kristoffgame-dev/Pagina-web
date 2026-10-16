@@ -229,17 +229,45 @@
     contenedor.appendChild(card);
   });
 }
+// 1. Agregar al carrito (agrupa items repetidos y valida stock)
+  function agregarAlCarrito(producto, cantidadAñadir = 1) {
+    const stockDisponible = Number(producto.stock || 0);
 
-  function agregarAlCarrito(producto) {
-    carrito.push(producto);
+    // Buscar si el producto ya está en el carrito
+    const itemExistente = carrito.find(item => item.nombre === producto.nombre);
+
+    if (itemExistente) {
+      const nuevaCantidad = itemExistente.cantidad + cantidadAñadir;
+      if (nuevaCantidad > stockDisponible) {
+        alert(`¡Atención! Solo tenemos ${stockDisponible} unidades disponibles en inventario de ${producto.nombre}.`);
+        itemExistente.cantidad = stockDisponible;
+      } else {
+        itemExistente.cantidad = nuevaCantidad;
+      }
+    } else {
+      if (cantidadAñadir > stockDisponible) {
+        alert(`Solo puedes agregar un máximo de ${stockDisponible} unidades de ${producto.nombre}.`);
+        cantidadAñadir = stockDisponible;
+      }
+      carrito.push({
+        ...producto,
+        cantidad: cantidadAñadir
+      });
+    }
+
     actualizarContadorCarrito();
   }
 
+  // 2. Actualizar el número del icono en el Header (suma total de piezas)
   function actualizarContadorCarrito() {
     const contador = document.getElementById('carrito-contador');
-    if (contador) contador.textContent = carrito.length;
+    if (contador) {
+      const totalPiezas = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+      contador.textContent = totalPiezas;
+    }
   }
 
+  // 3. Abrir el modal del Carrito dibujando filas con controles + / -
   function abrirCarrito() {
     const modal = document.getElementById('modal-checkout');
     const lista = document.getElementById('lista-carrito');
@@ -254,14 +282,28 @@
       lista.innerHTML = '<p class="text-slate-400 text-center py-4">Tu carrito está vacío</p>';
     } else {
       carrito.forEach((item, index) => {
-        total += Number(item.precio || 0);
+        const subtotal = Number(item.precio || 0) * item.cantidad;
+        total += subtotal;
+
         lista.innerHTML += `
-          <div class="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-sm">
-            <div>
-              <span class="font-bold text-white block">${item.nombre}</span>
-              <span class="text-slate-400">$${Number(item.precio).toLocaleString('es-MX')} MXN</span>
+          <div class="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-sm gap-2">
+            <div class="flex-1 min-w-0">
+              <span class="font-bold text-white block truncate">${item.nombre}</span>
+              <span class="text-slate-400 text-xs">$${Number(item.precio).toLocaleString('es-MX')} MXN c/u</span>
             </div>
-            <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-2">&times;</button>
+            
+            <!-- Controles + y - de cantidad -->
+            <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700">
+              <button onclick="cambiarCantidadEnCarrito(${index}, -1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">-</button>
+              <span class="px-2 font-bold text-brand-cyan text-xs">${item.cantidad}</span>
+              <button onclick="cambiarCantidadEnCarrito(${index}, 1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">+</button>
+            </div>
+
+            <!-- Subtotal y Eliminar -->
+            <div class="text-right flex items-center gap-2">
+              <span class="font-bold text-white text-xs">$${subtotal.toLocaleString('es-MX')}</span>
+              <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-1.5 py-0.5 rounded text-base">&times;</button>
+            </div>
           </div>
         `;
       });
@@ -272,6 +314,32 @@
     modal.classList.add('flex');
   }
 
+  // 4. Cambiar cantidad desde los botones + y - dentro del Modal
+  function cambiarCantidadEnCarrito(index, cambio) {
+    const item = carrito[index];
+    if (!item) return;
+
+    const stockDisponible = Number(item.stock || 0);
+    const nuevaCantidad = item.cantidad + cambio;
+
+    if (nuevaCantidad <= 0) {
+      eliminarDelCarrito(index);
+    } else if (nuevaCantidad > stockDisponible) {
+      alert(`No puedes agregar más de ${stockDisponible} unidades disponibles de ${item.nombre}.`);
+    } else {
+      item.cantidad = nuevaCantidad;
+      actualizarContadorCarrito();
+      abrirCarrito();
+    }
+  }
+
+  // 5. Eliminar un producto completo del carrito
+  function eliminarDelCarrito(index) {
+    carrito.splice(index, 1);
+    actualizarContadorCarrito();
+    abrirCarrito();
+  }
+
   function cerrarCheckout() {
     const modal = document.getElementById('modal-checkout');
     if (modal) {
@@ -279,13 +347,7 @@
       modal.classList.add('hidden');
     }
   }
-
-  function eliminarDelCarrito(index) {
-    carrito.splice(index, 1);
-    actualizarContadorCarrito();
-    abrirCarrito();
-  }
-
+  
   async function procesarPagoMercadoPago() {
     if (carrito.length === 0) {
       alert("Agrega productos a tu carrito antes de pagar.");
