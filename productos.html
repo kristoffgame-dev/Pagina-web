@@ -356,10 +356,10 @@
 
     const metodo = document.getElementById('metodo-pago').value;
 
-    if (metodo === 'SPEI_Directo') {
+   if (metodo === 'SPEI_Directo') {
       let mensajeWsp = "Hola DODI SYSTEM, quiero confirmar mi compra por transferencia directa de los siguientes productos:%0A";
       carrito.forEach(item => {
-        mensajeWsp += `- ${item.nombre} ($${item.precio} MXN)%0A`;
+        mensajeWsp += `- ${item.cantidad}x ${item.nombre} ($${(item.precio * item.cantidad).toLocaleString('es-MX')} MXN)%0A`;
       });
       window.open(`https://wa.me/527442320022?text=${mensajeWsp}`, '_blank');
       return;
