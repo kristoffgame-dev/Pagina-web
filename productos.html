@@ -1,13 +1,10 @@
-<!doctype html>
-<html lang="es-MX">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Productos & Software | DODI SYSTEM</title>
-  <meta name="description" content="Catálogo de productos de software e infraestructura por DODI SYSTEM.">
-  <link rel="icon" href="assets/logo.png">
-  
-  <!-- Tailwind CSS -->
+  <meta charset="UTF-8">
+  <title>Dodi System - Catálogo</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -15,493 +12,376 @@
         extend: {
           colors: {
             brand: {
-              dark: '#0B1120',
-              card: '#1E293B',
-              blue: '#2563EB',
-              cyan: '#06B6D4',
-              emerald: '#10B981'
+              cyan: '#06b6d4',
+              blue: '#2563eb',
+              dark: '#090d16',
+              card: '#111827'
             }
           }
         }
       }
     }
   </script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background-color: #090d16; color: #f8fafc; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
-
-<!-- Botón Flotante de WhatsApp -->
-<a href="https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20quisiera%20solicitar%20información%20y%20una%20cotización."
-   target="_blank"
-   rel="noopener noreferrer"
-   class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl shadow-emerald-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center group"
-   aria-label="Contactar por WhatsApp">
-  <svg class="w-7 h-7 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18.1-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18.1-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-  </svg>
-</a>
-
-<!-- Botón Flotante del Carrito -->
-<button id="btn-carrito-flotante" onclick="abrirCarrito()" class="fixed bottom-6 left-6 z-40 bg-brand-blue hover:bg-blue-600 text-white p-4 rounded-full shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-110 flex items-center justify-center gap-2 group">
-  <svg class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
-  <span id="carrito-contador" class="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">0</span>
-</button>
-
-  <!-- Header / Navegación -->
-  <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a class="flex items-center gap-3.5 group" href="index.html">
-        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-cyan/20 to-brand-blue/20 border border-brand-cyan/30 flex items-center justify-center p-1.5 shadow-lg shadow-brand-blue/10 group-hover:scale-105 group-hover:border-brand-cyan transition-all duration-300">
-          <img src="assets/logo.png" alt="Logo DODI SYSTEM" class="w-full h-full object-contain filter drop-shadow" onerror="this.onerror=null; this.src='logo.png'; this.parentElement.innerHTML='<span class=\'font-black text-brand-cyan text-xl\'>DS</span>';">
-        </div>
-        <div class="flex flex-col">
-          <span class="font-black text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-cyan to-blue-500 drop-shadow-sm group-hover:from-brand-cyan group-hover:to-brand-blue transition-all">
-            DODI SYSTEM
-          </span>
-          <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1 group-hover:text-brand-cyan transition-colors">
-            Soluciones Digitales
-          </span>
-        </div>
-      </a>
-
-      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-        <a href="index.html" class="text-slate-400 hover:text-white transition-colors">Inicio</a>
-        <a href="productos.html" class="text-white hover:text-brand-cyan transition-colors">Productos</a>
-        <a href="redes-camaras.html" class="text-slate-400 hover:text-white transition-colors">Redes & Cámaras</a>
-        <a href="edu.html" class="text-slate-400 hover:text-white transition-colors">Educación</a>
-        <a href="portal.html" class="text-slate-400 hover:text-white transition-colors">Portal Wi-Fi</a>
-        <a href="index.html#cotizar" class="bg-brand-blue hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-bold transition-all shadow-md shadow-blue-600/20 hover:shadow-blue-600/40">
-          Solicitar Cotización
-        </a>
-      </nav>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+  <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-40 px-8 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-black text-white text-xl shadow-lg shadow-cyan-500/20">D</div>
+      <span class="text-2xl font-black tracking-tight text-white">DODI <span class="text-cyan-400">SYSTEM</span></span>
     </div>
+    <button onclick="abrirCarrito()" class="relative bg-slate-800 hover:bg-slate-700 border border-slate-700 px-4 py-2 rounded-xl flex items-center gap-2 transition-colors">
+      <i class="fa-solid fa-cart-shopping text-cyan-400"></i>
+      <span class="text-sm font-bold">Carrito</span>
+      <span id="carrito-contador" class="absolute -top-2 -right-2 bg-cyan-500 text-slate-950 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center shadow-md">0</span>
+    </button>
   </header>
 
-  <!-- Contenido Principal -->
-  <main class="max-w-6xl mx-auto px-4 py-16 w-full space-y-12">
-    <div class="text-center max-w-2xl mx-auto space-y-4">
-      <h1 class="text-3xl sm:text-5xl font-black text-white">Catálogo & <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">E-Commerce Global</span></h1>
-      <p class="text-slate-400">Desarrollo de software a la medida, licencias y productos tecnológicos con envío directo.</p>
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="mb-8">
+      <h1 class="text-3xl font-black text-white mb-2">Catálogo de Productos</h1>
+      <p class="text-slate-400">Hardware, componentes y tecnología con múltiples fotos reales y reseñas de YouTube integradas.</p>
     </div>
-
-    <!-- Contenedor Dinámico de Productos -->
-    <div id="catalogo-grid" class="grid md:grid-cols-2 gap-8">
-      <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
-        <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
-        <p>Cargando productos actualizados...</p>
-      </div>
+    
+    <div id="catalogo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Los productos se cargan dinámicamente -->
     </div>
   </main>
 
-  <!-- MODAL DE CHECKOUT MERCADO PAGO -->
-  <div id="modal-checkout" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-lg w-full p-6 shadow-2xl relative text-slate-100">
-      <button onclick="cerrarCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-2xl">&times;</button>
+  <div id="modal-video" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+    <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
+      <button onclick="cerrarVideoGrande()" class="absolute top-3 right-3 z-10 bg-slate-800/80 hover:bg-red-600 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center transition-colors text-xl">
+        &times;
+      </button>
+      <div id="contenido-video-modal" class="w-full aspect-video bg-black"></div>
+    </div>
+  </div>
 
-      <!-- Resumen y Forma de Pago -->
-      <div id="paso-1-carrito">
-        <h3 class="text-xl font-black text-white mb-3 flex items-center gap-2">🛒 Tu Carrito de Compras</h3>
-        <div id="lista-carrito" class="space-y-3 max-h-56 overflow-y-auto mb-4 border-b border-slate-700 pb-4 pr-1"></div>
-        
+  <div id="modal-checkout" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+    <div class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl p-6 flex flex-col max-h-[90vh]">
+      <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-800">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-cyan-400"></i> Tu Carrito</h2>
+        <button onclick="cerrarCheckout()" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+      </div>
+      <div id="lista-carrito" class="flex-1 overflow-y-auto space-y-3 mb-4 pr-1"></div>
+      <div class="border-t border-slate-800 pt-4 mt-auto">
         <div class="flex justify-between items-center mb-4">
-          <span class="font-bold text-slate-400">Total:</span>
-          <span id="carrito-total" class="text-2xl font-black text-brand-cyan">$0 MXN</span>
+          <span class="text-slate-400 font-medium">Total:</span>
+          <span id="carrito-total" class="text-2xl font-black text-white">$0 MXN</span>
         </div>
-
-        <div class="mb-5">
-          <label class="block text-xs font-bold text-slate-300 uppercase mb-2">Selecciona tu Método de Pago:</label>
-          <select id="metodo-pago" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-brand-cyan text-white focus:outline-none">
-            <option value="MercadoPago">Tarjetas / Tarjeta de Débito, Crédito o Efectivo (Mercado Pago)</option>
-            <option value="SPEI_Directo">Transferencia Directa a BBVA (0% Comisión)</option>
+        <div class="mb-4">
+          <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Método de pago:</label>
+          <select id="metodo-pago" class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-cyan-500">
+            <option value="MercadoPago">Mercado Pago (Tarjetas, OXXO, etc.)</option>
+            <option value="SPEI_Directo">Transferencia Directa (WhatsApp)</option>
           </select>
         </div>
-
-        <button id="btn-procesar-pago" onclick="procesarPagoMercadoPago()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
-          <span>Procesar Pago Seguro</span>
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+        <button onclick="procesarPagoMercadoPago()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black py-3 rounded-xl transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2">
+          <span>Continuar con el Pago</span>
+          <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950/80 py-8 mt-12">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-      <span>© <span id="year">2026</span> DODI SYSTEM. Todos los derechos reservados.</span>
-      <div class="flex gap-4">
-        <a href="index.html" class="hover:text-slate-300 transition-colors">Inicio</a>
-        <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
-        <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
-      </div>
-    </div>
-  </footer>
-
-<!-- Modal para Reproducir Video en Grande -->
-<div id="modal-video" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
-  <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
-    <!-- Botón de cerrar -->
-    <button onclick="cerrarVideoGrande()" class="absolute top-3 right-3 z-10 bg-slate-800/80 hover:bg-red-600 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center transition-colors text-xl">
-      &times;
-    </button>
-    <!-- Contenedor donde se incrustará el video con sonido y controles -->
-    <div id="contenido-video-modal" class="w-full aspect-video bg-black"></div>
-  </div>
-</div>
-
   <script>
- let carrito = [];
+    let carrito = [];
 
-// Función para detectar respuestas de pago de Mercado Pago
-function verificarEstadoPago() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const status = urlParams.get('status');
-
-  if (status === 'failure') {
-    alert("⚠️ Tu pago no pudo ser completado o fue rechazado por el banco.\n\nPuedes intentarlo nuevamente con otro método de pago o seleccionar Transferencia Directa BBVA.");
-    window.history.replaceState({}, document.title, window.location.pathname);
-  } else if (status === 'pending') {
-    alert("⏳ Tu pago se encuentra PENDIENTE.\n\nSi elegiste pagar en efectivo (OXXO/7-Eleven) o por transferencia, recuerda completar tu depósito con la ficha generada por Mercado Pago. ¡Muchas gracias!");
-    window.history.replaceState({}, document.title, window.location.pathname);
-  }
-}
-
-async function cargarCatalogoDinamico() {
-  const contenedor = document.getElementById('catalogo-grid');
-  if (contenedor) {
-    contenedor.innerHTML = `
-      <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
-        <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
-        <p>Cargando productos actualizados...</p>
-      </div>
-    `;
-  }
-
-  try {
-    const respuesta = await fetch('/api/catalogo');
-    if (!respuesta.ok) throw new Error('Error al obtener el catálogo del servidor');
-
-    const productos = await respuesta.json();
-
-    if (Array.isArray(productos) && productos.length > 0) {
-      renderizarProductos(productos);
-    } else {
+    async function cargarCatalogoDinamico() {
+      const contenedor = document.getElementById('catalogo-grid');
       if (contenedor) {
-        contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400"><p>No hay productos disponibles en este momento.</p></div>`;
+        contenedor.innerHTML = `
+          <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
+            <div class="w-8 h-8 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+            <p>Cargando inventario...</p>
+          </div>
+        `;
+      }
+
+      try {
+        // Ejemplo con tu Nintendo Switch V1 usando múltiples fotos de celular y video de YouTube al final
+        const productosPrueba = [
+          {
+            nombre: "Nintendo Switch V1 (Completa / Excelente estado)",
+            categoria: "Consolas",
+            precio: 2900,
+            stock: 1,
+            descripcion: "Consola original con dock de TV, cables y Joy-Cons funcionando perfecto. Fotos reales de la consola y video reseña oficial incluidos.",
+            imagenes: [
+              "https://images.unsplash.com/photo-1578303512597-81e6cc155b12?auto=format&fit=crop&w=600&q=80", // Foto real simulada 1
+              "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=600&q=80"  // Foto real simulada 2
+            ],
+            video_url: "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
+          },
+          {
+            nombre: "Router TP-Link Archer C6 Gigabit",
+            categoria: "Redes",
+            precio: 850,
+            stock: 3,
+            descripcion: "Router Wi-Fi AC1200 de doble banda ideal para fibra óptica.",
+            imagenes: [
+              "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=600&q=80"
+            ],
+            video_url: "https://www.youtube.com/watch?v=yKD2ykbAzGs"
+          }
+        ];
+
+        let productos = productosPrueba;
+        try {
+          const respuesta = await fetch('/api/catalogo');
+          if (respuesta.ok) {
+            const datosRemotos = await respuesta.json();
+            if (Array.isArray(datosRemotos) && datosRemotos.length > 0) {
+              productos = datosRemotos;
+            }
+          }
+        } catch(e) {
+          console.log("Usando datos locales de demostración.");
+        }
+
+        renderizarProductos(productos);
+      } catch (error) {
+        console.error("Error:", error);
+        if (contenedor) {
+          contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-red-400"><p>Error al conectar con el inventario.</p></div>`;
+        }
       }
     }
-  } catch (error) {
-    console.error("Error:", error);
-    if (contenedor) {
-      contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-red-400"><p>Error al conectar con el inventario. Inténtalo más tarde.</p></div>`;
+
+    function renderizarProductos(productos) {
+      const contenedor = document.getElementById('catalogo-grid');
+      if (!contenedor) return;
+      contenedor.innerHTML = '';
+
+      productos.forEach((prod, prodIndex) => {
+        const stockCrudo = prod.stock !== undefined ? prod.stock : (prod.Stock !== undefined ? prod.Stock : 0);
+        const stockReal = parseInt(String(stockCrudo).replace(/[^0-9]/g, ''), 10);
+        const stock = !isNaN(stockReal) ? stockReal : 0;
+
+        // Construir lista de slides multimedia (fotos + video al final)
+        let slidesHtml = '';
+        let listaImgs = prod.imagenes || (prod.imagen ? [prod.imagen] : []);
+        if (listaImgs.length === 0) {
+          listaImgs = ["https://placehold.co/600x400/111827/06b6d4?text=Dodi+System"];
+        }
+
+        // 1. Agregar las fotos al carrusel
+        listaImgs.forEach((imgUrl, imgIdx) => {
+          slidesHtml += `
+            <div class="w-full h-full flex-shrink-0 relative bg-slate-950 flex items-center justify-center">
+              <img src="${imgUrl}" alt="${prod.nombre}" class="w-full h-full object-cover">
+              <span class="absolute bottom-2 left-2 bg-slate-900/80 text-cyan-400 text-[10px] font-black px-2 py-1 rounded-lg border border-slate-700">Foto ${imgIdx + 1} de ${listaImgs.length}</span>
+            </div>
+          `;
+        });
+
+        // 2. Agregar el video de YouTube como último elemento del carrusel si existe
+        const videoSrc = prod.video_url || prod.video || '';
+        let videoId = '';
+        if (videoSrc && videoSrc.trim() !== '') {
+          if (videoSrc.includes('youtu.be/')) {
+            videoId = videoSrc.split('youtu.be/')[1].split('?')[0];
+          } else if (videoSrc.includes('youtube.com/watch')) {
+            const urlParams = new URLSearchParams(new URL(videoSrc).search);
+            videoId = urlParams.get('v');
+          }
+
+          if (videoId) {
+            slidesHtml += `
+              <div class="w-full h-full flex-shrink-0 relative bg-slate-950 cursor-pointer group" onclick="abrirVideoGrande('${videoSrc}')" title="Haz clic para ampliar la reseña con sonido">
+                <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1" class="w-full h-full pointer-events-none object-cover" frameborder="0"></iframe>
+                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                  <span class="bg-slate-900/90 text-white px-3.5 py-2 rounded-xl text-xs font-black shadow-lg border border-slate-700 opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                    <i class="fa-solid fa-play text-cyan-400"></i> Ver Reseña Video
+                  </span>
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        let badgeStock = stock <= 0 ? 
+          `<span class="text-xs font-bold text-red-400 bg-red-400/10 px-3 py-1 rounded-full">Agotado</span>` : 
+          `<span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">${prod.categoria || 'Hardware'} (${stock} disp.)</span>`;
+
+        let botonHtml = stock <= 0 ? 
+          `<button disabled class="bg-slate-800 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">Agotado</button>` : 
+          `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
+
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-cyan-500/50 transition-all duration-300";
+
+        card.innerHTML = `
+          <div>
+            <!-- Contenedor del Carrusel Multimedia -->
+            <div class="relative w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 group">
+              <div id="track-${prodIndex}" class="w-full h-full flex transition-transform duration-300 ease-out">
+                ${slidesHtml}
+              </div>
+              ${(listaImgs.length + (videoId ? 1 : 0)) > 1 ? `
+                <button onclick="moverCarrusel(${prodIndex}, -1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-slate-900 text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md border border-slate-700">
+                  <i class="fa-solid fa-chevron-left text-xs"></i>
+                </button>
+                <button onclick="moverCarrusel(${prodIndex}, 1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-slate-900 text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md border border-slate-700">
+                  <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+              ` : ''}
+            </div>
+
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">${prod.categoria || 'Hardware'}</span>
+              ${badgeStock}
+            </div>
+            <h3 class="text-xl font-black text-white mb-2">${prod.nombre}</h3>
+            <p class="text-slate-300 text-sm mb-4 leading-relaxed">${prod.descripcion || 'Sin descripción disponible.'}</p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+            <span class="text-2xl font-black text-white">$${Number(prod.precio).toLocaleString('es-MX')} <span class="text-xs text-slate-400 font-normal">MXN</span></span>
+            ${botonHtml}
+          </div>
+        `;
+        contenedor.appendChild(card);
+        window[`indicesCarrusel_${prodIndex}`] = { actual: 0, total: listaImgs.length + (videoId ? 1 : 0) };
+      });
     }
-  }
-}
 
-function renderizarProductos(productos) {
-  window.productosGlobal = productos;
+    function moverCarrusel(prodIndex, direccion) {
+      const state = window[`indicesCarrusel_${prodIndex}`];
+      if (!state) return;
+      state.actual = (state.actual + direccion + state.total) % state.total;
+      const track = document.getElementById(`track-${prodIndex}`);
+      if (track) {
+        track.style.transform = `translateX(-${state.actual * 100}%)`;
+      }
+    }
 
-  const contenedor = document.getElementById('catalogo-grid');
-  if (!contenedor) return;
+    function abrirVideoGrande(urlVideoOriginal) {
+      const modal = document.getElementById('modal-video');
+      const contenedorVideo = document.getElementById('contenido-video-modal');
+      if (!modal || !contenedorVideo) return;
 
-  contenedor.innerHTML = '';
-
-  productos.forEach((prod, index) => {
-    const imagenSrc = prod.imagen_url || prod.imagen || '';
-    const videoSrc = prod.video_url || prod.video || '';
-    
-    // Lectura de stock desde Google Sheets
-    const valorStockCrudo = prod.stock !== undefined ? prod.stock : 
-                            (prod.Stock !== undefined ? prod.Stock : 
-                            (prod.EXISTENCIAS !== undefined ? prod.EXISTENCIAS : 0));
-
-    const stockReal = parseInt(String(valorStockCrudo).replace(/[^0-9]/g, ''), 10);
-    const stock = !isNaN(stockReal) ? stockReal : 0;
-
-    let contenidoVisual = '';
-    
-    if (videoSrc && videoSrc.trim() !== '') {
       let videoId = '';
-      if (videoSrc.includes('youtu.be/')) {
-        videoId = videoSrc.split('youtu.be/')[1].split('?')[0];
-      } else if (videoSrc.includes('youtube.com/watch')) {
-        const urlParams = new URLSearchParams(new URL(videoSrc).search);
+      if (urlVideoOriginal.includes('youtu.be/')) {
+        videoId = urlVideoOriginal.split('youtu.be/')[1].split('?')[0];
+      } else if (urlVideoOriginal.includes('youtube.com/watch')) {
+        const urlParams = new URLSearchParams(new URL(urlVideoOriginal).search);
         videoId = urlParams.get('v');
       }
 
       if (videoId) {
-        // Miniatura interactiva para YouTube con efecto hover para ampliar
-        contenidoVisual = `
-          <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative cursor-pointer group" onclick="abrirVideoGrande('${videoSrc}')" title="Haz clic para ver el video en grande">
-            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1" class="w-full h-full pointer-events-none" frameborder="0"></iframe>
-            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors flex items-center justify-center">
-              <span class="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg border border-slate-700 opacity-90 group-hover:opacity-100 transition-opacity">
-                ▶ Ampliar video
-              </span>
-            </div>
-          </div>
-        `;
-      } else {
-        // Reproductor de archivos MP4 directos
-        contenidoVisual = `
-          <div class="w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-700 bg-slate-950 relative cursor-pointer group" title="Haz clic para activar/desactivar audio">
-            <video src="${videoSrc}" autoplay muted loop playsinline class="w-full h-full object-cover" onclick="toggleAudioVideo(this)"></video>
-            <div class="absolute bottom-2 right-2 bg-slate-900/80 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none">
-              <span class="icono-audio">🔇 Click para sonido</span>
-            </div>
-          </div>
+        contenedorVideo.innerHTML = `
+          <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         `;
       }
-    } else if (imagenSrc && imagenSrc.trim() !== '') {
-      // Imagen completa sin recortes (object-contain)
-      contenidoVisual = `
-        <img src="${imagenSrc}" alt="${prod.nombre}" class="w-full h-48 object-contain bg-slate-950 p-2 rounded-xl mb-4 border border-slate-700">
-      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
     }
 
-    let badgeStock = '';
-    let botonHtml = '';
-
-    if (stock <= 0) {
-      badgeStock = `<span class="text-xs font-bold text-red-400 bg-red-400/10 px-3 py-1 rounded-full">Agotado</span>`;
-      botonHtml = `<button disabled class="bg-slate-800 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">Agotado</button>`;
-    } else {
-      badgeStock = `<span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'} (${stock} disp.)</span>`;
-      botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
+    function cerrarVideoGrande() {
+      const modal = document.getElementById('modal-video');
+      const contenedorVideo = document.getElementById('contenido-video-modal');
+      if (modal && contenedorVideo) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+        contenedorVideo.innerHTML = '';
+      }
     }
 
-    const card = document.createElement('div');
-    card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
-
-    card.innerHTML = `
-      <div>
-        ${contenidoVisual}
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">${prod.categoria || 'Software'}</span>
-          ${badgeStock}
-        </div>
-        <h3 class="text-xl font-black text-white mb-2">${prod.nombre}</h3>
-        <p class="text-slate-400 text-sm mb-4">${prod.descripcion || 'Sin descripción disponible.'}</p>
-      </div>
-      <div class="flex items-center justify-between pt-4 border-t border-slate-800">
-        <span class="text-2xl font-black text-white">$${Number(prod.precio).toLocaleString('es-MX')} <span class="text-xs text-slate-400 font-normal">MXN</span></span>
-        ${botonHtml}
-      </div>
-    `;
-
-    contenedor.appendChild(card);
-  });
-}
-
-// Funciones para el Modal de Video en Grande
-function abrirVideoGrande(urlVideoOriginal) {
-  const modal = document.getElementById('modal-video');
-  const contenedorVideo = document.getElementById('contenido-video-modal');
-  
-  if (!modal || !contenedorVideo) return;
-
-  let videoId = '';
-  if (urlVideoOriginal.includes('youtu.be/')) {
-    videoId = urlVideoOriginal.split('youtu.be/')[1].split('?')[0];
-  } else if (urlVideoOriginal.includes('youtube.com/watch')) {
-    const urlParams = new URLSearchParams(new URL(urlVideoOriginal).search);
-    videoId = urlParams.get('v');
-  }
-
-  if (videoId) {
-    contenedorVideo.innerHTML = `
-      <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    `;
-  }
-
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-}
-
-function cerrarVideoGrande() {
-  const modal = document.getElementById('modal-video');
-  const contenedorVideo = document.getElementById('contenido-video-modal');
-  
-  if (modal && contenedorVideo) {
-    modal.classList.remove('flex');
-    modal.classList.add('hidden');
-    contenedorVideo.innerHTML = ''; // Detiene el video al cerrar
-  }
-}
-
-// Función para alternar audio en videos MP4 directos
-function toggleAudioVideo(videoElement) {
-  const contenedor = videoElement.parentElement;
-  const textoIndicador = contenedor.querySelector('.icono-audio');
-
-  if (videoElement.muted) {
-    videoElement.muted = false;
-    if (textoIndicador) textoIndicador.textContent = '🔊 Con sonido';
-  } else {
-    videoElement.muted = true;
-    if (textoIndicador) textoIndicador.textContent = '🔇 Click para sonido';
-  }
-}
-
-// Funciones de Carrito y Checkout
-function agregarAlCarrito(producto, cantidadAñadir = 1) {
-  const stockDisponible = Number(producto.stock || 0);
-  const itemExistente = carrito.find(item => item.nombre === producto.nombre);
-
-  if (itemExistente) {
-    const nuevaCantidad = itemExistente.cantidad + cantidadAñadir;
-    if (nuevaCantidad > stockDisponible) {
-      alert(`¡Atención! Solo tenemos ${stockDisponible} unidades disponibles en inventario de ${producto.nombre}.`);
-      itemExistente.cantidad = stockDisponible;
-    } else {
-      itemExistente.cantidad = nuevaCantidad;
+    function agregarAlCarrito(producto, cantidadAñadir = 1) {
+      const stockDisponible = Number(producto.stock || 0);
+      const itemExistente = carrito.find(item => item.nombre === producto.nombre);
+      if (itemExistente) {
+        const nuevaCantidad = itemExistente.cantidad + cantidadAñadir;
+        if (nuevaCantidad > stockDisponible) {
+          alert(`Solo tenemos ${stockDisponible} unidades disponibles.`);
+          itemExistente.cantidad = stockDisponible;
+        } else {
+          itemExistente.cantidad = nuevaCantidad;
+        }
+      } else {
+        carrito.push({ ...producto, cantidad: cantidadAñadir });
+      }
+      actualizarContadorCarrito();
     }
-  } else {
-    if (cantidadAñadir > stockDisponible) {
-      alert(`Solo puedes agregar un máximo de ${stockDisponible} unidades de ${producto.nombre}.`);
-      cantidadAñadir = stockDisponible;
+
+    function actualizarContadorCarrito() {
+      const contador = document.getElementById('carrito-contador');
+      if (contador) {
+        const totalPiezas = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+        contador.textContent = totalPiezas;
+      }
     }
-    carrito.push({ ...producto, cantidad: cantidadAñadir });
-  }
 
-  actualizarContadorCarrito();
-}
+    function abrirCarrito() {
+      const modal = document.getElementById('modal-checkout');
+      const lista = document.getElementById('lista-carrito');
+      const totalEl = document.getElementById('carrito-total');
+      if (!modal || !lista || !totalEl) return;
 
-function actualizarContadorCarrito() {
-  const contador = document.getElementById('carrito-contador');
-  if (contador) {
-    const totalPiezas = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-    contador.textContent = totalPiezas;
-  }
-}
+      lista.innerHTML = '';
+      let total = 0;
+      if (carrito.length === 0) {
+        lista.innerHTML = '<p class="text-slate-400 text-center py-4">Tu carrito está vacío</p>';
+      } else {
+        carrito.forEach((item, index) => {
+          const subtotal = Number(item.precio || 0) * item.cantidad;
+          total += subtotal;
+          lista.innerHTML += `
+            <div class="flex justify-between items-center bg-slate-800/60 p-3 rounded-xl border border-slate-700 text-sm gap-2">
+              <div class="flex-1 min-w-0">
+                <span class="font-bold text-white block truncate">${item.nombre}</span>
+                <span class="text-slate-400 text-xs">$${Number(item.precio).toLocaleString('es-MX')} MXN c/u</span>
+              </div>
+              <span class="font-bold text-cyan-400 text-xs">Cant: ${item.cantidad}</span>
+              <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-2 text-base">&times;</button>
+            </div>
+          `;
+        });
+      }
+      totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
 
-function abrirCarrito() {
-  const modal = document.getElementById('modal-checkout');
-  const lista = document.getElementById('lista-carrito');
-  const totalEl = document.getElementById('carrito-total');
-  
-  if (!modal || !lista || !totalEl) return;
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarContadorCarrito();
+      abrirCarrito();
+    }
 
-  lista.innerHTML = '';
-  let total = 0;
+    function cerrarCheckout() {
+      const modal = document.getElementById('modal-checkout');
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
 
-  if (carrito.length === 0) {
-    lista.innerHTML = '<p class="text-slate-400 text-center py-4">Tu carrito está vacío</p>';
-  } else {
-    carrito.forEach((item, index) => {
-      const subtotal = Number(item.precio || 0) * item.cantidad;
-      total += subtotal;
+    async function procesarPagoMercadoPago() {
+      if (carrito.length === 0) {
+        alert("Agrega productos antes de pagar.");
+        return;
+      }
+      const metodo = document.getElementById('metodo-pago').value;
+      if (metodo === 'SPEI_Directo') {
+        let mensajeWsp = "Hola DODI SYSTEM, quiero confirmar mi compra:%0A";
+        carrito.forEach(item => {
+          mensajeWsp += `- ${item.cantidad}x ${item.nombre} ($${(item.precio * item.cantidad).toLocaleString('es-MX')} MXN)%0A`;
+        });
+        window.open(`https://wa.me/527442320022?text=${mensajeWsp}`, '_blank');
+        return;
+      }
+      alert("Redirigiendo a Mercado Pago...");
+    }
 
-      lista.innerHTML += `
-        <div class="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-sm gap-2">
-          <div class="flex-1 min-w-0">
-            <span class="font-bold text-white block truncate">${item.nombre}</span>
-            <span class="text-slate-400 text-xs">$${Number(item.precio).toLocaleString('es-MX')} MXN c/u</span>
-          </div>
-          <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700">
-            <button onclick="cambiarCantidadEnCarrito(${index}, -1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">-</button>
-            <span class="px-2 font-bold text-brand-cyan text-xs">${item.cantidad}</span>
-            <button onclick="cambiarCantidadEnCarrito(${index}, 1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">+</button>
-          </div>
-          <div class="text-right flex items-center gap-2">
-            <span class="font-bold text-white text-xs">$${subtotal.toLocaleString('es-MX')}</span>
-            <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-1.5 py-0.5 rounded text-base">&times;</button>
-          </div>
-        </div>
-      `;
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarCatalogoDinamico();
     });
-  }
-
-  totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-}
-
-function cambiarCantidadEnCarrito(index, cambio) {
-  const item = carrito[index];
-  if (!item) return;
-
-  const stockDisponible = Number(item.stock || 0);
-  const nuevaCantidad = item.cantidad + cambio;
-
-  if (nuevaCantidad <= 0) {
-    eliminarDelCarrito(index);
-  } else if (nuevaCantidad > stockDisponible) {
-    alert(`No puedes agregar más de ${stockDisponible} unidades disponibles de ${item.nombre}.`);
-  } else {
-    item.cantidad = nuevaCantidad;
-    actualizarContadorCarrito();
-    abrirCarrito();
-  }
-}
-
-function eliminarDelCarrito(index) {
-  carrito.splice(index, 1);
-  actualizarContadorCarrito();
-  abrirCarrito();
-}
-
-function cerrarCheckout() {
-  const modal = document.getElementById('modal-checkout');
-  if (modal) {
-    modal.classList.remove('flex');
-    modal.classList.add('hidden');
-  }
-}
-
-async function procesarPagoMercadoPago() {
-  if (carrito.length === 0) {
-    alert("Agrega productos a tu carrito antes de pagar.");
-    return;
-  }
-
-  const metodo = document.getElementById('metodo-pago').value;
-
-  if (metodo === 'SPEI_Directo') {
-    let mensajeWsp = "Hola DODI SYSTEM, quiero confirmar mi compra por transferencia directa de los siguientes productos:%0A";
-    carrito.forEach(item => {
-      mensajeWsp += `- ${item.cantidad}x ${item.nombre} ($${(item.precio * item.cantidad).toLocaleString('es-MX')} MXN)%0A`;
-    });
-    window.open(`https://wa.me/527442320022?text=${mensajeWsp}`, '_blank');
-    return;
-  }
-
-  const btn = document.getElementById('btn-procesar-pago');
-  const textoOriginal = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = "<span>Generando pago con Mercado Pago...</span>";
-
-  try {
-    const respuesta = await fetch('/api/crear-preferencia', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: carrito })
-    });
-
-    const data = await respuesta.json();
-
-    if (respuesta.ok && data.init_point) {
-      window.location.href = data.init_point;
-    } else {
-      alert("Error al conectar con Mercado Pago: " + (data.detalles || data.error || "No se pudo generar la preferencia."));
-      btn.disabled = false;
-      btn.innerHTML = textoOriginal;
-    }
-  } catch (error) {
-    console.error("Error al procesar pago:", error);
-    alert("Ocurrió un error al procesar el pago. Inténtalo de nuevo.");
-    btn.disabled = false;
-    btn.innerHTML = textoOriginal;
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  cargarCatalogoDinamico();
-  verificarEstadoPago();
-});
-
-const yearEl = document.getElementById('year');
-if (yearEl) {
-  yearEl.textContent = new Date().getFullYear();
-}
-</script>
+  </script>
 </body>
 </html>
