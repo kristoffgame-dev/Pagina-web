@@ -215,21 +215,20 @@ function renderizarProductos(productos) {
       stock = !isNaN(numeroExtraido) ? numeroExtraido : 0;
     }
 
-    // Estructura visual para carrusel de foto y video integrada
+    
+   // Estructura visual corregida para que el video cargue bien y la imagen no se corte
     let contenidoVisual = '';
     const imagenesProd = prod.galeria || (imagenSrc ? [imagenSrc] : []);
     
     if (imagenesProd.length > 0 || videoSrc) {
       contenidoVisual = `
-        <div class="relative w-full h-48 bg-slate-900 rounded-xl overflow-hidden mb-4 group/media">
+        <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 flex items-center justify-center group/media">
           ${videoSrc ? `
-            <div class="absolute inset-0 z-10">
-              <video src="${videoSrc}" class="w-full h-full object-cover cursor-pointer" muted loop autoplay playsinline onclick="toggleAudioVideo(this)"></video>
-              <span class="icono-audio absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-full pointer-events-none">🔇 Click para sonido</span>
-            </div>
+            <video src="${videoSrc}" class="w-full h-full object-contain cursor-pointer" autoplay muted loop playsinline onclick="toggleAudioVideo(this)"></video>
+            <span class="icono-audio absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-full pointer-events-none z-20">🔇 Click para sonido</span>
           ` : ''}
-          ${imagenesProd.length > 0 ? `
-            <img src="${imagenesProd[0]}" alt="${prod.nombre}" class="w-full h-full object-cover ${videoSrc ? 'opacity-0 hover:opacity-100 transition-opacity' : ''}">
+          ${!videoSrc && imagenesProd.length > 0 ? `
+            <img src="${imagenesProd[0]}" alt="${prod.nombre}" class="w-full h-full object-contain">
           ` : ''}
         </div>
       `;
