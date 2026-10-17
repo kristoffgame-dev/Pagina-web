@@ -243,7 +243,6 @@ function renderizarProductos(productos) {
         elementInicialHTML = `
           <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick='abrirGaleriaAmpliada(${JSON.stringify(listaImágenes)}, "${videoSrc}", 0, "${(prod.nombre || 'Imagen').replace(/'/g, "\\'")}")' title="Haz clic para ampliar">
             <img src="${listaImágenes[0]}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300 group-hover/img:scale-105">
-            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 1/${totalElementos}</span>
           </div>
         `;
       } else if (videoSrc) {
@@ -257,7 +256,6 @@ function renderizarProductos(productos) {
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
               <span>Ampliar / Sonido</span>
             </button>
-            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video</span>
           </div>
         `;
       }
@@ -362,7 +360,6 @@ function cambiarMediaProducto(uid, indexTarget, tipo, urlImg, urlVideo, nombrePr
     contenidoNuevo = `
       <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick='abrirGaleriaAmpliada(${galeriaJson}, "${videoUrlCard}", ${indexTarget}, "${nombreProd.replace(/'/g, "\\'")}")' title="Haz clic para ampliar">
         <img src="${urlImg}" alt="${nombreProd}" class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300 group-hover/img:scale-105">
-        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 ${indexTarget + 1}/${totalElementos}</span>
       </div>
     `;
   } else {
@@ -376,7 +373,6 @@ function cambiarMediaProducto(uid, indexTarget, tipo, urlImg, urlVideo, nombrePr
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
           <span>Ampliar / Sonido</span>
         </button>
-        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video ${indexTarget + 1}/${totalElementos}</span>
       </div>
     `;
   }
@@ -467,13 +463,11 @@ function actualizarContenidoModal() {
     const imgUrl = modalGaleriaActual[modalIndiceActual];
     visorModal.innerHTML = `
       <img src="${imgUrl}" alt="${modalNombreProd}" class="max-w-full max-h-full object-contain mx-auto rounded-lg shadow-lg">
-      <span class="absolute bottom-3 left-3 bg-black/70 text-slate-300 text-xs px-3 py-1 rounded-md pointer-events-none">📷 Foto ${modalIndiceActual + 1} de ${totalElementos}</span>
     `;
   } else {
     const videoId = obtenerIdYouTube(modalVideoActual);
     visorModal.innerHTML = `
       <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&enablejsapi=1" class="w-full h-full rounded-lg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <span class="absolute bottom-3 left-3 bg-black/70 text-slate-300 text-xs px-3 py-1 rounded-md pointer-events-none">🎥 Video del producto (${modalIndiceActual + 1} de ${totalElementos})</span>
     `;
   }
 
