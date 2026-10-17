@@ -136,172 +136,305 @@
   </footer>
 
   <script>
-  let carrito = [];
+ let carrito = [];
 
-  async function cargarCatalogoDinamico() {
-    const contenedor = document.getElementById('catalogo-grid');
-    if (contenedor) {
-      contenedor.innerHTML = `
-        <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
-          <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
-          <p>Cargando productos actualizados...</p>
-        </div>
-      `;
-    }
+// Función para detectar respuestas de pago de Mercado Pago
+function verificarEstadoPago() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const status = urlParams.get('status');
 
-    try {
-      const respuesta = await fetch('/api/catalogo');
-      if (!respuesta.ok) throw new Error('Error al obtener el catálogo del servidor');
+  if (status === 'failure') {
+    alert("⚠️ Tu pago no pudo ser completado o fue rechazado por el banco.\n\nPuedes intentarlo nuevamente con otro método de pago o seleccionar Transferencia Directa BBVA.");
+    // Limpiar parámetros de la URL de forma limpia
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } else if (status === 'pending') {
+    alert("⏳ Tu pago se encuentra PENDIENTE.\n\nSi elegiste pagar en efectivo (OXXO/7-Eleven) o por transferencia, recuerda completar tu depósito con la ficha generada por Mercado Pago. ¡Muchas gracias!");
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
 
-      const productos = await respuesta.json();
-
-      if (Array.isArray(productos) && productos.length > 0) {
-        renderizarProductos(productos);
-      } else {
-        if (contenedor) {
-          contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400"><p>No hay productos disponibles en este momento.</p></div>`;
-        }
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      if (contenedor) {
-        contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-red-400"><p>Error al conectar con el inventario. Inténtalo más tarde.</p></div>`;
-      }
-    }
+async function cargarCatalogoDinamico() {
+  const contenedor = document.getElementById('catalogo-grid');
+  if (contenedor) {
+    contenedor.innerHTML = `
+      <div class="col-span-full text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-3">
+        <div class="w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin"></div>
+        <p>Cargando productos actualizados...</p>
+      </div>
+    `;
   }
 
-  function renderizarProductos(productos) {
-    const contenedor = document.getElementById('catalogo-grid');
-    if (!contenedor) return;
+  try {
+    const respuesta = await fetch('/api/catalogo');
+    if (!respuesta.ok) throw new Error('Error al obtener el catálogo del servidor');
 
-    contenedor.innerHTML = '';
+    const productos = await respuesta.json();
 
-    productos.forEach(prod => {
-      const card = document.createElement('div');
-      card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
-      
-      card.innerHTML = `
-        <div>
-          ${prod.imagen ? `<img src="${prod.imagen}" alt="${prod.nombre}" class="w-full h-48 object-cover rounded-xl mb-4 border border-slate-700">` : ''}
-          <span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'}</span>
-          <h3 class="text-xl font-black text-white mt-3 mb-2">${prod.nombre}</h3>
-          <p class="text-slate-400 text-sm mb-4">${prod.descripcion || 'Sin descripción disponible.'}</p>
+    if (Array.isArray(productos) && productos.length > 0) {
+      renderizarProductos(productos);
+    } else {
+      if (contenedor) {
+        contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400"><p>No hay productos disponibles en este momento.</p></div>`;
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    if (contenedor) {
+      contenedor.innerHTML = `<div class="col-span-full text-center py-12 text-red-400"><p>Error al conectar con el inventario. Inténtalo más tarde.</p></div>`;
+    }
+  }
+}
+
+function renderizarProductos(productos) {
+  // Guardamos los productos globalmente para poder verlos en la consola si los necesitas
+  window.productosGlobal = productos;
+
+  const contenedor = document.getElementById('catalogo-grid');
+  if (!contenedor) return;
+
+  contenedor.innerHTML = '';
+
+  productos.forEach((prod, index) => {
+    if (index === 0) {
+      console.log("Llaves exactas del primer producto:", Object.keys(prod));
+      console.log("Objeto completo del primer producto:", prod);
+    }
+
+    const imagenSrc = prod.imagen_url || prod.imagen || '';
+    const videoSrc = prod.video_url || prod.video || '';
+    
+    // Lectura de stock desde Google Sheets
+    const valorStockCrudo = prod.stock !== undefined ? prod.stock : 
+                            (prod.Stock !== undefined ? prod.Stock : 
+                            (prod.EXISTENCIAS !== undefined ? prod.EXISTENCIAS : 0));
+
+    const stockReal = parseInt(String(valorStockCrudo).replace(/[^0-9]/g, ''), 10);
+    const stock = !isNaN(stockReal) ? stockReal : 0;
+
+   
+
+    let badgeStock = '';
+    let botonHtml = '';
+
+    if (stock <= 0) {
+      badgeStock = `<span class="text-xs font-bold text-red-400 bg-red-400/10 px-3 py-1 rounded-full">Agotado</span>`;
+      botonHtml = `<button disabled class="bg-slate-800 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">Agotado</button>`;
+    } else {
+      badgeStock = `<span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'} (${stock} disp.)</span>`;
+      botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
+    }
+
+    const card = document.createElement('div');
+    card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
+
+    card.innerHTML = `
+      <div>
+        ${contenidoVisual}
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">${prod.categoria || 'Software'}</span>
+          ${badgeStock}
         </div>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-800">
-          <span class="text-2xl font-black text-white">$${Number(prod.precio).toLocaleString('es-MX')} <span class="text-xs text-slate-400 font-normal">MXN</span></span>
-          <button onclick='agregarAlCarrito(${JSON.stringify(prod)})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">
-            Agregar
-          </button>
-        </div>
-      `;
-      contenedor.appendChild(card);
+        <h3 class="text-xl font-black text-white mb-2">${prod.nombre}</h3>
+        <p class="text-slate-400 text-sm mb-4">${prod.descripcion || 'Sin descripción disponible.'}</p>
+      </div>
+      <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+        <span class="text-2xl font-black text-white">$${Number(prod.precio).toLocaleString('es-MX')} <span class="text-xs text-slate-400 font-normal">MXN</span></span>
+        ${botonHtml}
+      </div>
+    `;
+
+    contenedor.appendChild(card);
+  });
+}
+
+// Función para alternar el audio del video al hacerle clic
+function toggleAudioVideo(videoElement) {
+  const contenedor = videoElement.parentElement;
+  const textoIndicador = contenedor.querySelector('.icono-audio');
+
+  if (videoElement.muted) {
+    videoElement.muted = false;
+    if (textoIndicador) textoIndicador.textContent = '🔊 Con sonido';
+  } else {
+    videoElement.muted = true;
+    if (textoIndicador) textoIndicador.textContent = '🔇 Click para sonido';
+  }
+}
+
+// 1. Agregar al carrito (agrupa items repetidos y valida stock)
+function agregarAlCarrito(producto, cantidadAñadir = 1) {
+  const stockDisponible = Number(producto.stock || 0);
+
+  // Buscar si el producto ya está en el carrito
+  const itemExistente = carrito.find(item => item.nombre === producto.nombre);
+
+  if (itemExistente) {
+    const nuevaCantidad = itemExistente.cantidad + cantidadAñadir;
+    if (nuevaCantidad > stockDisponible) {
+      alert(`¡Atención! Solo tenemos ${stockDisponible} unidades disponibles en inventario de ${producto.nombre}.`);
+      itemExistente.cantidad = stockDisponible;
+    } else {
+      itemExistente.cantidad = nuevaCantidad;
+    }
+  } else {
+    if (cantidadAñadir > stockDisponible) {
+      alert(`Solo puedes agregar un máximo de ${stockDisponible} unidades de ${producto.nombre}.`);
+      cantidadAñadir = stockDisponible;
+    }
+    carrito.push({
+      ...producto,
+      cantidad: cantidadAñadir
     });
   }
 
-  function agregarAlCarrito(producto) {
-    carrito.push(producto);
-    actualizarContadorCarrito();
+  actualizarContadorCarrito();
+}
+
+// 2. Actualizar el número del icono en el Header (suma total de piezas)
+function actualizarContadorCarrito() {
+  const contador = document.getElementById('carrito-contador');
+  if (contador) {
+    const totalPiezas = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    contador.textContent = totalPiezas;
   }
+}
 
-  function actualizarContadorCarrito() {
-    const contador = document.getElementById('carrito-contador');
-    if (contador) contador.textContent = carrito.length;
-  }
+// 3. Abrir el modal del Carrito dibujando filas con controles + / -
+function abrirCarrito() {
+  const modal = document.getElementById('modal-checkout');
+  const lista = document.getElementById('lista-carrito');
+  const totalEl = document.getElementById('carrito-total');
+  
+  if (!modal || !lista || !totalEl) return;
 
-  function abrirCarrito() {
-    const modal = document.getElementById('modal-checkout');
-    const lista = document.getElementById('lista-carrito');
-    const totalEl = document.getElementById('carrito-total');
-    
-    if (!modal || !lista || !totalEl) return;
+  lista.innerHTML = '';
+  let total = 0;
 
-    lista.innerHTML = '';
-    let total = 0;
+  if (carrito.length === 0) {
+    lista.innerHTML = '<p class="text-slate-400 text-center py-4">Tu carrito está vacío</p>';
+  } else {
+    carrito.forEach((item, index) => {
+      const subtotal = Number(item.precio || 0) * item.cantidad;
+      total += subtotal;
 
-    if (carrito.length === 0) {
-      lista.innerHTML = '<p class="text-slate-400 text-center py-4">Tu carrito está vacío</p>';
-    } else {
-      carrito.forEach((item, index) => {
-        total += Number(item.precio || 0);
-        lista.innerHTML += `
-          <div class="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-sm">
-            <div>
-              <span class="font-bold text-white block">${item.nombre}</span>
-              <span class="text-slate-400">$${Number(item.precio).toLocaleString('es-MX')} MXN</span>
-            </div>
-            <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-2">&times;</button>
+      lista.innerHTML += `
+        <div class="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-sm gap-2">
+          <div class="flex-1 min-w-0">
+            <span class="font-bold text-white block truncate">${item.nombre}</span>
+            <span class="text-slate-400 text-xs">$${Number(item.precio).toLocaleString('es-MX')} MXN c/u</span>
           </div>
-        `;
-      });
-    }
+          
+          <!-- Controles + y - de cantidad -->
+          <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700">
+            <button onclick="cambiarCantidadEnCarrito(${index}, -1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">-</button>
+            <span class="px-2 font-bold text-brand-cyan text-xs">${item.cantidad}</span>
+            <button onclick="cambiarCantidadEnCarrito(${index}, 1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">+</button>
+          </div>
 
-    totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+          <!-- Subtotal y Eliminar -->
+          <div class="text-right flex items-center gap-2">
+            <span class="font-bold text-white text-xs">$${subtotal.toLocaleString('es-MX')}</span>
+            <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-1.5 py-0.5 rounded text-base">&times;</button>
+          </div>
+        </div>
+      `;
+    });
   }
 
-  function cerrarCheckout() {
-    const modal = document.getElementById('modal-checkout');
-    if (modal) {
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
-    }
-  }
+  totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
 
-  function eliminarDelCarrito(index) {
-    carrito.splice(index, 1);
+// 4. Cambiar cantidad desde los botones + y - dentro del Modal
+function cambiarCantidadEnCarrito(index, cambio) {
+  const item = carrito[index];
+  if (!item) return;
+
+  const stockDisponible = Number(item.stock || 0);
+  const nuevaCantidad = item.cantidad + cambio;
+
+  if (nuevaCantidad <= 0) {
+    eliminarDelCarrito(index);
+  } else if (nuevaCantidad > stockDisponible) {
+    alert(`No puedes agregar más de ${stockDisponible} unidades disponibles de ${item.nombre}.`);
+  } else {
+    item.cantidad = nuevaCantidad;
     actualizarContadorCarrito();
     abrirCarrito();
   }
+}
 
-  async function procesarPagoMercadoPago() {
-    if (carrito.length === 0) {
-      alert("Agrega productos a tu carrito antes de pagar.");
-      return;
-    }
+// 5. Eliminar un producto completo del carrito
+function eliminarDelCarrito(index) {
+  carrito.splice(index, 1);
+  actualizarContadorCarrito();
+  abrirCarrito();
+}
 
-    const metodo = document.getElementById('metodo-pago').value;
+function cerrarCheckout() {
+  const modal = document.getElementById('modal-checkout');
+  if (modal) {
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+  }
+}
 
-    if (metodo === 'SPEI_Directo') {
-      let mensajeWsp = "Hola DODI SYSTEM, quiero confirmar mi compra por transferencia directa de los siguientes productos:%0A";
-      carrito.forEach(item => {
-        mensajeWsp += `- ${item.nombre} ($${item.precio} MXN)%0A`;
-      });
-      window.open(`https://wa.me/527442320022?text=${mensajeWsp}`, '_blank');
-      return;
-    }
+async function procesarPagoMercadoPago() {
+  if (carrito.length === 0) {
+    alert("Agrega productos a tu carrito antes de pagar.");
+    return;
+  }
 
-    const btn = document.getElementById('btn-procesar-pago');
-    const textoOriginal = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = "<span>Generando pago con Mercado Pago...</span>";
+  const metodo = document.getElementById('metodo-pago').value;
 
-    try {
-      const respuesta = await fetch('/api/crear-preferencia', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: carrito })
-      });
+  if (metodo === 'SPEI_Directo') {
+    let mensajeWsp = "Hola DODI SYSTEM, quiero confirmar mi compra por transferencia directa de los siguientes productos:%0A";
+    carrito.forEach(item => {
+      mensajeWsp += `- ${item.cantidad}x ${item.nombre} ($${(item.precio * item.cantidad).toLocaleString('es-MX')} MXN)%0A`;
+    });
+    window.open(`https://wa.me/527442320022?text=${mensajeWsp}`, '_blank');
+    return;
+  }
 
-      const data = await respuesta.json();
+  const btn = document.getElementById('btn-procesar-pago');
+  const textoOriginal = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = "<span>Generando pago con Mercado Pago...</span>";
 
-      if (respuesta.ok && data.init_point) {
-        window.location.href = data.init_point;
-      } else {
-        alert("Error al conectar con Mercado Pago: " + (data.detalles || data.error || "No se pudo generar la preferencia."));
-        btn.disabled = false;
-        btn.innerHTML = textoOriginal;
-      }
-    } catch (error) {
-      console.error("Error al procesar pago:", error);
-      alert("Ocurrió un error al procesar el pago. Inténtalo de nuevo.");
+  try {
+    const respuesta = await fetch('/api/crear-preferencia', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: carrito })
+    });
+
+    const data = await respuesta.json();
+
+    if (respuesta.ok && data.init_point) {
+      window.location.href = data.init_point;
+    } else {
+      alert("Error al conectar con Mercado Pago: " + (data.detalles || data.error || "No se pudo generar la preferencia."));
       btn.disabled = false;
       btn.innerHTML = textoOriginal;
     }
+  } catch (error) {
+    console.error("Error al procesar pago:", error);
+    alert("Ocurrió un error al procesar el pago. Inténtalo de nuevo.");
+    btn.disabled = false;
+    btn.innerHTML = textoOriginal;
   }
+}
 
-  document.addEventListener('DOMContentLoaded', cargarCatalogoDinamico);
-  document.getElementById('year').textContent = new Date().getFullYear();
+document.addEventListener('DOMContentLoaded', () => {
+  cargarCatalogoDinamico();
+  verificarEstadoPago();
+});
+
+const yearEl = document.getElementById('year');
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
 </script>
 </body>
 </html>
