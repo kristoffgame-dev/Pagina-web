@@ -268,7 +268,7 @@ function renderizarProductos(productos) {
         listaImágenes.forEach((img, imgIdx) => {
           itemsMini.push(`
             <button onclick="cambiarMediaProducto('${prodIdUnico}', ${imgIdx}, 'image', '${img}', '', '${(prod.nombre || '').replace(/'/g, "\\'")}', ${totalElementos})" 
-              class="w-10 h-10 rounded-lg bg-slate-900 border-2 ${imgIdx === 0 ? 'border-brand-cyan' : 'border-slate-700 hover:border-slate-500'} overflow-hidden shrink-0 transition-all cursor-pointer flex items-center justify-center p-0.5" title="Ver foto ${imgIdx + 1}">
+              class="w-14 h-14 rounded-xl bg-slate-900 border-2 ${imgIdx === 0 ? 'border-brand-cyan shadow-md shadow-brand-cyan/20' : 'border-slate-700 hover:border-slate-500'} overflow-hidden shrink-0 transition-all cursor-pointer flex items-center justify-center p-0.5" title="Ver foto ${imgIdx + 1}">
               <img src="${img}" class="w-full h-full object-cover">
             </button>
           `);
@@ -278,14 +278,14 @@ function renderizarProductos(productos) {
           const vidIdx = listaImágenes.length;
           itemsMini.push(`
             <button onclick="cambiarMediaProducto('${prodIdUnico}', ${vidIdx}, 'video', '', '${videoSrc}', '${(prod.nombre || '').replace(/'/g, "\\'")}', ${totalElementos})" 
-              class="w-10 h-10 rounded-lg bg-slate-950 border-2 border-slate-700 hover:border-brand-blue overflow-hidden shrink-0 transition-all cursor-pointer flex items-center justify-center relative" title="Ver video del producto">
-              <span class="text-[10px] font-bold text-white">▶</span>
+              class="w-14 h-14 rounded-xl bg-slate-950 border-2 border-slate-700 hover:border-brand-blue overflow-hidden shrink-0 transition-all cursor-pointer flex items-center justify-center relative shadow-md" title="Ver video del producto">
+              <span class="text-xs font-bold text-white bg-black/60 w-full h-full flex items-center justify-center">▶</span>
             </button>
           `);
         }
 
         botonesMiniaturasHTML = `
-          <div class="flex items-center justify-center gap-2 mt-2 overflow-x-auto pb-1">
+          <div class="flex items-center justify-center gap-2.5 mt-3 overflow-x-auto pb-1">
             ${itemsMini.join('')}
           </div>
         `;
@@ -296,8 +296,8 @@ function renderizarProductos(productos) {
           <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center" id="${prodIdUnico}-visor" data-indice-actual="0">
             ${elementInicialHTML}
             ${totalElementos > 1 ? `
-              <button onclick="navegarMedia('${prodIdUnico}', -1,${totalElementos})" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-brand-blue text-white w-8 h-8 rounded-full flex items-center justify-center transition-all opacity-70 hover:opacity-100 z-30 cursor-pointer shadow-md">&#10094;</button>
-              <button onclick="navegarMedia('${prodIdUnico}', 1,${totalElementos})" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-brand-blue text-white w-8 h-8 rounded-full flex items-center justify-center transition-all opacity-70 hover:opacity-100 z-30 cursor-pointer shadow-md">&#10095;</button>
+              <button onclick="navegarMedia('${prodIdUnico}', -1,${totalElementos})" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-brand-blue text-white w-9 h-9 rounded-full flex items-center justify-center transition-all opacity-80 hover:opacity-100 z-30 cursor-pointer shadow-lg">&#10094;</button>
+              <button onclick="navegarMedia('${prodIdUnico}', 1,${totalElementos})" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-brand-blue text-white w-9 h-9 rounded-full flex items-center justify-center transition-all opacity-80 hover:opacity-100 z-30 cursor-pointer shadow-lg">&#10095;</button>
             ` : ''}
           </div>
           ${botonesMiniaturasHTML}
