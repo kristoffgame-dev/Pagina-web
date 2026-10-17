@@ -216,11 +216,11 @@ function renderizarProductos(productos) {
     }
 
     
-   // Estructura visual CORREGIDA: imágenes y videos COMPLETOS, sin recortes
+   // Estructura visual: YouTube en Loop, sin botones, con botón de ampliar
     let contenidoVisual = '';
     const imagenesProd = prod.galeria || (imagenSrc ? [imagenSrc] : []);
     
-    // Función auxiliar interna para convertir enlaces de YouTube a formato embed seguro
+    // Función auxiliar para configurar YouTube sin controles y en bucle perfecto
     function obtenerUrlEmbedYouTube(url) {
       if (!url) return '';
       let videoId = '';
@@ -231,20 +231,29 @@ function renderizarProductos(productos) {
       } else if (url.includes('embed/')) {
         videoId = url.split('embed/')[1].split('?')[0];
       }
-      return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1` : url;
+      // Parámetros clave: controls=0 (sin controles), mute=1 (autoplay silencioso), loop=1 (bucle), playlist=videoId (necesario para loop en YT)
+      return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3` : url;
     }
 
     if (videoSrc) {
       const urlEmbed = obtenerUrlEmbedYouTube(videoSrc);
+      // Guardamos la URL limpia sin autoplay ni mute para cuando el usuario quiera ampliarlo con sonido
+      const urlOriginalLimpia = videoSrc; 
+      
       contenidoVisual = `
-        <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 border border-slate-800 flex items-center justify-center">
-          <iframe src="${urlEmbed}" class="w-full h-full object-contain pointer-events-auto" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 border border-slate-800 flex items-center justify-center group/video">
+          <iframe src="${urlEmbed}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          
+          <!-- Botón flotante para ampliar / ver con sonido -->
+          <button onclick="ampliarVideoYouTube('${videoSrc}', '${prod.nombre || 'Video del producto'}')" class="absolute bottom-3 right-3 bg-brand-blue/90 hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-md transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            <span>Ampliar / Sonido</span>
+          </button>
         </div>
       `;
     } else if (imagenesProd.length > 0) {
       contenidoVisual = `
         <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 flex items-center justify-center border border-slate-800 p-1">
-          <!-- Corregido: object-contain y p-1 aseguran que la imagen se vea COMPLETA dentro del cuadro -->
           <img src="${imagenesProd[0]}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain mx-auto">
         </div>
       `;
@@ -254,8 +263,48 @@ function renderizarProductos(productos) {
           <span>Sin contenido multimedia</span>
         </div>
       `;
-    }
+// Función para abrir el video de YouTube en grande con sonido
+function ampliarVideoYouTube(urlVideo, tituloProducto) {
+  let videoId = '';
+  if (urlVideo.includes('youtu.be/')) {
+    videoId = urlVideo.split('youtu.be/')[1].split('?')[0];
+  } else if (urlVideo.includes('watch?v=')) {
+    videoId = urlVideo.split('watch?v=')[1].split('&')[0];
+  } else if (urlVideo.includes('embed/')) {
+    videoId = urlVideo.split('embed/')[1].split('?')[0];
+  }
+  
+  if (!videoId) return;
 
+  // Creamos un modal flotante dinámico para reproducir con sonido y controles completos
+  const modalHTML = `
+    <div id="modal-video-ampliado" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+      <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-3xl w-full p-4 relative shadow-2xl flex flex-col">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="text-white font-bold text-lg truncate">${tituloProducto}</h3>
+          <button onclick="cerrarVideoAmpliado()" class="text-slate-400 hover:text-white font-black text-2xl px-2">&times;</button>
+        </div>
+        <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden">
+          <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Inyectamos el modal al DOM
+  const divContenedor = document.createElement('div');
+  divContenedor.innerHTML = modalHTML;
+  document.body.appendChild(divContenedor);
+}
+
+function cerrarVideoAmpliado() {
+  const modal = document.getElementById('modal-video-ampliado');
+  if (modal) {
+    modal.parentElement.remove();
+  }
+}
+
+    }
     let badgeStock = '';
     let botonHtml = '';
 
