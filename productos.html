@@ -138,7 +138,6 @@
   <script>
 let carrito = [];
 
-// Función para detectar respuestas de pago de Mercado Pago
 function verificarEstadoPago() {
   const urlParams = new URLSearchParams(window.location.search);
   const status = urlParams.get('status');
@@ -184,7 +183,7 @@ async function cargarCatalogoDinamico() {
   }
 }
 
-// Función robusta para extraer el ID de cualquier enlace de YouTube
+// Función robusta para extraer el ID de YouTube
 function obtenerIdYouTube(url) {
   if (!url) return '';
   let videoId = '';
@@ -207,15 +206,10 @@ function renderizarProductos(productos) {
   contenedor.innerHTML = '';
 
   productos.forEach((prod, index) => {
-    if (index === 0) {
-      console.log("Llaves exactas del primer producto:", Object.keys(prod));
-      console.log("Objeto completo del primer producto:", prod);
-    }
-
     const imagenSrc = prod.imagen_url || prod.imagen || '';
     const videoSrc = prod.video_url || prod.video || '';
     
-    // Lectura de stock robusta compatible con múltiples nombres de columnas
+    // Lectura de stock robusta
     const valorStockCrudo = prod.stock !== undefined ? prod.stock : 
                             (prod.Stock !== undefined ? prod.Stock : 
                             (prod.EXISTENCIAS !== undefined ? prod.EXISTENCIAS : 
@@ -229,10 +223,8 @@ function renderizarProductos(productos) {
       stock = !isNaN(numeroExtraido) ? numeroExtraido : 0;
     }
 
-   // Estructura visual para múltiples fotos y video al final
+    // Visor multimedia: Carrusel de fotos + Video de YouTube al final
     let contenidoVisual = '';
-    
-    // Obtenemos el arreglo de imágenes (puede venir como 'galeria' en array o una sola 'imagen_url')
     let listaImágenes = [];
     if (Array.isArray(prod.galeria)) {
       listaImágenes = prod.galeria;
@@ -243,27 +235,24 @@ function renderizarProductos(productos) {
     }
 
     if (listaImágenes.length > 0 || videoSrc) {
-      // Si hay video, preparamos su miniatura en loop sin controles
       let htmlVideoMini = '';
       if (videoSrc) {
         const videoId = obtenerIdYouTube(videoSrc);
         const urlEmbedMini = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3`;
         
         htmlVideoMini = `
-          <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 border border-slate-800 flex items-center justify-center group/video shrink-0 snap-center">
+          <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center group/video shrink-0 snap-center">
             <iframe src="${urlEmbedMini}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
             
-            <!-- Botón flotante para ampliar y escuchar el video final -->
             <button onclick="ampliarVideoYouTube('${videoSrc}', '${prod.nombre || 'Video'}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
               <span>Ampliar / Sonido</span>
             </button>
-            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video del producto</span>
+            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video</span>
           </div>
         `;
       }
 
-      // Renderizamos las fotos y colocamos el video estrictamente al final
       contenidoVisual = `
         <div class="relative w-full mb-4">
           <div class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-2 scrollbar-thin scrollbar-thumb-slate-700">
@@ -356,10 +345,9 @@ function cerrarVideoAmpliado() {
   }
 }
 
-// 1. Agregar al carrito (agrupa items repetidos y valida stock)
+// Carrito y Compras
 function agregarAlCarrito(producto, cantidadAñadir = 1) {
   const stockDisponible = Number(producto.stock || 0);
-
   const itemExistente = carrito.find(item => item.nombre === producto.nombre);
 
   if (itemExistente) {
@@ -375,16 +363,12 @@ function agregarAlCarrito(producto, cantidadAñadir = 1) {
       alert(`Solo puedes agregar un máximo de ${stockDisponible} unidades de ${producto.nombre}.`);
       cantidadAñadir = stockDisponible;
     }
-    carrito.push({
-      ...producto,
-      cantidad: cantidadAñadir
-    });
+    carrito.push({ ...producto, cantidad: cantidadAñadir });
   }
 
   actualizarContadorCarrito();
 }
 
-// 2. Actualizar el número del icono en el Header
 function actualizarContadorCarrito() {
   const contador = document.getElementById('carrito-contador');
   if (contador) {
@@ -393,7 +377,6 @@ function actualizarContadorCarrito() {
   }
 }
 
-// 3. Abrir el modal del Carrito
 function abrirCarrito() {
   const modal = document.getElementById('modal-checkout');
   const lista = document.getElementById('lista-carrito');
@@ -438,7 +421,6 @@ function abrirCarrito() {
   modal.classList.add('flex');
 }
 
-// 4. Cambiar cantidad desde los botones + y -
 function cambiarCantidadEnCarrito(index, cambio) {
   const item = carrito[index];
   if (!item) return;
@@ -457,7 +439,6 @@ function cambiarCantidadEnCarrito(index, cambio) {
   }
 }
 
-// 5. Eliminar un producto del carrito
 function eliminarDelCarrito(index) {
   carrito.splice(index, 1);
   actualizarContadorCarrito();
