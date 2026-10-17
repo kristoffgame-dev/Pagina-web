@@ -95,7 +95,7 @@
   <!-- MODAL DE CHECKOUT MERCADO PAGO -->
   <div id="modal-checkout" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
     <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-lg w-full p-6 shadow-2xl relative text-slate-100">
-      <button onclick="cerrarCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-2xl">&times;</button>
+      <button onclick="cerrarCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-2xl cursor-pointer">&times;</button>
 
       <!-- Resumen y Forma de Pago -->
       <div id="paso-1-carrito">
@@ -115,7 +115,7 @@
           </select>
         </div>
 
-        <button id="btn-procesar-pago" onclick="procesarPagoMercadoPago()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+        <button id="btn-procesar-pago" onclick="procesarPagoMercadoPago()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
           <span>Procesar Pago Seguro</span>
           <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
         </button>
@@ -136,7 +136,7 @@
   </footer>
 
   <script>
- let carrito = [];
+let carrito = [];
 
 // Función para detectar respuestas de pago de Mercado Pago
 function verificarEstadoPago() {
@@ -184,6 +184,20 @@ async function cargarCatalogoDinamico() {
   }
 }
 
+// Función robusta para extraer el ID de cualquier enlace de YouTube
+function obtenerIdYouTube(url) {
+  if (!url) return '';
+  let videoId = '';
+  if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1].split('?')[0];
+  } else if (url.includes('watch?v=')) {
+    videoId = url.split('watch?v=')[1].split('&')[0];
+  } else if (url.includes('embed/')) {
+    videoId = url.split('embed/')[1].split('?')[0];
+  }
+  return videoId;
+}
+
 function renderizarProductos(productos) {
   window.productosGlobal = productos;
 
@@ -215,37 +229,20 @@ function renderizarProductos(productos) {
       stock = !isNaN(numeroExtraido) ? numeroExtraido : 0;
     }
 
-    
-   // Estructura visual: YouTube en Loop, sin botones, con botón de ampliar
+    // Estructura visual para carrusel de foto y video integrada
     let contenidoVisual = '';
     const imagenesProd = prod.galeria || (imagenSrc ? [imagenSrc] : []);
     
-    // Función auxiliar para configurar YouTube sin controles y en bucle perfecto
-    function obtenerUrlEmbedYouTube(url) {
-      if (!url) return '';
-      let videoId = '';
-      if (url.includes('youtu.be/')) {
-        videoId = url.split('youtu.be/')[1].split('?')[0];
-      } else if (url.includes('watch?v=')) {
-        videoId = url.split('watch?v=')[1].split('&')[0];
-      } else if (url.includes('embed/')) {
-        videoId = url.split('embed/')[1].split('?')[0];
-      }
-      // Parámetros clave: controls=0 (sin controles), mute=1 (autoplay silencioso), loop=1 (bucle), playlist=videoId (necesario para loop en YT)
-      return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3` : url;
-    }
-
     if (videoSrc) {
-      const urlEmbed = obtenerUrlEmbedYouTube(videoSrc);
-      // Guardamos la URL limpia sin autoplay ni mute para cuando el usuario quiera ampliarlo con sonido
-      const urlOriginalLimpia = videoSrc; 
+      const videoId = obtenerIdYouTube(videoSrc);
+      const urlEmbedMini = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3`;
       
       contenidoVisual = `
         <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 border border-slate-800 flex items-center justify-center group/video">
-          <iframe src="${urlEmbed}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          <iframe src="${urlEmbedMini}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
           
-          <!-- Botón flotante para ampliar / ver con sonido -->
-          <button onclick="ampliarVideoYouTube('${videoSrc}', '${prod.nombre || 'Video del producto'}')" class="absolute bottom-3 right-3 bg-brand-blue/90 hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-md transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
+          <!-- Botón flotante para ampliar y escuchar -->
+          <button onclick="ampliarVideoYouTube('${videoSrc}', '${prod.nombre || 'Video'}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
             <span>Ampliar / Sonido</span>
           </button>
@@ -263,48 +260,8 @@ function renderizarProductos(productos) {
           <span>Sin contenido multimedia</span>
         </div>
       `;
-// Función para abrir el video de YouTube en grande con sonido
-function ampliarVideoYouTube(urlVideo, tituloProducto) {
-  let videoId = '';
-  if (urlVideo.includes('youtu.be/')) {
-    videoId = urlVideo.split('youtu.be/')[1].split('?')[0];
-  } else if (urlVideo.includes('watch?v=')) {
-    videoId = urlVideo.split('watch?v=')[1].split('&')[0];
-  } else if (urlVideo.includes('embed/')) {
-    videoId = urlVideo.split('embed/')[1].split('?')[0];
-  }
-  
-  if (!videoId) return;
-
-  // Creamos un modal flotante dinámico para reproducir con sonido y controles completos
-  const modalHTML = `
-    <div id="modal-video-ampliado" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-3xl w-full p-4 relative shadow-2xl flex flex-col">
-        <div class="flex justify-between items-center mb-3">
-          <h3 class="text-white font-bold text-lg truncate">${tituloProducto}</h3>
-          <button onclick="cerrarVideoAmpliado()" class="text-slate-400 hover:text-white font-black text-2xl px-2">&times;</button>
-        </div>
-        <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden">
-          <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-  `;
-
-  // Inyectamos el modal al DOM
-  const divContenedor = document.createElement('div');
-  divContenedor.innerHTML = modalHTML;
-  document.body.appendChild(divContenedor);
-}
-
-function cerrarVideoAmpliado() {
-  const modal = document.getElementById('modal-video-ampliado');
-  if (modal) {
-    modal.parentElement.remove();
-  }
-}
-
     }
+
     let badgeStock = '';
     let botonHtml = '';
 
@@ -313,7 +270,7 @@ function cerrarVideoAmpliado() {
       botonHtml = `<button disabled class="bg-slate-800 text-slate-500 font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">Agotado</button>`;
     } else {
       badgeStock = `<span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1 rounded-full">${prod.categoria || 'Software'} (${stock} disp.)</span>`;
-      botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20">Agregar</button>`;
+      botonHtml = `<button onclick='agregarAlCarrito(${JSON.stringify({...prod, stock: stock})})' class="bg-brand-blue hover:bg-blue-600 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/25 cursor-pointer">Agregar</button>`;
     }
 
     const card = document.createElement('div');
@@ -339,17 +296,40 @@ function cerrarVideoAmpliado() {
   });
 }
 
-// Función para alternar el audio del video al hacerle clic
-function toggleAudioVideo(videoElement) {
-  const contenedor = videoElement.parentElement;
-  const textoIndicador = contenedor.querySelector('.icono-audio');
+// Función para abrir el video de YouTube en grande con sonido
+function ampliarVideoYouTube(urlVideo, tituloProducto) {
+  const videoId = obtenerIdYouTube(urlVideo);
+  if (!videoId) {
+    alert("No se pudo cargar el video.");
+    return;
+  }
 
-  if (videoElement.muted) {
-    videoElement.muted = false;
-    if (textoIndicador) textoIndicador.textContent = '🔊 Con sonido';
-  } else {
-    videoElement.muted = true;
-    if (textoIndicador) textoIndicador.textContent = '🔇 Click para sonido';
+  const modalAnterior = document.getElementById('modal-video-ampliado');
+  if (modalAnterior) modalAnterior.remove();
+
+  const divContenedor = document.createElement('div');
+  divContenedor.id = 'modal-video-ampliado';
+  divContenedor.className = "fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4";
+  
+  divContenedor.innerHTML = `
+    <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-3xl w-full p-4 relative shadow-2xl flex flex-col">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-white font-bold text-lg truncate">${tituloProducto}</h3>
+        <button onclick="cerrarVideoAmpliado()" class="text-slate-400 hover:text-white font-black text-2xl px-2 cursor-pointer">&times;</button>
+      </div>
+      <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-inner">
+        <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&enablejsapi=1" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(divContenedor);
+}
+
+function cerrarVideoAmpliado() {
+  const modal = document.getElementById('modal-video-ampliado');
+  if (modal) {
+    modal.remove();
   }
 }
 
@@ -416,14 +396,14 @@ function abrirCarrito() {
           </div>
           
           <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700">
-            <button onclick="cambiarCantidadEnCarrito(${index}, -1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">-</button>
+            <button onclick="cambiarCantidadEnCarrito(${index}, -1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors cursor-pointer">-</button>
             <span class="px-2 font-bold text-brand-cyan text-xs">${item.cantidad}</span>
-            <button onclick="cambiarCantidadEnCarrito(${index}, 1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">+</button>
+            <button onclick="cambiarCantidadEnCarrito(${index}, 1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors cursor-pointer">+</button>
           </div>
 
           <div class="text-right flex items-center gap-2">
             <span class="font-bold text-white text-xs">$${subtotal.toLocaleString('es-MX')}</span>
-            <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-1.5 py-0.5 rounded text-base">&times;</button>
+            <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-1.5 py-0.5 rounded text-base cursor-pointer">&times;</button>
           </div>
         </div>
       `;
