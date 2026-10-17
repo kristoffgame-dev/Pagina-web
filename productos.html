@@ -104,17 +104,16 @@
       }
 
       try {
-        // Ejemplo con tu Nintendo Switch V1 usando múltiples fotos de celular y video de YouTube al final
         const productosPrueba = [
           {
             nombre: "Nintendo Switch V1 (Completa / Excelente estado)",
             categoria: "Consolas",
             precio: 2900,
             stock: 1,
-            descripcion: "Consola original con dock de TV, cables y Joy-Cons funcionando perfecto. Fotos reales de la consola y video reseña oficial incluidos.",
+            descripcion: "Consola original con dock de TV, cables y Joy-Cons funcionando perfecto. Fotos reales y video reseña oficial incluidos.",
             imagenes: [
-              "https://images.unsplash.com/photo-1578303512597-81e6cc155b12?auto=format&fit=crop&w=600&q=80", // Foto real simulada 1
-              "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=600&q=80"  // Foto real simulada 2
+              "https://images.unsplash.com/photo-1578303512597-81e6cc155b12?auto=format&fit=crop&w=600&q=80",
+              "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=600&q=80"
             ],
             video_url: "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
           },
@@ -163,14 +162,12 @@
         const stockReal = parseInt(String(stockCrudo).replace(/[^0-9]/g, ''), 10);
         const stock = !isNaN(stockReal) ? stockReal : 0;
 
-        // Construir lista de slides multimedia (fotos + video al final)
         let slidesHtml = '';
         let listaImgs = prod.imagenes || (prod.imagen ? [prod.imagen] : []);
         if (listaImgs.length === 0) {
           listaImgs = ["https://placehold.co/600x400/111827/06b6d4?text=Dodi+System"];
         }
 
-        // 1. Agregar las fotos al carrusel
         listaImgs.forEach((imgUrl, imgIdx) => {
           slidesHtml += `
             <div class="w-full h-full flex-shrink-0 relative bg-slate-950 flex items-center justify-center">
@@ -180,7 +177,6 @@
           `;
         });
 
-        // 2. Agregar el video de YouTube como último elemento del carrusel si existe
         const videoSrc = prod.video_url || prod.video || '';
         let videoId = '';
         if (videoSrc && videoSrc.trim() !== '') {
@@ -218,7 +214,6 @@
 
         card.innerHTML = `
           <div>
-            <!-- Contenedor del Carrusel Multimedia -->
             <div class="relative w-full h-48 mb-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 group">
               <div id="track-${prodIndex}" class="w-full h-full flex transition-transform duration-300 ease-out">
                 ${slidesHtml}
@@ -298,7 +293,6 @@
       if (itemExistente) {
         const nuevaCantidad = itemExistente.cantidad + cantidadAñadir;
         if (nuevaCantidad > stockDisponible) {
-          alert(`Solo tenemos ${stockDisponible} unidades disponibles.`);
           itemExistente.cantidad = stockDisponible;
         } else {
           itemExistente.cantidad = nuevaCantidad;
@@ -364,7 +358,6 @@
 
     async function procesarPagoMercadoPago() {
       if (carrito.length === 0) {
-        alert("Agrega productos antes de pagar.");
         return;
       }
       const metodo = document.getElementById('metodo-pago').value;
@@ -376,7 +369,6 @@
         window.open(`https://wa.me/527442320022?text=${mensajeWsp}`, '_blank');
         return;
       }
-      alert("Redirigiendo a Mercado Pago...");
     }
 
     document.addEventListener('DOMContentLoaded', () => {
