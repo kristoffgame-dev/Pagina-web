@@ -241,7 +241,7 @@ function renderizarProductos(productos) {
 
       if (listaImágenes.length > 0) {
         elementInicialHTML = `
-          <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick="ampliarImagen('${listaImágenes[0]}', '${(prod.nombre || 'Imagen').replace(/'/g, "\\'")}')" title="Haz clic para ampliar">
+          <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick='abrirGaleriaAmpliada(${JSON.stringify(listaImágenes)}, "${videoSrc}", 0, "${(prod.nombre || 'Imagen').replace(/'/g, "\\'")}")' title="Haz clic para ampliar">
             <img src="${listaImágenes[0]}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300 group-hover/img:scale-105">
             <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 1/${totalElementos} (Clic para ampliar)</span>
           </div>
@@ -250,13 +250,14 @@ function renderizarProductos(productos) {
         const videoId = obtenerIdYouTube(videoSrc);
         const urlEmbedMini = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3`;
         elementInicialHTML = `
-          <div class="w-full h-full flex items-center justify-center media-slide relative group/video">
+          <div class="w-full h-full flex items-center justify-center media-slide relative group/video cursor-pointer" onclick='abrirGaleriaAmpliada([], "${videoSrc}", 0, "${(prod.nombre || 'Video').replace(/'/g, "\\'")}")' title="Haz clic para ampliar">
             <iframe src="${urlEmbedMini}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-            <button onclick="ampliarVideoYouTube('${videoSrc}', '${(prod.nombre || 'Video').replace(/'/g, "\\'")}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
+            <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors"></div>
+            <button onclick="event.stopPropagation(); ampliarVideoYouTube('${videoSrc}', '${(prod.nombre || 'Video').replace(/'/g, "\\'")}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
               <span>Ampliar / Sonido</span>
             </button>
-            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video 1/${totalElementos}</span>
+            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video (Clic para ampliar)</span>
           </div>
         `;
       }
@@ -352,10 +353,14 @@ function cambiarMediaProducto(uid, indexTarget, tipo, urlImg, urlVideo, nombrePr
   const visor = document.getElementById(`${uid}-visor`);
   if (!visor) return;
 
+  const cardPadre = visor.closest('.bg-brand-card');
+  const galeriaJson = cardPadre ? cardPadre.getAttribute('data-imagenes') : '[]';
+  const videoUrlCard = cardPadre ? cardPadre.getAttribute('data-video') : '';
+
   let contenidoNuevo = '';
   if (tipo === 'image') {
     contenidoNuevo = `
-      <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick="ampliarImagen('${urlImg}', '${nombreProd.replace(/'/g, "\\'")}')" title="Haz clic para ampliar">
+      <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick='abrirGaleriaAmpliada(${galeriaJson}, "${videoUrlCard}", ${indexTarget}, "${nombreProd.replace(/'/g, "\\'")}")' title="Haz clic para ampliar">
         <img src="${urlImg}" alt="${nombreProd}" class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300 group-hover/img:scale-105">
         <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 ${indexTarget + 1}/${totalElementos} (Clic para ampliar)</span>
       </div>
@@ -364,13 +369,14 @@ function cambiarMediaProducto(uid, indexTarget, tipo, urlImg, urlVideo, nombrePr
     const videoId = obtenerIdYouTube(urlVideo);
     const urlEmbedMini = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3`;
     contenidoNuevo = `
-      <div class="w-full h-full flex items-center justify-center media-slide relative group/video">
+      <div class="w-full h-full flex items-center justify-center media-slide relative group/video cursor-pointer" onclick='abrirGaleriaAmpliada(${galeriaJson}, "${urlVideo}", ${indexTarget}, "${nombreProd.replace(/'/g, "\\'")}")' title="Haz clic para ampliar">
         <iframe src="${urlEmbedMini}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-        <button onclick="ampliarVideoYouTube('${urlVideo}', '${nombreProd.replace(/'/g, "\\'")}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
+        <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors"></div>
+        <button onclick="event.stopPropagation(); ampliarVideoYouTube('${urlVideo}', '${nombreProd.replace(/'/g, "\\'")}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
           <span>Ampliar / Sonido</span>
         </button>
-        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video ${indexTarget + 1}/${totalElementos}</span>
+        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video ${indexTarget + 1}/${totalElementos} (Clic para ampliar)</span>
       </div>
     `;
   }
@@ -407,38 +413,92 @@ function navegarMedia(uid, direccion, totalElementos) {
   }
 }
 
-// Función para abrir la imagen en grande (Modal de Foto)
-function ampliarImagen(urlImg, tituloProducto) {
-  const modalAnterior = document.getElementById('modal-imagen-ampliada');
+// Variables para el Modal Ampliado con Flechas
+let modalGaleriaActual = [];
+let modalVideoActual = '';
+let modalIndiceActual = 0;
+let modalNombreProd = '';
+
+function abrirGaleriaAmpliada(imagenesArray, videoUrl, indiceInicial, nombreProducto) {
+  modalGaleriaActual = imagenesArray || [];
+  modalVideoActual = videoUrl || '';
+  modalIndiceActual = indiceInicial;
+  modalNombreProd = nombreProducto || 'Producto';
+
+  const modalAnterior = document.getElementById('modal-media-ampliada');
   if (modalAnterior) modalAnterior.remove();
 
+  const totalElementos = modalGaleriaActual.length + (modalVideoActual ? 1 : 0);
+
   const divContenedor = document.createElement('div');
-  divContenedor.id = 'modal-imagen-ampliada';
-  divContenedor.className = "fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4";
+  divContenedor.id = 'modal-media-ampliada';
+  divContenedor.className = "fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4";
   
   divContenedor.innerHTML = `
     <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-4xl w-full p-4 relative shadow-2xl flex flex-col">
       <div class="flex justify-between items-center mb-3">
-        <h3 class="text-white font-bold text-lg truncate">${tituloProducto}</h3>
-        <button onclick="cerrarImagenAmpliada()" class="text-slate-400 hover:text-white font-black text-2xl px-2 cursor-pointer">&times;</button>
+        <h3 id="modal-titulo-contador" class="text-white font-bold text-lg truncate">${modalNombreProd}</h3>
+        <button onclick="cerrarMediaAmpliada()" class="text-slate-400 hover:text-white font-black text-2xl px-2 cursor-pointer">&times;</button>
       </div>
-      <div class="relative w-full max-h-[80vh] bg-black/60 rounded-xl overflow-hidden flex items-center justify-center p-2">
-        <img src="${urlImg}" alt="${tituloProducto}" class="max-w-full max-h-[75vh] object-contain mx-auto rounded-lg shadow-inner">
+      
+      <div class="relative w-full h-[70vh] bg-black/80 rounded-xl overflow-hidden flex items-center justify-center p-2 shadow-inner" id="modal-contenido-visor">
       </div>
+
+      ${totalElementos > 1 ? `
+        <button onclick="navegarModalMedia(-1)" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-brand-blue text-white w-12 h-12 rounded-full flex items-center justify-center transition-all opacity-80 hover:opacity-100 z-30 cursor-pointer shadow-xl text-xl">&#10094;</button>
+        <button onclick="navegarModalMedia(1)" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-brand-blue text-white w-12 h-12 rounded-full flex items-center justify-center transition-all opacity-80 hover:opacity-100 z-30 cursor-pointer shadow-xl text-xl">&#10095;</button>
+      ` : ''}
     </div>
   `;
 
   document.body.appendChild(divContenedor);
+  actualizarContenidoModal();
 }
 
-function cerrarImagenAmpliada() {
-  const modal = document.getElementById('modal-imagen-ampliada');
-  if (modal) {
-    modal.remove();
+function actualizarContenidoModal() {
+  const visorModal = document.getElementById('modal-contenido-visor');
+  const tituloContador = document.getElementById('modal-titulo-contador');
+  if (!visorModal) return;
+
+  const totalFotos = modalGaleriaActual.length;
+  const totalElementos = totalFotos + (modalVideoActual ? 1 : 0);
+
+  if (modalIndiceActual < totalFotos) {
+    const imgUrl = modalGaleriaActual[modalIndiceActual];
+    visorModal.innerHTML = `
+      <img src="${imgUrl}" alt="${modalNombreProd}" class="max-w-full max-h-full object-contain mx-auto rounded-lg shadow-lg">
+      <span class="absolute bottom-3 left-3 bg-black/70 text-slate-300 text-xs px-3 py-1 rounded-md pointer-events-none">📷 Foto ${modalIndiceActual + 1} de ${totalElementos}</span>
+    `;
+  } else {
+    const videoId = obtenerIdYouTube(modalVideoActual);
+    visorModal.innerHTML = `
+      <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&enablejsapi=1" class="w-full h-full rounded-lg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <span class="absolute bottom-3 left-3 bg-black/70 text-slate-300 text-xs px-3 py-1 rounded-md pointer-events-none">🎥 Video del producto (${modalIndiceActual + 1} de ${totalElementos})</span>
+    `;
+  }
+
+  if (tituloContador) {
+    tituloContador.textContent = `${modalNombreProd} — (${modalIndiceActual + 1}/${totalElementos})`;
   }
 }
 
-// Función para abrir el video de YouTube en grande con sonido
+function navegarModalMedia(direccion) {
+  const totalFotos = modalGaleriaActual.length;
+  const totalElementos = totalFotos + (modalVideoActual ? 1 : 0);
+
+  modalIndiceActual += direccion;
+  if (modalIndiceActual < 0) modalIndiceActual = totalElementos - 1;
+  if (modalIndiceActual >= totalElementos) modalIndiceActual = 0;
+
+  actualizarContenidoModal();
+}
+
+function cerrarMediaAmpliada() {
+  const modal = document.getElementById('modal-media-ampliada');
+  if (modal) modal.remove();
+}
+
+// Función para abrir el video de YouTube en grande con sonido (Modal original directo)
 function ampliarVideoYouTube(urlVideo, tituloProducto) {
   const videoId = obtenerIdYouTube(urlVideo);
   if (!videoId) {
