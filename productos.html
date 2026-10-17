@@ -145,7 +145,6 @@ function verificarEstadoPago() {
 
   if (status === 'failure') {
     alert("⚠️ Tu pago no pudo ser completado o fue rechazado por el banco.\n\nPuedes intentarlo nuevamente con otro método de pago o seleccionar Transferencia Directa BBVA.");
-    // Limpiar parámetros de la URL de forma limpia
     window.history.replaceState({}, document.title, window.location.pathname);
   } else if (status === 'pending') {
     alert("⏳ Tu pago se encuentra PENDIENTE.\n\nSi elegiste pagar en efectivo (OXXO/7-Eleven) o por transferencia, recuerda completar tu depósito con la ficha generada por Mercado Pago. ¡Muchas gracias!");
@@ -186,7 +185,6 @@ async function cargarCatalogoDinamico() {
 }
 
 function renderizarProductos(productos) {
-  // Guardamos los productos globalmente para poder verlos en la consola si los necesitas
   window.productosGlobal = productos;
 
   const contenedor = document.getElementById('catalogo-grid');
@@ -203,15 +201,45 @@ function renderizarProductos(productos) {
     const imagenSrc = prod.imagen_url || prod.imagen || '';
     const videoSrc = prod.video_url || prod.video || '';
     
-    // Lectura de stock desde Google Sheets
+    // Lectura de stock robusta compatible con múltiples nombres de columnas
     const valorStockCrudo = prod.stock !== undefined ? prod.stock : 
                             (prod.Stock !== undefined ? prod.Stock : 
-                            (prod.EXISTENCIAS !== undefined ? prod.EXISTENCIAS : 0));
+                            (prod.EXISTENCIAS !== undefined ? prod.EXISTENCIAS : 
+                            (prod.existencias !== undefined ? prod.existencias : 0)));
 
-    const stockReal = parseInt(String(valorStockCrudo).replace(/[^0-9]/g, ''), 10);
-    const stock = !isNaN(stockReal) ? stockReal : 0;
+    let stock = 0;
+    if (typeof valorStockCrudo === 'number') {
+      stock = valorStockCrudo;
+    } else if (typeof valorStockCrudo === 'string') {
+      const numeroExtraido = parseInt(valorStockCrudo.replace(/\D/g, ''), 10);
+      stock = !isNaN(numeroExtraido) ? numeroExtraido : 0;
+    }
 
-   
+    // Estructura visual para carrusel de foto y video integrada
+    let contenidoVisual = '';
+    const imagenesProd = prod.galeria || (imagenSrc ? [imagenSrc] : []);
+    
+    if (imagenesProd.length > 0 || videoSrc) {
+      contenidoVisual = `
+        <div class="relative w-full h-48 bg-slate-900 rounded-xl overflow-hidden mb-4 group/media">
+          ${videoSrc ? `
+            <div class="absolute inset-0 z-10">
+              <video src="${videoSrc}" class="w-full h-full object-cover cursor-pointer" muted loop autoplay playsinline onclick="toggleAudioVideo(this)"></video>
+              <span class="icono-audio absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-full pointer-events-none">🔇 Click para sonido</span>
+            </div>
+          ` : ''}
+          ${imagenesProd.length > 0 ? `
+            <img src="${imagenesProd[0]}" alt="${prod.nombre}" class="w-full h-full object-cover ${videoSrc ? 'opacity-0 hover:opacity-100 transition-opacity' : ''}">
+          ` : ''}
+        </div>
+      `;
+    } else {
+      contenidoVisual = `
+        <div class="w-full h-48 bg-slate-900 rounded-xl overflow-hidden mb-4 flex items-center justify-center text-slate-600">
+          <span>Sin imagen</span>
+        </div>
+      `;
+    }
 
     let badgeStock = '';
     let botonHtml = '';
@@ -265,7 +293,6 @@ function toggleAudioVideo(videoElement) {
 function agregarAlCarrito(producto, cantidadAñadir = 1) {
   const stockDisponible = Number(producto.stock || 0);
 
-  // Buscar si el producto ya está en el carrito
   const itemExistente = carrito.find(item => item.nombre === producto.nombre);
 
   if (itemExistente) {
@@ -290,7 +317,7 @@ function agregarAlCarrito(producto, cantidadAñadir = 1) {
   actualizarContadorCarrito();
 }
 
-// 2. Actualizar el número del icono en el Header (suma total de piezas)
+// 2. Actualizar el número del icono en el Header
 function actualizarContadorCarrito() {
   const contador = document.getElementById('carrito-contador');
   if (contador) {
@@ -299,7 +326,7 @@ function actualizarContadorCarrito() {
   }
 }
 
-// 3. Abrir el modal del Carrito dibujando filas con controles + / -
+// 3. Abrir el modal del Carrito
 function abrirCarrito() {
   const modal = document.getElementById('modal-checkout');
   const lista = document.getElementById('lista-carrito');
@@ -324,14 +351,12 @@ function abrirCarrito() {
             <span class="text-slate-400 text-xs">$${Number(item.precio).toLocaleString('es-MX')} MXN c/u</span>
           </div>
           
-          <!-- Controles + y - de cantidad -->
           <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700">
             <button onclick="cambiarCantidadEnCarrito(${index}, -1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">-</button>
             <span class="px-2 font-bold text-brand-cyan text-xs">${item.cantidad}</span>
             <button onclick="cambiarCantidadEnCarrito(${index}, 1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold transition-colors">+</button>
           </div>
 
-          <!-- Subtotal y Eliminar -->
           <div class="text-right flex items-center gap-2">
             <span class="font-bold text-white text-xs">$${subtotal.toLocaleString('es-MX')}</span>
             <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-300 font-bold px-1.5 py-0.5 rounded text-base">&times;</button>
@@ -346,7 +371,7 @@ function abrirCarrito() {
   modal.classList.add('flex');
 }
 
-// 4. Cambiar cantidad desde los botones + y - dentro del Modal
+// 4. Cambiar cantidad desde los botones + y -
 function cambiarCantidadEnCarrito(index, cambio) {
   const item = carrito[index];
   if (!item) return;
@@ -365,7 +390,7 @@ function cambiarCantidadEnCarrito(index, cambio) {
   }
 }
 
-// 5. Eliminar un producto completo del carrito
+// 5. Eliminar un producto del carrito
 function eliminarDelCarrito(index) {
   carrito.splice(index, 1);
   actualizarContadorCarrito();
