@@ -217,25 +217,41 @@ function renderizarProductos(productos) {
 
     
    // Estructura visual corregida para que el video cargue bien y la imagen no se corte
+    // Estructura visual adaptada para videos de YouTube e imágenes sin recortes
     let contenidoVisual = '';
     const imagenesProd = prod.galeria || (imagenSrc ? [imagenSrc] : []);
     
-    if (imagenesProd.length > 0 || videoSrc) {
+    // Función auxiliar interna para convertir enlaces de YouTube a formato embed seguro
+    function obtenerUrlEmbedYouTube(url) {
+      if (!url) return '';
+      let videoId = '';
+      if (url.includes('youtu.be/')) {
+        videoId = url.split('youtu.be/')[1].split('?')[0];
+      } else if (url.includes('watch?v=')) {
+        videoId = url.split('watch?v=')[1].split('&')[0];
+      } else if (url.includes('embed/')) {
+        videoId = url.split('embed/')[1].split('?')[0];
+      }
+      return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1` : url;
+    }
+
+    if (videoSrc) {
+      const urlEmbed = obtenerUrlEmbedYouTube(videoSrc);
       contenidoVisual = `
-        <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 flex items-center justify-center group/media">
-          ${videoSrc ? `
-            <video src="${videoSrc}" class="w-full h-full object-contain cursor-pointer" autoplay muted loop playsinline onclick="toggleAudioVideo(this)"></video>
-            <span class="icono-audio absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-full pointer-events-none z-20">🔇 Click para sonido</span>
-          ` : ''}
-          ${!videoSrc && imagenesProd.length > 0 ? `
-            <img src="${imagenesProd[0]}" alt="${prod.nombre}" class="w-full h-full object-contain">
-          ` : ''}
+        <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 border border-slate-800">
+          <iframe src="${urlEmbed}" class="w-full h-full object-contain pointer-events-auto" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      `;
+    } else if (imagenesProd.length > 0) {
+      contenidoVisual = `
+        <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden mb-4 flex items-center justify-center border border-slate-800">
+          <img src="${imagenesProd[0]}" alt="${prod.nombre}" class="w-full h-full object-contain">
         </div>
       `;
     } else {
       contenidoVisual = `
-        <div class="w-full h-48 bg-slate-900 rounded-xl overflow-hidden mb-4 flex items-center justify-center text-slate-600">
-          <span>Sin imagen</span>
+        <div class="w-full h-48 bg-slate-900 rounded-xl overflow-hidden mb-4 flex items-center justify-center text-slate-500 text-xs">
+          <span>Sin contenido multimedia</span>
         </div>
       `;
     }
