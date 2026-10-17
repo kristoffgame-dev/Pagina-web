@@ -241,9 +241,9 @@ function renderizarProductos(productos) {
 
       if (listaImágenes.length > 0) {
         elementInicialHTML = `
-          <div class="w-full h-full flex items-center justify-center p-1 media-slide">
-            <img src="${listaImágenes[0]}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain mx-auto">
-            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 1/${totalElementos}</span>
+          <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick="ampliarImagen('${listaImágenes[0]}', '${(prod.nombre || 'Imagen').replace(/'/g, "\\'")}')" title="Haz clic para ampliar">
+            <img src="${listaImágenes[0]}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300 group-hover/img:scale-105">
+            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 1/${totalElementos} (Clic para ampliar)</span>
           </div>
         `;
       } else if (videoSrc) {
@@ -355,9 +355,9 @@ function cambiarMediaProducto(uid, indexTarget, tipo, urlImg, urlVideo, nombrePr
   let contenidoNuevo = '';
   if (tipo === 'image') {
     contenidoNuevo = `
-      <div class="w-full h-full flex items-center justify-center p-1 media-slide">
-        <img src="${urlImg}" alt="${nombreProd}" class="max-w-full max-h-full object-contain mx-auto">
-        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 ${indexTarget + 1}/${totalElementos}</span>
+      <div class="w-full h-full flex items-center justify-center p-1 media-slide cursor-pointer group/img" onclick="ampliarImagen('${urlImg}', '${nombreProd.replace(/'/g, "\\'")}')" title="Haz clic para ampliar">
+        <img src="${urlImg}" alt="${nombreProd}" class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300 group-hover/img:scale-105">
+        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 ${indexTarget + 1}/${totalElementos} (Clic para ampliar)</span>
       </div>
     `;
   } else {
@@ -404,6 +404,37 @@ function navegarMedia(uid, direccion, totalElementos) {
     cambiarMediaProducto(uid, nuevoIndice, 'image', imagenes[nuevoIndice], '', nombreProd, totalElementos);
   } else {
     cambiarMediaProducto(uid, nuevoIndice, 'video', '', videoSrc, nombreProd, totalElementos);
+  }
+}
+
+// Función para abrir la imagen en grande (Modal de Foto)
+function ampliarImagen(urlImg, tituloProducto) {
+  const modalAnterior = document.getElementById('modal-imagen-ampliada');
+  if (modalAnterior) modalAnterior.remove();
+
+  const divContenedor = document.createElement('div');
+  divContenedor.id = 'modal-imagen-ampliada';
+  divContenedor.className = "fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4";
+  
+  divContenedor.innerHTML = `
+    <div class="bg-brand-card rounded-2xl border border-slate-700 max-w-4xl w-full p-4 relative shadow-2xl flex flex-col">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-white font-bold text-lg truncate">${tituloProducto}</h3>
+        <button onclick="cerrarImagenAmpliada()" class="text-slate-400 hover:text-white font-black text-2xl px-2 cursor-pointer">&times;</button>
+      </div>
+      <div class="relative w-full max-h-[80vh] bg-black/60 rounded-xl overflow-hidden flex items-center justify-center p-2">
+        <img src="${urlImg}" alt="${tituloProducto}" class="max-w-full max-h-[75vh] object-contain mx-auto rounded-lg shadow-inner">
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(divContenedor);
+}
+
+function cerrarImagenAmpliada() {
+  const modal = document.getElementById('modal-imagen-ampliada');
+  if (modal) {
+    modal.remove();
   }
 }
 
