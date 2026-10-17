@@ -223,8 +223,6 @@ function renderizarProductos(productos) {
       stock = !isNaN(numeroExtraido) ? numeroExtraido : 0;
     }
 
-    // Visor multimedia: Carrusel de fotos + Video de YouTube al final
-    let contenidoVisual = '';
     let listaImágenes = [];
     if (Array.isArray(prod.galeria)) {
       listaImágenes = prod.galeria;
@@ -234,36 +232,75 @@ function renderizarProductos(productos) {
       listaImágenes = [imagenSrc];
     }
 
+    const prodIdUnico = `prod-media-${index}-${Math.floor(Math.random() * 10000)}`;
+    let contenidoVisual = '';
+
     if (listaImágenes.length > 0 || videoSrc) {
-      let htmlVideoMini = '';
-      if (videoSrc) {
+      const totalElementos = listaImágenes.length + (videoSrc ? 1 : 0);
+      let elementInicialHTML = '';
+
+      if (listaImágenes.length > 0) {
+        elementInicialHTML = `
+          <div class="w-full h-full flex items-center justify-center p-1 media-slide">
+            <img src="${listaImágenes[0]}" alt="${prod.nombre}" class="max-w-full max-h-full object-contain mx-auto">
+            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 1/${totalElementos}</span>
+          </div>
+        `;
+      } else if (videoSrc) {
         const videoId = obtenerIdYouTube(videoSrc);
         const urlEmbedMini = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3`;
-        
-        htmlVideoMini = `
-          <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center group/video shrink-0 snap-center">
+        elementInicialHTML = `
+          <div class="w-full h-full flex items-center justify-center media-slide relative group/video">
             <iframe src="${urlEmbedMini}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-            
-            <button onclick="ampliarVideoYouTube('${videoSrc}', '${prod.nombre || 'Video'}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
+            <button onclick="ampliarVideoYouTube('${videoSrc}', '${(prod.nombre || 'Video').replace(/'/g, "\\'")}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
               <span>Ampliar / Sonido</span>
             </button>
-            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video</span>
+            <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video 1/${totalElementos}</span>
+          </div>
+        `;
+      }
+
+      let botonesMiniaturasHTML = '';
+      if (totalElementos > 1) {
+        let itemsMini = [];
+        
+        listaImágenes.forEach((img, imgIdx) => {
+          itemsMini.push(`
+            <button onclick="cambiarMediaProducto('${prodIdUnico}', ${imgIdx}, 'image', '${img}', '', '${(prod.nombre || '').replace(/'/g, "\\'")}', ${totalElementos})" 
+              class="w-10 h-10 rounded-lg bg-slate-900 border-2 ${imgIdx === 0 ? 'border-brand-cyan' : 'border-slate-700 hover:border-slate-500'} overflow-hidden shrink-0 transition-all cursor-pointer flex items-center justify-center p-0.5" title="Ver foto ${imgIdx + 1}">
+              <img src="${img}" class="w-full h-full object-cover">
+            </button>
+          `);
+        });
+
+        if (videoSrc) {
+          const vidIdx = listaImágenes.length;
+          itemsMini.push(`
+            <button onclick="cambiarMediaProducto('${prodIdUnico}', ${vidIdx}, 'video', '', '${videoSrc}', '${(prod.nombre || '').replace(/'/g, "\\'")}', ${totalElementos})" 
+              class="w-10 h-10 rounded-lg bg-slate-950 border-2 border-slate-700 hover:border-brand-blue overflow-hidden shrink-0 transition-all cursor-pointer flex items-center justify-center relative" title="Ver video del producto">
+              <span class="text-[10px] font-bold text-white">▶</span>
+            </button>
+          `);
+        }
+
+        botonesMiniaturasHTML = `
+          <div class="flex items-center justify-center gap-2 mt-2 overflow-x-auto pb-1">
+            ${itemsMini.join('')}
           </div>
         `;
       }
 
       contenidoVisual = `
         <div class="relative w-full mb-4">
-          <div class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-2 scrollbar-thin scrollbar-thumb-slate-700">
-            ${listaImágenes.map((img, idx) => `
-              <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center p-1 shrink-0 snap-center">
-                <img src="${img}" alt="${prod.nombre} - Foto${idx + 1}" class="max-w-full max-h-full object-contain mx-auto">
-                <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 ${idx + 1}/${listaImágenes.length}</span>
-              </div>
-            `).join('')}
-            ${htmlVideoMini}
+          <div class="relative w-full h-48 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center" id="${prodIdUnico}-visor" data-indice-actual="0">
+            ${elementInicialHTML}
+            ${totalElementos > 1 ? `
+              <button onclick="navegarMedia('${prodIdUnico}', -1,${totalElementos})" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-brand-blue text-white w-8 h-8 rounded-full flex items-center justify-center transition-all opacity-70 hover:opacity-100 z-30 cursor-pointer shadow-md">&#10094;</button>
+              <button onclick="navegarMedia('${prodIdUnico}', 1,${totalElementos})" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-brand-blue text-white w-8 h-8 rounded-full flex items-center justify-center transition-all opacity-70 hover:opacity-100 z-30 cursor-pointer shadow-md">&#10095;</button>
+            ` : ''}
           </div>
+          ${botonesMiniaturasHTML}
         </div>
       `;
     } else {
@@ -287,6 +324,9 @@ function renderizarProductos(productos) {
 
     const card = document.createElement('div');
     card.className = "bg-brand-card rounded-2xl border border-slate-800 p-6 flex flex-col justify-between shadow-xl hover:border-brand-cyan/50 transition-all duration-300";
+    card.setAttribute('data-imagenes', JSON.stringify(listaImágenes));
+    card.setAttribute('data-video', videoSrc);
+    card.setAttribute('data-nombre', prod.nombre || '');
 
     card.innerHTML = `
       <div>
@@ -306,6 +346,65 @@ function renderizarProductos(productos) {
 
     contenedor.appendChild(card);
   });
+}
+
+function cambiarMediaProducto(uid, indexTarget, tipo, urlImg, urlVideo, nombreProd, totalElementos) {
+  const visor = document.getElementById(`${uid}-visor`);
+  if (!visor) return;
+
+  let contenidoNuevo = '';
+  if (tipo === 'image') {
+    contenidoNuevo = `
+      <div class="w-full h-full flex items-center justify-center p-1 media-slide">
+        <img src="${urlImg}" alt="${nombreProd}" class="max-w-full max-h-full object-contain mx-auto">
+        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">📷 ${indexTarget + 1}/${totalElementos}</span>
+      </div>
+    `;
+  } else {
+    const videoId = obtenerIdYouTube(urlVideo);
+    const urlEmbedMini = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3`;
+    contenidoNuevo = `
+      <div class="w-full h-full flex items-center justify-center media-slide relative group/video">
+        <iframe src="${urlEmbedMini}" class="w-full h-full object-contain pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        <button onclick="ampliarVideoYouTube('${urlVideo}', '${nombreProd.replace(/'/g, "\\'")}')" class="absolute bottom-3 right-3 bg-brand-blue hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transition-all flex items-center gap-1.5 opacity-90 group-hover/video:opacity-100 hover:scale-105 z-20 cursor-pointer">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          <span>Ampliar / Sonido</span>
+        </button>
+        <span class="absolute top-2 left-2 bg-black/70 text-slate-300 text-[10px] px-2 py-0.5 rounded-md pointer-events-none">🎥 Video ${indexTarget + 1}/${totalElementos}</span>
+      </div>
+    `;
+  }
+
+  const botonesLaterales = visor.querySelectorAll('button[onclick*="navegarMedia"]');
+  const btnIzq = botonesLaterales[0] ? botonesLaterales[0].outerHTML : '';
+  const btnDer = botonesLaterales[1] ? botonesLaterales[1].outerHTML : '';
+
+  visor.innerHTML = contenidoNuevo + btnIzq + btnDer;
+  visor.setAttribute('data-indice-actual', indexTarget);
+}
+
+function navegarMedia(uid, direccion, totalElementos) {
+  const visor = document.getElementById(`${uid}-visor`);
+  if (!visor) return;
+
+  let indiceActual = parseInt(visor.getAttribute('data-indice-actual') || '0', 10);
+  let nuevoIndice = indiceActual + direccion;
+
+  if (nuevoIndice < 0) nuevoIndice = totalElementos - 1;
+  if (nuevoIndice >= totalElementos) nuevoIndice = 0;
+
+  const cardPadre = visor.closest('.bg-brand-card');
+  if (!cardPadre) return;
+
+  const imagenes = JSON.parse(cardPadre.getAttribute('data-imagenes') || '[]');
+  const videoSrc = cardPadre.getAttribute('data-video') || '';
+  const nombreProd = cardPadre.getAttribute('data-nombre') || '';
+
+  if (nuevoIndice < imagenes.length) {
+    cambiarMediaProducto(uid, nuevoIndice, 'image', imagenes[nuevoIndice], '', nombreProd, totalElementos);
+  } else {
+    cambiarMediaProducto(uid, nuevoIndice, 'video', '', videoSrc, nombreProd, totalElementos);
+  }
 }
 
 // Función para abrir el video de YouTube en grande con sonido
