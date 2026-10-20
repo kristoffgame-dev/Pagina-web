@@ -154,6 +154,50 @@
                 <input type="text" id="dir-cp" placeholder="39670" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-sm text-white focus:ring-2 focus:ring-brand-cyan focus:outline-none">
               </div>
             </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Ciudad / Municipio *</label>
+                <input type="text" id="dir-ciudad" placeholder="Ej. Acapulco de Juárez" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-sm text-white focus:ring-2 focus:ring-brand-cyan focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Estado *</label>
+                <select id="dir-estado" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-sm text-white focus:ring-2 focus:ring-brand-cyan focus:outline-none">
+                  <option value="">Selecciona un estado...</option>
+                  <option value="Aguascalientes">Aguascalientes</option>
+                  <option value="Baja California">Baja California</option>
+                  <option value="Baja California Sur">Baja California Sur</option>
+                  <option value="Campeche">Campeche</option>
+                  <option value="Chiapas">Chiapas</option>
+                  <option value="Chihuahua">Chihuahua</option>
+                  <option value="Ciudad de México">Ciudad de México</option>
+                  <option value="Coahuila">Coahuila</option>
+                  <option value="Colima">Colima</option>
+                  <option value="Durango">Durango</option>
+                  <option value="Estado de México">Estado de México</option>
+                  <option value="Guanajuato">Guanajuato</option>
+                  <option value="Guerrero">Guerrero</option>
+                  <option value="Hidalgo">Hidalgo</option>
+                  <option value="Jalisco">Jalisco</option>
+                  <option value="Michoacán">Michoacán</option>
+                  <option value="Morelos">Morelos</option>
+                  <option value="Nayarit">Nayarit</option>
+                  <option value="Nuevo León">Nuevo León</option>
+                  <option value="Oaxaca">Oaxaca</option>
+                  <option value="Puebla">Puebla</option>
+                  <option value="Querétaro">Querétaro</option>
+                  <option value="Quintana Roo">Quintana Roo</option>
+                  <option value="San Luis Potosí">San Luis Potosí</option>
+                  <option value="Sinaloa">Sinaloa</option>
+                  <option value="Sonora">Sonora</option>
+                  <option value="Tabasco">Tabasco</option>
+                  <option value="Tamaulipas">Tamaulipas</option>
+                  <option value="Tlaxcala">Tlaxcala</option>
+                  <option value="Veracruz">Veracruz</option>
+                  <option value="Yucatán">Yucatán</option>
+                  <option value="Zacatecas">Zacatecas</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           <!-- Formulario Dinámico: Entrega Personal en Acapulco -->
@@ -808,12 +852,14 @@ async function procesarCompraCompleta() {
     const calle = document.getElementById('dir-calle').value.trim();
     const colonia = document.getElementById('dir-colonia').value.trim();
     const cp = document.getElementById('dir-cp').value.trim();
+    const ciudad = document.getElementById('dir-ciudad').value.trim();
+    const estado = document.getElementById('dir-estado').value;
 
-    if (!calle || !colonia || !cp) {
-      alert("⚠️ Por favor completa los datos de tu dirección de envío (Calle, Colonia y C.P.).");
+    if (!calle || !colonia || !cp || !ciudad || !estado) {
+      alert("⚠️ Por favor completa todos los datos de tu dirección (Calle, Colonia, C.P., Ciudad y Estado).");
       return;
     }
-    detallesEntregaTexto = `Envío a domicilio: ${calle}, Col. ${colonia}, C.P. ${cp}`;
+    detallesEntregaTexto = `Envío a domicilio: ${calle}, Col. ${colonia}, C.P. ${cp}, ${ciudad}, ${estado}`;
   } else {
     const punto = document.getElementById('punto-acapulco').value;
     if (!punto) {
