@@ -2,3 +2,37 @@
 @media(max-width:900px){.main-nav{position:fixed;inset:82px 0 auto;background:#081421;padding:22px;display:none;flex-direction:column;align-items:stretch;border-bottom:1px solid var(--line)}.main-nav.open{display:flex}.product-nav{position:static;display:flex;flex-direction:row;background:none;padding:0}.menu-toggle{display:block}.hero-grid,.section-heading,.demo-section,.contact-grid,.product-card{grid-template-columns:1fr}.hero-panel{transform:none}.steps-grid{grid-template-columns:repeat(2,1fr)}.value-grid{grid-template-columns:1fr}.cta-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}}
 @media(max-width:620px){.container{width:min(100% - 28px,var(--max))}.nav-wrap{height:72px}.brand img{width:44px;height:44px}.main-nav{inset:72px 0 auto}.hero{padding:75px 0 65px}.hero h1{font-size:2.65rem}.hero-actions{flex-direction:column}.button{width:100%}.services-grid,.steps-grid,.field-row,#margin-calculator{grid-template-columns:1fr}.section{padding:72px 0}.service-card{min-height:auto}.mini-stats{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.footer-brand{grid-column:auto}.footer-bottom{flex-direction:column;gap:6px}.floating-contact b{display:none}.product-card{padding:25px}.product-mockup{min-height:230px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
+
+/* Fondo base oscuro tecnológico */
+body {
+  background-color: #020617; /* Slate 950 */
+  color: #f8fafc;
+  overflow-x: hidden;
+}
+
+/* Efecto de malla o patrón tecnológico animado de fondo */
+.tech-bg-pattern {
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    linear-gradient(to right, rgba(15, 23, 42, 0.8) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.8) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Animación sutil de flotación para elementos tecnológicos o engranes/iconos */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+.tech-float {
+  animation: floatSlow 6s ease-in-out infinite;
+}
