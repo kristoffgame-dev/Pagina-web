@@ -26,6 +26,7 @@
   </script>
 </head>
 <body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
+
 <!-- Botón Flotante de WhatsApp -->
 <a href="https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20quisiera%20solicitar%20información%20y%20una%20cotización." 
    target="_blank" 
@@ -37,6 +38,7 @@
     <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18.1-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18.1-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
   </svg>
 </a>
+
   <!-- Header / Navegación Unificada -->
   <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -102,6 +104,7 @@
       </div>
     </div>
   </main>
+
   <!-- Footer -->
   <footer class="border-t border-slate-800 bg-slate-950/80 py-8 mt-12">
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
@@ -111,96 +114,85 @@
         <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
         <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
         <a href="educacion.html" class="hover:text-slate-300 transition-colors">Educación</a>
-        <a href="wifi.html" class="hover:text-slate-300 transition-colors">Wi-Fi</a>
+        <a href="portal.html" class="hover:text-slate-300 transition-colors">Portal Wi-Fi</a>
       </div>
     </div>
   </footer>
-<!-- CÓDIGO DIRECTO DEL ASISTENTE Y FONDO DE DODI SYSTEM -->
-<style>
-  .tech-grid {
-    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.25) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(30, 41, 59, 0.25) 1px, transparent 1px);
-    background-size: 36px 36px;
-  }
-</style>
 
-<div class="fixed inset-0 tech-grid pointer-events-none z-0 opacity-70"></div>
-<div class="fixed inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/80 pointer-events-none z-0"></div>
+  <!-- Asistente Virtual Directo (Elevado a bottom-36 para no tapar WhatsApp, sin fondo oscuro) -->
+  <div id="dodi-assistant-container" class="fixed bottom-36 right-6 z-50 font-sans">
+    <button id="dodi-chat-toggle" class="relative group bg-slate-900 border border-cyan-500/50 hover:border-cyan-400 p-3.5 rounded-full shadow-2xl shadow-cyan-500/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+      <span class="absolute inset-0 rounded-full bg-cyan-500/20 animate-ping opacity-75 pointer-events-none"></span>
+      <div class="relative w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-inner">
+        <i class="fa-solid fa-robot animate-pulse"></i>
+      </div>
+      <span class="absolute -top-10 right-0 bg-slate-800 text-cyan-300 text-xs px-3 py-1 rounded-full border border-cyan-500/30 shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        ¡Hola! ¿Buscas algún equipo o cotización? 🚀
+      </span>
+    </button>
 
-<div id="dodi-assistant-container" class="fixed bottom-24 right-6 z-50 font-sans">
-  <button id="dodi-chat-toggle" class="relative group bg-slate-900 border border-cyan-500/50 hover:border-cyan-400 p-3.5 rounded-full shadow-2xl shadow-cyan-500/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-    <span class="absolute inset-0 rounded-full bg-cyan-500/20 animate-ping opacity-75 pointer-events-none"></span>
-    <div class="relative w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-inner">
-      <i class="fa-solid fa-robot animate-pulse"></i>
-    </div>
-    <span class="absolute -top-10 right-0 bg-slate-800 text-cyan-300 text-xs px-3 py-1 rounded-full border border-cyan-500/30 shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      ¡Hola! ¿Buscas algún equipo o cotización? 🚀
-    </span>
-  </button>
-
-  <div id="dodi-chat-box" class="hidden absolute bottom-20 right-0 w-80 md:w-96 bg-slate-950 border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 transform translate-y-4 opacity-0 scale-95">
-    <div class="bg-gradient-to-r from-slate-900 to-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="relative">
-          <div class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-400 text-sm">
-            <i class="fa-solid fa-microchip"></i>
+    <div id="dodi-chat-box" class="hidden absolute bottom-20 right-0 w-80 md:w-96 bg-slate-950 border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 transform translate-y-4 opacity-0 scale-95">
+      <div class="bg-gradient-to-r from-slate-900 to-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-400 text-sm">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-950"></span>
           </div>
-          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-950"></span>
+          <div>
+            <h4 class="text-white font-bold text-sm tracking-wide">Dodi System - Soporte & Ventas</h4>
+            <p class="text-[10px] text-cyan-400 font-mono">En línea • Asesor Tecnológico</p>
+          </div>
         </div>
-        <div>
-          <h4 class="text-white font-bold text-sm tracking-wide">Dodi System - Soporte & Ventas</h4>
-          <p class="text-[10px] text-cyan-400 font-mono">En línea • Asesor Tecnológico</p>
+        <button id="dodi-chat-close" class="text-slate-400 hover:text-white transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div id="dodi-chat-messages" class="p-4 h-80 overflow-y-auto space-y-3 text-xs text-slate-300 flex flex-col">
+        <div class="flex items-start gap-2 max-w-[85%]">
+          <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex-shrink-0 flex items-center justify-center text-cyan-400 text-xs mt-0.5">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none shadow-sm">
+            <p>¡Qué tal! Bienvenido a <strong>Dodi System</strong>. 🚀 Estoy aquí para asesorarte con nuestros equipos, redes y cotizaciones. ¿Qué necesitas hoy?</p>
+          </div>
         </div>
       </div>
-      <button id="dodi-chat-close" class="text-slate-400 hover:text-white transition">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-    </div>
 
-    <div id="dodi-chat-messages" class="p-4 h-80 overflow-y-auto space-y-3 text-xs text-slate-300 flex flex-col">
-      <div class="flex items-start gap-2 max-w-[85%]">
-        <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex-shrink-0 flex items-center justify-center text-cyan-400 text-xs mt-0.5">
-          <i class="fa-solid fa-robot"></i>
-        </div>
-        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none shadow-sm">
-          <p>¡Qué tal! Bienvenido a <strong>Dodi System</strong>. 🚀 Estoy aquí para asesorarte con nuestros equipos, redes y cotizaciones. ¿Qué necesitas hoy?</p>
-        </div>
+      <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
+        <input type="text" id="dodi-chat-input" placeholder="Escribe tu duda o producto..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 transition">
+        <button id="dodi-chat-send" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-3.5 py-2 rounded-xl transition font-bold flex items-center justify-center">
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
       </div>
-    </div>
-
-    <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
-      <input type="text" id="dodi-chat-input" placeholder="Escribe tu duda o producto..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 transition">
-      <button id="dodi-chat-send" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-3.5 py-2 rounded-xl transition font-bold flex items-center justify-center">
-        <i class="fa-solid fa-paper-plane text-xs"></i>
-      </button>
     </div>
   </div>
-</div>
 
-<script>
-  const toggleBtn = document.getElementById('dodi-chat-toggle');
-  const chatBox = document.getElementById('dodi-chat-box');
-  const closeBtn = document.getElementById('dodi-chat-close');
-
-  if (toggleBtn && chatBox && closeBtn) {
-    toggleBtn.addEventListener('click', () => {
-      if (chatBox.classList.contains('hidden')) {
-        chatBox.classList.remove('hidden');
-        setTimeout(() => { chatBox.classList.remove('translate-y-4', 'opacity-0', 'scale-95'); }, 10);
-      } else {
-        chatBox.classList.add('translate-y-4', 'opacity-0', 'scale-95');
-        setTimeout(() => { chatBox.classList.add('hidden'); }, 300);
-      }
-    });
-
-    closeBtn.addEventListener('click', () => {
-      chatBox.classList.add('translate-y-4', 'opacity-0', 'scale-95');
-      setTimeout(() => { chatBox.classList.add('hidden'); }, 300);
-    });
-  }
-</script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const toggleBtn = document.getElementById('dodi-chat-toggle');
+    const chatBox = document.getElementById('dodi-chat-box');
+    const closeBtn = document.getElementById('dodi-chat-close');
+
+    if (toggleBtn && chatBox && closeBtn) {
+      toggleBtn.addEventListener('click', () => {
+        if (chatBox.classList.contains('hidden')) {
+          chatBox.classList.remove('hidden');
+          setTimeout(() => { chatBox.classList.remove('translate-y-4', 'opacity-0', 'scale-95'); }, 10);
+        } else {
+          chatBox.classList.add('translate-y-4', 'opacity-0', 'scale-95');
+          setTimeout(() => { chatBox.classList.add('hidden'); }, 300);
+        }
+      });
+
+      closeBtn.addEventListener('click', () => {
+        chatBox.classList.add('translate-y-4', 'opacity-0', 'scale-95');
+        setTimeout(() => { chatBox.classList.add('hidden'); }, 300);
+      });
+    }
   </script>
 </body>
 </html>
