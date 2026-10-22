@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="es-MX">
 <head>
-  <!-- Script Global del Asistente (Elevado para no tapar WhatsApp) -->
-  <script src="assistant.js" defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Educación & Capacitación | DODI SYSTEM</title>
@@ -27,9 +25,9 @@
     }
   </script>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-cyan selection:text-brand-dark">
 
-  <!-- Botón Flotante de WhatsApp (Abajo en bottom-6) -->
+  <!-- Botón Flotante de WhatsApp -->
   <a href="https://wa.me/527442320022?text=Hola%20DODI%20SYSTEM,%20quisiera%20solicitar%20información%20y%20una%20cotización." 
      target="_blank" 
      rel="noopener noreferrer"
@@ -41,7 +39,7 @@
   </a>
 
   <!-- Header / Navegación Unificada -->
-  <header class="border-b border-slate-800/80 bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50">
+  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a class="flex items-center gap-3.5 group" href="index.html">
         <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-cyan/20 to-brand-blue/20 border border-brand-cyan/30 flex items-center justify-center p-1.5 shadow-lg shadow-brand-blue/10 group-hover:scale-105 group-hover:border-brand-cyan transition-all duration-300">
@@ -118,7 +116,7 @@
     </div>
   </footer>
 
-  <!-- Asistente de IA (Únicamente el widget flotante en bottom-36) -->
+  <!-- Asistente de IA (En bottom-36 para no estorbar con WhatsApp) -->
   <div id="dodi-assistant-container" class="fixed bottom-36 right-6 z-50 font-sans">
     <button id="dodi-chat-toggle" class="relative group bg-slate-900 border border-cyan-500/50 hover:border-cyan-400 p-3.5 rounded-full shadow-2xl shadow-cyan-500/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
       <span class="absolute inset-0 rounded-full bg-cyan-500/20 animate-ping opacity-75 pointer-events-none"></span>
@@ -194,4 +192,4 @@
     }
   </script>
 </body>
-</html> 
+</html>
