@@ -286,6 +286,87 @@
   </div>
 </div>
 
+        <button id="btn-procesar-pago" onclick="procesarCompraCompleta()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer mt-3">
+          <span>Confirmar Datos y Procesar Pago</span>
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-950/80 py-8 mt-12">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <span>© <span id="year">2026</span> DODI SYSTEM. Todos los derechos reservados.</span>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-slate-300 transition-colors">Inicio</a>
+        <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
+        <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
+      </div>
+    </div>
+  </footer>
+<!-- CÓDIGO DIRECTO DEL ASISTENTE Y FONDO DE DODI SYSTEM -->
+<style>
+  .tech-grid {
+    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.25) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(30, 41, 59, 0.25) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+</style>
+
+<div class="fixed inset-0 tech-grid pointer-events-none z-0 opacity-70"></div>
+<div class="fixed inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/80 pointer-events-none z-0"></div>
+
+<div id="dodi-assistant-container" class="fixed bottom-24 right-6 z-50 font-sans">
+  <button id="dodi-chat-toggle" class="relative group bg-slate-900 border border-cyan-500/50 hover:border-cyan-400 p-3.5 rounded-full shadow-2xl shadow-cyan-500/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+    <span class="absolute inset-0 rounded-full bg-cyan-500/20 animate-ping opacity-75 pointer-events-none"></span>
+    <div class="relative w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-inner">
+      <i class="fa-solid fa-robot animate-pulse"></i>
+    </div>
+    <span class="absolute -top-10 right-0 bg-slate-800 text-cyan-300 text-xs px-3 py-1 rounded-full border border-cyan-500/30 shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      ¡Hola! ¿Buscas algún equipo o cotización? 🚀
+    </span>
+  </button>
+
+  <div id="dodi-chat-box" class="hidden absolute bottom-20 right-0 w-80 md:w-96 bg-slate-950 border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 transform translate-y-4 opacity-0 scale-95">
+    <div class="bg-gradient-to-r from-slate-900 to-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <div class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-400 text-sm">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-950"></span>
+        </div>
+        <div>
+          <h4 class="text-white font-bold text-sm tracking-wide">Dodi System - Soporte & Ventas</h4>
+          <p class="text-[10px] text-cyan-400 font-mono">En línea • Asesor Tecnológico</p>
+        </div>
+      </div>
+      <button id="dodi-chat-close" class="text-slate-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <div id="dodi-chat-messages" class="p-4 h-80 overflow-y-auto space-y-3 text-xs text-slate-300 flex flex-col">
+      <div class="flex items-start gap-2 max-w-[85%]">
+        <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex-shrink-0 flex items-center justify-center text-cyan-400 text-xs mt-0.5">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl rounded-tl-none shadow-sm">
+          <p>¡Qué tal! Bienvenido a <strong>Dodi System</strong>. 🚀 Estoy aquí para asesorarte con nuestros equipos, redes y cotizaciones. ¿Qué necesitas hoy?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
+      <input type="text" id="dodi-chat-input" placeholder="Escribe tu duda o producto..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 transition">
+      <button id="dodi-chat-send" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-3.5 py-2 rounded-xl transition font-bold flex items-center justify-center">
+        <i class="fa-solid fa-paper-plane text-xs"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
   const toggleBtn = document.getElementById('dodi-chat-toggle');
   const chatBox = document.getElementById('dodi-chat-box');
@@ -308,26 +389,6 @@
     });
   }
 </script>
-
-        <button id="btn-procesar-pago" onclick="procesarCompraCompleta()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-black py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer mt-3">
-          <span>Confirmar Datos y Procesar Pago</span>
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950/80 py-8 mt-12">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-      <span>© <span id="year">2026</span> DODI SYSTEM. Todos los derechos reservados.</span>
-      <div class="flex gap-4">
-        <a href="index.html" class="hover:text-slate-300 transition-colors">Inicio</a>
-        <a href="productos.html" class="hover:text-slate-300 transition-colors">Productos</a>
-        <a href="redes-camaras.html" class="hover:text-slate-300 transition-colors">Redes</a>
-      </div>
-    </div>
-  </footer>
 
   <script>
 let carrito = [];
