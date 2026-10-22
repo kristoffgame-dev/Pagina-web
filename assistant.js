@@ -29,7 +29,7 @@
     // Widget del Asistente
     if (!document.getElementById('dodi-assistant-container')) {
       const assistantHTML = `
-      <div id="dodi-assistant-container" class="fixed bottom-6 right-6 z-50 font-sans">
+      <div id="dodi-assistant-container" class="fixed bottom-36 right-6 z-50 font-sans">
         <button id="dodi-chat-toggle" class="relative group bg-slate-900 border border-cyan-500/50 hover:border-cyan-400 p-3.5 rounded-full shadow-2xl shadow-cyan-500/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
           <span class="absolute inset-0 rounded-full bg-cyan-500/20 animate-ping opacity-75 pointer-events-none"></span>
           <div class="relative w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-inner">
